@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Set up the monorepo structure, Docker Compose for Strapi & PostgreSQL on the VPS, Nginx reverse proxy, and Docker pruning cron jobs.
 
 ## Requirements
@@ -36,11 +36,11 @@
 6. Create `infra/nginx/guai-studio.conf` defining server blocks, SSL setup (can use Certbot), reverse proxy to port 1337, and static root at `current` symlink.
 
 ## Todo List
-- [ ] Initialize monorepo structure
-- [ ] Initialize Strapi v5 project
-- [ ] Create `docker-compose.yml` with logging constraints
-- [ ] Create Nginx config
-- [ ] Create Docker cleanup script
+- [x] Initialize monorepo structure
+- [x] Initialize Strapi v5 project
+- [x] Create `docker-compose.yml` with logging constraints
+- [x] Create Nginx config
+- [x] Create Docker cleanup script
 
 ## Success Criteria
 - Strapi runs locally via docker-compose.
