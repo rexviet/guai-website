@@ -1,0 +1,104 @@
+apps/cms/.gitignore
+  s_de35d823e506d5::t_9996822ea2f7e6 1-131
+apps/cms/README.md
+  s_de35d823e506d5::t_9996822ea2f7e6 1-61
+infra/scripts/prune-docker.sh
+  s_de35d823e506d5::t_0f15fadf8315f1 1-15,21-45,47-53
+  s_de35d823e506d5::t_aeb92fc1e5ca23 16-20
+  s_de35d823e506d5::t_3a8ee351b4dc9d 46
+apps/cms/config/middlewares.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-16
+apps/cms/package.json
+  s_de35d823e506d5::t_9996822ea2f7e6 1-42
+.gitignore
+  s_de35d823e506d5::t_a25237d83caa3b 1-19
+apps/cms/public/robots.txt
+  s_de35d823e506d5::t_9996822ea2f7e6 1-3
+apps/cms/config/api.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-16
+apps/cms/src/admin/app.example.tsx
+  s_de35d823e506d5::t_9996822ea2f7e6 1-37
+apps/cms/src/index.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-20
+apps/cms/config/plugins.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-44
+apps/cms/src/admin/vite.config.example.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-12
+apps/cms/src/admin/tsconfig.json
+  s_de35d823e506d5::t_9996822ea2f7e6 1-20
+infra/.env.example
+  s_de35d823e506d5::t_0791691df681dc 1-43
+apps/cms/tsconfig.json
+  s_de35d823e506d5::t_9996822ea2f7e6 1-44
+apps/cms/config/admin.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-25
+infra/docker-compose.yml
+  s_de35d823e506d5::t_1823e0547088d3 53-56,58
+  s_de35d823e506d5::t_4b4f929edb747e 1-37,44-52,57,59-87,92-98
+  s_de35d823e506d5::t_5702421d6c31a6 38-43
+  s_de35d823e506d5::t_0e17ba3aaf98e6 88-91
+apps/cms/.env.example
+  s_de35d823e506d5::t_9996822ea2f7e6 1-8
+apps/cms/Dockerfile
+  s_de35d823e506d5::t_7bbfb3758e6cd4 1-19,37-60,70-83
+  s_de35d823e506d5::t_ff0a40a9da3fde 29,32,36
+  s_de35d823e506d5::t_d7d546e0ffc582 20-28,30-31,33-35
+  s_de35d823e506d5::t_ecb8dfcc4dab64 61-69
+apps/cms/config/database.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-72
+apps/cms/.dockerignore
+  s_de35d823e506d5::t_8c60eb663e38ef 1-11
+apps/cms/config/server.ts
+  s_de35d823e506d5::t_9996822ea2f7e6 1-14
+infra/nginx/guai-studio.conf
+  s_de35d823e506d5::t_7bebb3c22cdd7c 135-141,146-152
+  s_de35d823e506d5::t_f8d96b4fb828e8 1-5,15-28,37-46,51-68,76-77,85-88,96-97,100-102,108-125,128-134,142-145,153-160
+  s_de35d823e506d5::t_1fe92922dc2898 47-50
+  s_de35d823e506d5::t_bad4e8834f9793 29-36
+  s_de35d823e506d5::t_5fb08821eec6de 126-127
+  s_de35d823e506d5::t_88c327af6d098d 103-107
+  s_de35d823e506d5::t_204e1c0f901dbd 69-75,78-84,89-95,98-99
+  s_de35d823e506d5::t_05031eccddb1f4 6-14
+apps/cms/package-lock.json
+  s_de35d823e506d5::t_78eb294a356715 1-21796
+plans/260804-2236-guai-studio-website/brainstorm-summary.md
+  s_de35d823e506d5::t_faeba07d37375a 1-128
+plans/260804-2236-guai-studio-website/client-proposal.md
+  s_de35d823e506d5::t_e8183dc958d516 1-42
+plans/260804-2236-guai-studio-website/phase-01-setup-infra.md
+  s_de35d823e506d5::t_26db99699c1497 1-59
+plans/260804-2236-guai-studio-website/phase-02-strapi-content-model.md
+  s_de35d823e506d5::t_cb7fc0267a8afc 1-59
+plans/260804-2236-guai-studio-website/phase-03-design-system.md
+  s_de35d823e506d5::t_49f536294be614 1-52
+plans/260804-2236-guai-studio-website/phase-04-astro-pages.md
+  s_de35d823e506d5::t_94b11ad0b49642 1-57
+plans/260804-2236-guai-studio-website/phase-05-contact-lead-pipeline.md
+  s_de35d823e506d5::t_ca6aac209a6342 1-60
+plans/260804-2236-guai-studio-website/phase-06-ci-cd-pipeline.md
+  s_de35d823e506d5::t_1620f5150a1b4c 1-54
+plans/260804-2236-guai-studio-website/phase-07-handover-go-live.md
+  s_de35d823e506d5::t_4a68e3ac75eb00 1-46
+plans/260804-2236-guai-studio-website/plan.md
+  s_de35d823e506d5::t_eefef66be5d849 1-46
+plans/260804-2236-guai-studio-website/solution-design.md
+  s_de35d823e506d5::t_e7a1a407fa990a 1-262
+plans/260804-2236-guai-studio-website/vps-quote-comparison.md
+  s_de35d823e506d5::t_4d94222171a7b9 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "e316cf1dd9a737998095cf48efaced6ef2fc3c98",
+  "prompts": {},
+  "sessions": {
+    "s_de35d823e506d5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b35c9613-a425-4bf0-aa50-f6941b2c146d",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
