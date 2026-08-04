@@ -1,0 +1,98 @@
+# GuAI Studio infrastructure: Strapi CMS + PostgreSQL.
+#
+# Usage:
+#   cp infra/.env.example infra/.env   # fill in real secrets, never commit
+#   docker compose -f infra/docker-compose.yml up -d
+#
+# Both services set a hard `json-file` logging cap (10MB x 3 files max per
+# container) because this VPS has a history of disk-full incidents from
+# unbounded Docker logs. `infra/scripts/prune-docker.sh` (run on a cron
+# schedule) is a second layer of defense on top of this, not a substitute.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # SECURITY: intentionally no `ports:` mapping here. Postgres must only be
+    # reachable from the `strapi` service via the internal `guai-network`
+    # bridge network — never expose 5432 to the host/public internet.
+    networks:
+      - guai-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Conservative cap given the 2GB VPS and its history of resource
+    # exhaustion incidents — prevents one service from starving the other.
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  strapi:
+    build:
+      context: ../apps/cms
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # SECURITY: bind to loopback only. Nginx (on the host, see
+    # infra/nginx/guai-studio.conf) proxies /api and /admin to 127.0.0.1:1337
+    # over HTTPS — publishing on 0.0.0.0 would let anyone reach Strapi admin
+    # directly over plain HTTP, bypassing Nginx/TLS entirely.
+    ports:
+      - "127.0.0.1:1337:1337"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      # --- Strapi secrets (see infra/.env.example) ---
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      # --- Database connection ---
+      # DATABASE_HOST must equal the `postgres` service name below so Docker's
+      # internal DNS resolves it on the `guai-network` bridge network.
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: "5432"
+      # Reuse the same POSTGRES_* values so there is a single source of truth
+      # for DB credentials between the two services.
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_SSL: "false"
+    networks:
+      - guai-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+
+volumes:
+  postgres_data:
+
+networks:
+  guai-network:
+    driver: bridge
