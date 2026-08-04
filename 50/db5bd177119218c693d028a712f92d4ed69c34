@@ -1,0 +1,19 @@
+docs/journals/260805-0623-phase-01-setup-infrastructure-complete.md
+  s_de35d823e506d5::t_363140db6f6096 1-86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "50db5bd177119218c693d028a712f92d4ed69c34",
+  "prompts": {},
+  "sessions": {
+    "s_de35d823e506d5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b35c9613-a425-4bf0-aa50-f6941b2c146d",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
