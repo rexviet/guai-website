@@ -30,7 +30,7 @@ Build a multi-page company profile and portfolio website for GuAI Studio using a
 | Phase | Name | Status |
 |-------|------|--------|
 | 1 | [Setup Infrastructure](./phase-01-setup-infra.md) | Completed |
-| 2 | [Strapi Content Model & i18n](./phase-02-strapi-content-model.md) | Pending |
+| 2 | [Strapi Content Model & i18n](./phase-02-strapi-content-model.md) | Completed |
 | 3 | [Design System](./phase-03-design-system.md) | Pending |
 | 4 | [Astro Pages & SEO](./phase-04-astro-pages.md) | Pending |
 | 5 | [Contact Form & Lead Pipeline](./phase-05-contact-lead-pipeline.md) | Pending |

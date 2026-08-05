@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Implemented (pending Strapi boot verification against sqlite)
+- **Current status:** Completed
 - **Brief description:** Configure Strapi plugins, i18n, and create the schema for all content types (`service`, `case-study`, `virtual-kol`, `site-setting`, `seo-meta`).
 
 ## Requirements

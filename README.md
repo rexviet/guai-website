@@ -55,10 +55,31 @@ docker compose -f infra/docker-compose.yml down --volumes  # Stop and remove vol
 | Phase | Component | Status |
 |-------|-----------|--------|
 | 1 | Monorepo setup, Strapi CMS, Docker infrastructure | ✅ Complete |
-| 2–3 | Content types, API design | Planned |
+| 2 | Content model (i18n, R2 provider, content types) | ✅ Complete |
+| 3 | API design and integration | Planned |
 | 4 | Astro frontend | Planned |
 | 5 | Deployment pipeline | Planned |
 | 6–7 | VPS setup, DNS, SSL/TLS | Planned |
+
+## Phase 2: Content Model (Complete)
+
+Phase 2 implemented the Strapi CMS content model with:
+
+- **Content Types**: `service`, `case-study`, `virtual-kol`, and `site-setting` (single type)
+- **Components**: `seo-meta` reusable component for SEO metadata
+- **Internationalization (i18n)**: Vietnamese (default) and English locales enabled
+- **Media Upload Provider**: Cloudflare R2 S3-compatible storage configured
+- **Relationships**: Full relationship configuration between content types (see `apps/cms/src/api/*/content-types/*/schema.json`)
+
+**Required Environment Variables** (in `apps/cms/.env` or container):
+- `R2_ACCESS_KEY_ID` — Cloudflare R2 API token access key
+- `R2_SECRET_ACCESS_KEY` — Paired secret key
+- `R2_BUCKET` — R2 bucket name for media uploads
+- `R2_ENDPOINT` — R2 S3 API endpoint URL
+- `R2_REGION` — R2 region (`auto` is default)
+- `R2_PUBLIC_URL` — Public CDN domain for serving media
+
+See [`apps/cms/.env.example`](apps/cms/.env.example) for full environment setup.
 
 ## Infrastructure Reference
 
