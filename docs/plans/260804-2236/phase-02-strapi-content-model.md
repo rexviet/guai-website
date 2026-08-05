@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Implemented (pending Strapi boot verification against sqlite)
 - **Brief description:** Configure Strapi plugins, i18n, and create the schema for all content types (`service`, `case-study`, `virtual-kol`, `site-setting`, `seo-meta`).
 
 ## Requirements
@@ -35,12 +35,12 @@
 7. Configure localization options: enable localized on display fields, disable on relationships/slugs/media if appropriate.
 
 ## Todo List
-- [ ] Configure R2 Upload Provider
-- [ ] Define `seo-meta` component
-- [ ] Define `site-setting` schema
-- [ ] Define `service` schema
-- [ ] Define `case-study` schema
-- [ ] Define `virtual-kol` schema
+- [x] Configure R2 Upload Provider
+- [x] Define `seo-meta` component
+- [x] Define `site-setting` schema
+- [x] Define `service` schema
+- [x] Define `case-study` schema
+- [x] Define `virtual-kol` schema
 
 ## Success Criteria
 - Strapi Admin allows creating localized entries for all content types.
@@ -50,6 +50,7 @@
 ## Risk Assessment
 - **Risk:** R2 CORS or Bucket policy issues.
 - **Mitigation:** Follow Cloudflare R2 and S3 API docs closely for Strapi integration.
+- **Risk (flagged during code review, open):** Solution design section 6 specifies `site-setting.showreel_video` should stay self-hosted (bypass R2) for free-tier quota and hero-load-latency reasons. Strapi v5's upload plugin has one global provider per instance; splitting a single field to a different provider needs a custom upload controller, which is out of this phase's schema/config scope. Currently `showreel_video` uploads through R2 like all other media (documented inline in `apps/cms/config/plugins.ts`). **Decision needed:** accept R2 for the showreel (likely fine — one optimized hero video is negligible against the 10GB free tier, and R2 custom-domain + Cloudflare CDN may serve it fast enough) or scope a follow-up task for local storage on that one field.
 
 ## Security Considerations
 - R2 API Keys must be securely stored in `.env`.

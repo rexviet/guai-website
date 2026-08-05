@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "virtual_kols",
+  "info": {
+    "singularName": "virtual-kol",
+    "pluralName": "virtual-kols",
+    "displayName": "Virtual KOL",
+    "description": "An AI-generated virtual Key Opinion Leader / character profile."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "character_type": {
+      "type": "enumeration",
+      "enum": ["Fashion", "Beauty", "Lifestyle", "Entertainment"],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "short_bio": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "demo_video_youtube_url": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "order": {
+      "type": "integer",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    }
+  }
+}
