@@ -1,0 +1,23 @@
+docs/journals/260805-0745-phase-02-strapi-content-model-i18n.md
+  s_e3f3734d99506c::t_9f7467c316eb72 129
+  s_e3f3734d99506c::t_32648a1cd93c87 95,97,99,101,103-104,107,109,111
+  s_e3f3734d99506c::t_0bba80aa1bc1fd 1-31,33,35,42,47-51,53-55,58,70-72,78,80-81,87-89,92-94,96,98,100,102,105-106,108,110,112-126,128,130-139
+  s_e3f3734d99506c::t_f1cf00a476d0bb 127
+  s_e3f3734d99506c::t_a3fe89ad9aa20c 32,34,36-41,43-46,52,56-57,59-69,73-77,79,82-86,90-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "956fc9a4a56234d14d169e0a4f1aa116c1e80188",
+  "prompts": {},
+  "sessions": {
+    "s_e3f3734d99506c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d96de51a-3e18-46a7-b418-d2c860505aae",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
