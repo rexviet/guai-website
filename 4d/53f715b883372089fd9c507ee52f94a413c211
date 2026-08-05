@@ -1,0 +1,24 @@
+docs/plans/260804-2236/plan.md
+  s_e3f3734d99506c::t_1dd4e37d548099 33
+README.md
+  s_e3f3734d99506c::t_1f1754868ca80f 64-83
+  s_e3f3734d99506c::t_78e98fdb3ec021 58-59
+docs/plans/260804-2236/phase-02-strapi-content-model.md
+  s_e3f3734d99506c::t_3bd25717da5a2c 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "4d53f715b883372089fd9c507ee52f94a413c211",
+  "prompts": {},
+  "sessions": {
+    "s_e3f3734d99506c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d96de51a-3e18-46a7-b418-d2c860505aae",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
