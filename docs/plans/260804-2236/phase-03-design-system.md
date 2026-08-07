@@ -5,14 +5,15 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Set up Vanilla CSS design tokens (colors, typography, spacing, dark mode) and basic Astro UI components before building full pages.
 
 ## Requirements
+- **Initialize Astro** in `apps/web` (since the folder is empty).
 - No TailwindCSS; use Vanilla CSS.
-- Responsive, fluid design with Dark mode support.
-- Define typography (e.g., Inter/Outfit) and color palettes.
-- Create base Astro layout and common components (Button, Card, Section).
+- Responsive, fluid design strictly focused on **Dark mode** (matching the Kakao Wcopilot premium AI aesthetic).
+- Define typography using **Sora** (body/primary) and **Syne** (display headings).
+- Create base Astro layout and common components (Button, Card, Section), plus advanced components (Glassmorphism containers, Marquee, Masonry/Grid layouts for Works).
 
 ## Architecture
 - Global `index.css` with CSS variables (`--color-primary`, `--font-main`, etc.).

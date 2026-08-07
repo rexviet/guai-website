@@ -9,11 +9,13 @@
 - **Brief description:** Build the actual web pages, fetch content from Strapi, and implement i18n routing and dynamic SEO metadata.
 
 ## Requirements
-- Pages: Homepage, Services, Work, Virtual KOL, About, Contact.
+- Pages: Homepage, Services, Work (Portfolio), Virtual KOL, About, Contact.
 - Dynamic routing for `[slug].astro`.
+- Map Strapi **Dynamic Zones / Components** to Astro layout blocks for the `Works` detail pages to achieve rich, Webflow-like layouts (galleries, challenge/solution splits, metrics).
 - Multi-language support: `vi` at `/`, `en` at `/en/`.
 - Fallbacks for missing translations.
 - Helper scripts for SEO, `hreflang` tags, and generating sitemaps.
+- Implement scroll-triggered fade/slide animations (using CSS or a lightweight library) to match Kakao's dynamic feel.
 
 ## Architecture
 - Fetch wrappers in `lib/strapi-client.ts` to call Strapi REST API at build time.

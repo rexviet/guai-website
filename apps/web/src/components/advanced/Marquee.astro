@@ -1,0 +1,51 @@
+---
+export interface Props {
+  speed?: string;
+  direction?: 'normal' | 'reverse';
+  class?: string;
+}
+
+const { speed = '20s', direction = 'normal', class: className = '' } = Astro.props;
+---
+
+<style>
+  .ui-marquee-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .ui-marquee-content {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 100%;
+    animation: marquee var(--marquee-speed, 20s) linear infinite;
+  }
+
+  .ui-marquee-wrapper--reverse .ui-marquee-content {
+    animation-direction: reverse;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+</style>
+
+<div class={`ui-marquee-wrapper ui-marquee-wrapper--${direction} ${className}`} style={`--marquee-speed: ${speed};`}>
+  <div class="ui-marquee-content">
+    <slot />
+  </div>
+  <div class="ui-marquee-content" aria-hidden="true">
+    <slot />
+  </div>
+</div>

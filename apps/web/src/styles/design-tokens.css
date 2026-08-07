@@ -1,0 +1,40 @@
+:root {
+  /* Typography */
+  --font-primary: 'Sora', sans-serif;
+  --font-display: 'Syne', sans-serif;
+
+  /* Colors (Dark mode premium aesthetic) */
+  --color-bg: #000000;
+  --color-surface: #111111;
+  --color-surface-elevated: #1a1a1a;
+  
+  --color-text: #ffffff;
+  --color-text-muted: #aaadb0;
+  
+  --color-accent: #3898ec; /* Electric blue */
+  --color-accent-hover: #0082f3;
+  --color-danger: #ea384c;
+
+  /* Glassmorphism / Translucent Whites */
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-25: rgba(255, 255, 255, 0.25);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease-out;
+  --transition-normal: 0.3s ease-in-out;
+}

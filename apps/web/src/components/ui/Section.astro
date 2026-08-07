@@ -1,0 +1,34 @@
+---
+export interface Props {
+  class?: string;
+  id?: string;
+  containerSize?: 'sm' | 'md' | 'lg' | 'full';
+}
+
+const { class: className = '', id, containerSize = 'lg' } = Astro.props;
+
+const containerWidths = {
+  sm: 'max-width: 640px;',
+  md: 'max-width: 768px;',
+  lg: 'max-width: 1024px;',
+  full: 'max-width: 100%;'
+};
+---
+
+<style>
+  .ui-section {
+    padding: var(--space-xl) var(--space-md);
+    position: relative;
+  }
+
+  .ui-container {
+    margin: 0 auto;
+    width: 100%;
+  }
+</style>
+
+<section id={id} class={`ui-section ${className}`}>
+  <div class="ui-container" style={containerWidths[containerSize]}>
+    <slot />
+  </div>
+</section>

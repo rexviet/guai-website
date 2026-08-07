@@ -56,5 +56,8 @@
 - R2 API Keys must be securely stored in `.env`.
 - Limit API public access to only required endpoints (find, findOne).
 
+## Follow-up Tasks (Post-Phase 3/4)
+- **Revise `case-study` Schema:** To match the rich Kakao Wcopilot Works page layout, the current `description` richtext field should be replaced/supplemented with Strapi **Dynamic Zones** (e.g., Image Gallery, Challenge/Solution split, Metrics blocks).
+
 ## Next Steps
 - Phase 3: Design System

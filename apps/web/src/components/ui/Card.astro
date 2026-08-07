@@ -1,0 +1,28 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<style>
+  .ui-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-white-5);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform var(--transition-normal), border-color var(--transition-fast);
+  }
+
+  .ui-card:hover {
+    border-color: var(--color-white-25);
+    transform: translateY(-4px);
+  }
+</style>
+
+<div class={`ui-card ${className}`}>
+  <slot />
+</div>
