@@ -1,0 +1,16 @@
+docs/deployment.md
+  h_43770622f8f2a6 31-41
+docs/ops-manual.md
+  h_43770622f8f2a6 20-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "39d368b7eaf70ef4dcb3ee71c9f44fabcdec25b5",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
