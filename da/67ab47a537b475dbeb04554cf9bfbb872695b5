@@ -1,0 +1,16 @@
+README.md
+  h_43770622f8f2a6 53-55,62-66
+docs/deployment.md
+  h_43770622f8f2a6 1-142
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "da67ab47a537b475dbeb04554cf9bfbb872695b5",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
