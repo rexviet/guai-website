@@ -13,12 +13,13 @@ export async function fetchApi<T>(
 ): Promise<T> {
   try {
     // Build query string if urlParamsObject is provided
+    const token = process.env.STRAPI_TOKEN || import.meta.env?.STRAPI_TOKEN;
+    const cleanToken = typeof token === "string" && /^[\x00-\x7F]+$/.test(token) ? token.trim() : null;
+
     const options = {
       headers: {
         "Content-Type": "application/json",
-        ...(process.env.STRAPI_TOKEN || import.meta.env?.STRAPI_TOKEN
-          ? { Authorization: `Bearer ${process.env.STRAPI_TOKEN || import.meta.env?.STRAPI_TOKEN}` }
-          : {}),
+        ...(cleanToken ? { Authorization: `Bearer ${cleanToken}` } : {}),
       },
     };
 
