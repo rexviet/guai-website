@@ -186,19 +186,19 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                 class="top-line-advantages"
               ></div>
               
-              <div class="slider-controls" style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 20px; margin-top: 10px;">
-                <button aria-label="Scroll left" onclick="document.querySelector('.advantages-list').scrollBy({left: -(document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="slider-wrapper" style="position: relative;">
+                <button aria-label="Scroll left" onclick="document.querySelector('.advantages-list').scrollBy({left: -(document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; left: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
-                <button aria-label="Scroll right" onclick="document.querySelector('.advantages-list').scrollBy({left: (document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                <button aria-label="Scroll right" onclick="document.querySelector('.advantages-list').scrollBy({left: (document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; right: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
-              </div>
-              <div
-                data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11b"
-                style="opacity: 0"
-                class="advantages-list"
-              >
+
+                <div
+                  data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11b"
+                  style="opacity: 0"
+                  class="advantages-list"
+                >
                 {services.map((service, index) => {
                   const fallbackVideos = [
                     {
@@ -268,6 +268,7 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                     </a>
                   );
                 })}
+              </div>
               </div>
             </div>
           </div>
