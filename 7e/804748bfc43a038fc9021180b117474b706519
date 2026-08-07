@@ -1,0 +1,20 @@
+docs/journals/2026-08-07-phase-7-handover-go-live.md
+  h_43770622f8f2a6 1-33
+docs/ops-manual.md
+  h_43770622f8f2a6 1-131
+docs/plans/260804-2236/phase-07-handover-go-live.md
+  h_43770622f8f2a6 8,34-37
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 4,38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "7e804748bfc43a038fc9021180b117474b706519",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
