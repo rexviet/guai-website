@@ -1,0 +1,14 @@
+docs/journals/260807-2235-kakao-theme-integration.md
+  h_43770622f8f2a6 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "8baa0feec675087ad385508c1e4e12a68b7264a7",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
