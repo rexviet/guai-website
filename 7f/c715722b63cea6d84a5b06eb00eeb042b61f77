@@ -1,0 +1,60 @@
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 34
+docs/plans/260804-2236/phase-04-astro-pages.md
+  h_43770622f8f2a6 12,14,18
+docs/plans/260804-2236/phase-02-strapi-content-model.md
+  h_43770622f8f2a6 59-61
+docs/plans/260804-2236/phase-03-design-system.md
+  h_43770622f8f2a6 8,12,14-16
+kakao_home.html
+  h_43770622f8f2a6 1-53
+apps/web/.gitignore
+  h_43770622f8f2a6 1-24
+apps/web/.vscode/extensions.json
+  h_43770622f8f2a6 1-4
+apps/web/.vscode/launch.json
+  h_43770622f8f2a6 1-11
+apps/web/AGENTS.md
+  h_43770622f8f2a6 1-22
+apps/web/CLAUDE.md
+  h_43770622f8f2a6 1
+apps/web/README.md
+  h_43770622f8f2a6 1-43
+apps/web/astro.config.mjs
+  h_43770622f8f2a6 1-5
+apps/web/package.json
+  h_43770622f8f2a6 1-17
+apps/web/public/favicon.svg
+  h_43770622f8f2a6 1-9
+apps/web/src/components/advanced/Marquee.astro
+  h_43770622f8f2a6 1-51
+apps/web/src/components/ui/Button.astro
+  h_43770622f8f2a6 1-68
+apps/web/src/components/ui/Card.astro
+  h_43770622f8f2a6 1-28
+apps/web/src/components/ui/Section.astro
+  h_43770622f8f2a6 1-34
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 1-24
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 1-17
+apps/web/src/styles/design-tokens.css
+  h_43770622f8f2a6 1-40
+apps/web/src/styles/index.css
+  h_43770622f8f2a6 1-47
+apps/web/tsconfig.json
+  h_43770622f8f2a6 1-5
+kakao.css
+  h_43770622f8f2a6 1-22268
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "7fc715722b63cea6d84a5b06eb00eeb042b61f77",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
