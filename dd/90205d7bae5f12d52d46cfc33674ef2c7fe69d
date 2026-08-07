@@ -1,0 +1,14 @@
+infra/docker-compose.yml
+  h_43770622f8f2a6 25-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "dd90205d7bae5f12d52d46cfc33674ef2c7fe69d",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
