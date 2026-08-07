@@ -1,321 +1,187 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Section from '../../components/ui/Section.astro';
-import Card from '../../components/ui/Card.astro';
-import Button from '../../components/ui/Button.astro';
-import Marquee from '../../components/advanced/Marquee.astro';
 import { getServices, getCaseStudies } from '../../lib/strapi-client';
 
 const locale = 'en';
 const services = await getServices(locale);
 const caseStudies = await getCaseStudies(locale);
 
-const seo = {
-  title: 'GUAI Studio | Next-Gen AI Technology Studio',
-  description: 'Pioneering AI Commercial Video Ads, Virtual KOLs, and Motion VFX in APAC.',
-};
-
-const techStack = [
-  "GOOGLE VEO 3.1", "MIDJOURNEY V6", "RUNWAY GEN-3", "FLUX.1", 
-  "STABLE DIFFUSION", "ELEVENLABS", "UNREAL ENGINE 5", "BLENDER 3D"
-];
+const bannerVideo = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4";
+const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg";
 ---
 
-<style>
-  .hero-section {
-    position: relative;
-    padding-top: 140px;
-    padding-bottom: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(56, 152, 236, 0.25) 0%, rgba(168, 85, 247, 0.15) 50%, transparent 70%);
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .badge-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-full);
-    background: var(--color-white-5);
-    border: 1px solid var(--color-white-15, rgba(255, 255, 255, 0.15));
-    color: var(--color-accent);
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-    backdrop-filter: blur(12px);
-    z-index: 1;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    max-width: 900px;
-    margin-bottom: var(--space-md);
-    z-index: 1;
-  }
-
-  .hero-title .gradient-text {
-    background: linear-gradient(135deg, #ffffff 30%, #3898ec 70%, #a855f7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: var(--color-text-muted);
-    max-width: 680px;
-    margin-bottom: var(--space-lg);
-    line-height: 1.6;
-    z-index: 1;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    z-index: 1;
-    margin-bottom: var(--space-xl);
-  }
-
-  .showreel-container {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    aspect-ratio: 16/9;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--color-white-15, rgba(255, 255, 255, 0.15));
-    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
-    background: var(--color-surface);
-    z-index: 1;
-  }
-
-  .showreel-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7);
-  }
-
-  .showreel-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
-  }
-
-  .play-btn {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-  }
-
-  .play-btn:hover {
-    transform: scale(1.1);
-    background: var(--color-accent);
-    box-shadow: 0 0 30px var(--color-accent);
-  }
-
-  .section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto var(--space-xl);
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    margin-bottom: var(--space-xs);
-  }
-
-  .section-desc {
-    color: var(--color-text-muted);
-    font-size: 1.1rem;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-md);
-  }
-
-  .service-card-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .service-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: auto;
-    padding-top: var(--space-md);
-  }
-
-  .tag-pill {
-    font-size: 0.75rem;
-    padding: 3px 8px;
-    border-radius: var(--radius-sm);
-    background: var(--color-white-5);
-    border: 1px solid var(--color-white-10);
-    color: var(--color-text-muted);
-  }
-
-  .works-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: var(--space-lg);
-  }
-
-  .work-thumb {
-    width: 100%;
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-sm);
-  }
-
-  .work-metrics {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #3898ec;
-    margin-bottom: 0.5rem;
-  }
-
-  .marquee-item {
-    padding: 0 2rem;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.25rem;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    opacity: 0.6;
-  }
-</style>
-
-<BaseLayout seo={seo} lang={locale}>
-  <main class="page-home">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-glow"></div>
-      
-      <div class="badge-tag">
-        <span>✨ Next-Gen AI Creative Studio</span>
-      </div>
-
-      <h1 class="hero-title">
-        Transforming Visions Into <span class="gradient-text">Cinematic AI Realities</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        GUAI Studio produces high-end GenAI commercial ads, 3D Virtual KOLs, and futuristic visual effects for global brands.
-      </p>
-
-      <div class="hero-cta">
-        <Button href="/en/services" variant="primary">Explore Services</Button>
-        <Button href="/en/work/kakao-wcopilot-ai-campaign" variant="secondary">Watch 2026 Showreel</Button>
-      </div>
-
-      <!-- Showreel Video Preview -->
-      <div class="showreel-container">
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop" alt="GUAI Studio Showreel" class="showreel-bg" />
-        <div class="showreel-overlay">
-          <div class="play-btn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+<BaseLayout
+  lang={locale}
+  seo={{
+    metaTitle: "GuAI Studio - AI Content Creation",
+    metaDescription: "GuAI Studio provides powerful content creation solutions powered by AI."
+  }}
+>
+  <!-- Hero Section -->
+  <div data-w-id="bd1cbc60-077b-0eeb-98c4-c170d090ec19" class="home-1-section">
+    <div class="parallax-video-banner">
+      <figure id="BG-video" class="home-1-video w-node-bd1cbc60-077b-0eeb-98c4-c170d090ec1d-50f20c2b w-background-video w-background-video-atom">
+        <video autoplay loop muted playsinline style={`background-image:url("${bannerPoster}")`} data-object-fit="cover">
+          <source src={bannerVideo} />
+        </video>
+        <div class="banner-video-ov"></div>
+      </figure>
+    </div>
+    <div id="w-node-bd1cbc60-077b-0eeb-98c4-c170d090ec1f-50f20c2b" class="video-ov-banner">
+      <div class="base-container">
+        <div class="home-hero-content">
+          <div class="home-1-hero-title">
+            <h1 data-w-id="44e490e8-94df-d6fc-c177-03801ee8f206" style="opacity:0" class="title-home-1">Your video world</h1>
+            <p data-w-id="30ca54f6-73ed-1f90-e7e1-36feec46e296" style="opacity:0" class="banner-long-description">
+              Welcome to GuAI Studio, the ultimate platform designed to elevate your entertainment experience.
+            </p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Tech Stack Marquee -->
-    <div style="padding: var(--space-md) 0; border-y: 1px solid var(--color-white-10); background: var(--color-surface);">
-      <Marquee speed="25s">
-        {techStack.map(item => (
-          <span class="marquee-item">• {item}</span>
-        ))}
-      </Marquee>
     </div>
+  </div>
 
-    <!-- Featured Services Section -->
-    <Section id="services">
-      <div class="section-header">
-        <h2 class="section-title">Breakthrough AI Services</h2>
-        <p class="section-desc">End-to-end solutions from GenAI video production to 3D Virtual Human creation.</p>
-      </div>
-
-      <div class="services-grid">
-        {services.map((service: any) => (
-          <Card>
-            <div class="service-card-inner">
-              <h3 style="font-size: 1.3rem; margin-bottom: 0.75rem;">{service.attributes?.title}</h3>
-              <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">{service.attributes?.description}</p>
-              
-              {service.attributes?.tags && (
-                <div class="service-tags">
-                  {service.attributes.tags.map((tag: string) => (
-                    <span class="tag-pill">{tag}</span>
-                  ))}
-                </div>
-              )}
+  <!-- Services Section -->
+  <section id="Our-Benefits" class="section">
+    <div class="grid-wrapper">
+      <div id="w-node-_6eed7597-876c-9219-30fa-00dd96ea70fd-50f20c2b" data-w-id="6eed7597-876c-9219-30fa-00dd96ea70fd" class="four-column">
+        <h6 class="h6-subtitle">/Our Services</h6>
+        <div id="w-node-_295f2ac4-6769-314c-6f13-d8c57377d109-50f20c2b" class="flex-container">
+          <div class="about-us-left-con">
+            <div class="left-info">
+              <div class="text-animation-wrapper">
+                <h2 data-w-id="295f2ac4-6769-314c-6f13-d8c57377d10f" style="opacity:0" class="text-animation">all your video content needs! Let's create!</h2>
+              </div>
             </div>
-          </Card>
-        ))}
+            <div data-w-id="295f2ac4-6769-314c-6f13-d8c57377d111" style="opacity:0" class="right-arrow-wrap">
+              <div class="load-3">
+                <a href="#recent-work" class="btn-circle w-inline-block">
+                  <div class="clip">
+                    <div class="button-icon"><img src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp" loading="lazy" alt="Project icon" class="icon-bottom"></div>
+                    <div class="button-icon button-icon-top"><img src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp" loading="lazy" alt="Project icon" class="icon-bottom"></div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="advantages-wrap">
+            <div data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11a" style="width:0%" class="top-line-advantages"></div>
+            <div data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11b" style="opacity:0" class="advantages-list">
+              {services.slice(0, 3).map((service) => (
+                <a href={`/en/services/${service.slug}`} class="mini-video-lightbox w-inline-block">
+                  <div class="methods-container">
+                    <div class="service-video-wrap">
+                      <div class="video-services w-background-video w-background-video-atom">
+                        <video autoplay loop muted playsinline style={`background-image:url("${service.featured_image?.url || bannerPoster}")`} data-object-fit="cover">
+                          {service.featured_image?.url && <source src={service.featured_image.url} />}
+                        </video>
+                      </div>
+                    </div>
+                    <div class="metods-content-card">
+                      <div class="services-top">
+                        <h4 class="methods-title">{service.title}</h4>
+                      </div>
+                      <p class="methods-text">{service.short_description}<br></p>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-    </Section>
+    </div>
+  </section>
 
-    <!-- Featured Works Section -->
-    <Section id="works">
-      <div class="section-header">
-        <h2 class="section-title">Selected Works</h2>
-        <p class="section-desc">Explore our flagship AI commercial campaigns and creative productions.</p>
+  <!-- Works Section -->
+  <section id="recent-work" class="section without-top-spacing">
+    <div class="best-recent-work-wrapper">
+      <div data-w-id="41adf324-56a4-046a-b606-9aedb502ab91" style="opacity:0" class="recent-work-grid">
+        <div id="w-node-_41adf324-56a4-046a-b606-9aedb502ab92-50f20c2b" class="sticky-image-bar">
+          <div id="w-node-_41adf324-56a4-046a-b606-9aedb502ab93-50f20c2b" class="sticky-image-box">
+            <div class="sticky-image">
+              <div data-w-id="1a820061-e62d-316c-d03a-565301540620" style="display:flex" class="column-animations">
+                <div data-ix="color-bar-1" style="height:100%" class="top-color"></div>
+              </div>
+              {caseStudies.slice(0, 3).map((work, index) => (
+                <div class={`sticky-image-wrapper ${index === 0 ? 'image-three' : index === 1 ? 'image-two' : 'image-one'}`}>
+                  <div class="best-video-work w-background-video w-background-video-atom">
+                    <video autoplay loop muted playsinline style={`background-image:url("${work.thumbnail?.url || bannerPoster}")`} data-object-fit="cover">
+                      {work.thumbnail?.url && <source src={work.thumbnail.url} />}
+                    </video>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div id="w-node-_41adf324-56a4-046a-b606-9aedb502aba3-50f20c2b" class="sticky-box-list">
+          {caseStudies.slice(0, 3).map((work, index) => (
+            <div class="intro-box">
+              <div class="stacked-info">
+                <div class="stacked-info-wrap">
+                  <div class="top-title-con">
+                    <h6 class="best-work">/Best recent work</h6>
+                    <h2 class="best-work-title">{work.title}</h2>
+                  </div>
+                  <div class="mobile-intro-box-image">
+                    <div class={`sticky-image-wrapper ${index === 0 ? 'image-three' : index === 1 ? 'image-two' : 'image-one'}`}>
+                      <div class="best-video-work w-background-video w-background-video-atom">
+                        <video autoplay loop muted playsinline style={`background-image:url("${work.thumbnail?.url || bannerPoster}")`} data-object-fit="cover">
+                          {work.thumbnail?.url && <source src={work.thumbnail.url} />}
+                        </video>
+                      </div>
+                      <a href={`/en/work/${work.slug}`} class="best-work-link-wrap w-inline-block">
+                        <div class="view-link-best-work">
+                          <h6 class="view-more">View</h6>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <p class="services-description">{work.summary}</p>
+                </div>
+                <div class="transparent-btn-wrapper">
+                  <a href={`/en/work/${work.slug}`} class="button-transparent w-inline-block">
+                    <div class="clip">
+                      <div class="btn-banner-text"><div class="btn-title-text">Learn More</div></div>
+                      <div class="btn-banner-text button-text-bottom"><div class="btn-title-text">Learn More</div></div>
+                    </div>
+                    <div class="clip">
+                      <div class="button-icon"><img src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp" loading="lazy" alt="Project icon" class="icon-top"></div>
+                      <div class="button-icon button-icon-bottom"><img src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp" loading="lazy" alt="Project icon" class="icon-top"></div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="works-grid">
-        {caseStudies.map((work: any) => (
-          <Card>
-            {work.attributes?.image && (
-              <img src={work.attributes.image} alt={work.attributes.title} class="work-thumb" />
-            )}
-            {work.attributes?.metrics && (
-              <span class="work-metrics">{work.attributes.metrics}</span>
-            )}
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">{work.attributes?.title}</h3>
-            <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem;">{work.attributes?.description}</p>
-            <Button href={`/en/work/${work.attributes?.slug}`} variant="ghost">View Case Study →</Button>
-          </Card>
-        ))}
+  <!-- Final CTA Video Section -->
+  <div data-w-id="92dba6dd-f1b4-079e-312a-4872224e3139" class="video-section">
+    <div class="video-large w-background-video w-background-video-atom">
+      <video autoplay loop muted playsinline style={`background-image:url("https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg")`} data-object-fit="cover">
+        <source src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4" />
+      </video>
+      <div class="img-overlay">
+        <div class="base-video-container">
+          <h2 data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d933" style="opacity:0" class="video-info-content">Get ready to go on an amazing adventure!<br></h2>
+          <div id="w-node-bc01e66f-1ae7-85fd-6d81-f7f02352d939-50f20c2b" data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d939" style="opacity:0" class="hero-video-wrapper-2">
+            <div class="vertical-video-line top"></div>
+            <a href="/en/contact" class="video-button w-inline-block" style="text-decoration: none;">
+              <div class="play-button-icon-2" style="font-family: inherit; font-size: 1rem; width: auto; padding: 0 30px;">Contact Us</div>
+            </a>
+            <div class="vertical-video-line bottom-max"></div>
+          </div>
+        </div>
       </div>
-    </Section>
-  </main>
+      <div data-w-id="56bab206-c8b9-5c67-8e2a-038b0cc9f8b9" style="display:flex" class="column-animations">
+        <div data-ix="color-bar-1" style="height:100%" class="top-color"></div>
+      </div>
+    </div>
+  </div>
+
 </BaseLayout>

@@ -1,321 +1,1644 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/ui/Section.astro';
-import Card from '../components/ui/Card.astro';
-import Button from '../components/ui/Button.astro';
-import Marquee from '../components/advanced/Marquee.astro';
 import { getServices, getCaseStudies } from '../lib/strapi-client';
 
 const locale = 'vi';
 const services = await getServices(locale);
 const caseStudies = await getCaseStudies(locale);
 
-const seo = {
-  title: 'GUAI Studio | Studio Công Nghệ AI Đột Phá',
-  description: 'Studio tiên phong sáng tạo Video TVC AI, Virtual KOL và Kỹ thảo kỹ thuật số tại Việt Nam.',
-};
-
-const techStack = [
-  "GOOGLE VEO 3.1", "MIDJOURNEY V6", "RUNWAY GEN-3", "FLUX.1", 
-  "STABLE DIFFUSION", "ELEVENLABS", "UNREAL ENGINE 5", "BLENDER 3D"
-];
+const bannerVideo = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4";
+const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg";
 ---
 
-<style>
-  .hero-section {
-    position: relative;
-    padding-top: 140px;
-    padding-bottom: var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(56, 152, 236, 0.25) 0%, rgba(168, 85, 247, 0.15) 50%, transparent 70%);
-    filter: blur(80px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .badge-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    border-radius: var(--radius-full);
-    background: var(--color-white-5);
-    border: 1px solid var(--color-white-15, rgba(255, 255, 255, 0.15));
-    color: var(--color-accent);
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-    backdrop-filter: blur(12px);
-    z-index: 1;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    max-width: 900px;
-    margin-bottom: var(--space-md);
-    z-index: 1;
-  }
-
-  .hero-title .gradient-text {
-    background: linear-gradient(135deg, #ffffff 30%, #3898ec 70%, #a855f7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: var(--color-text-muted);
-    max-width: 680px;
-    margin-bottom: var(--space-lg);
-    line-height: 1.6;
-    z-index: 1;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    z-index: 1;
-    margin-bottom: var(--space-xl);
-  }
-
-  .showreel-container {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    aspect-ratio: 16/9;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--color-white-15, rgba(255, 255, 255, 0.15));
-    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
-    background: var(--color-surface);
-    z-index: 1;
-  }
-
-  .showreel-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7);
-  }
-
-  .showreel-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
-  }
-
-  .play-btn {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-  }
-
-  .play-btn:hover {
-    transform: scale(1.1);
-    background: var(--color-accent);
-    box-shadow: 0 0 30px var(--color-accent);
-  }
-
-  .section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto var(--space-xl);
-  }
-
-  .section-title {
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    margin-bottom: var(--space-xs);
-  }
-
-  .section-desc {
-    color: var(--color-text-muted);
-    font-size: 1.1rem;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-md);
-  }
-
-  .service-card-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .service-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: auto;
-    padding-top: var(--space-md);
-  }
-
-  .tag-pill {
-    font-size: 0.75rem;
-    padding: 3px 8px;
-    border-radius: var(--radius-sm);
-    background: var(--color-white-5);
-    border: 1px solid var(--color-white-10);
-    color: var(--color-text-muted);
-  }
-
-  .works-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: var(--space-lg);
-  }
-
-  .work-thumb {
-    width: 100%;
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-sm);
-  }
-
-  .work-metrics {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #3898ec;
-    margin-bottom: 0.5rem;
-  }
-
-  .marquee-item {
-    padding: 0 2rem;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.25rem;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    opacity: 0.6;
-  }
-</style>
-
-<BaseLayout seo={seo} lang={locale}>
-  <main class="page-home">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-glow"></div>
-      
-      <div class="badge-tag">
-        <span>✨ Kỷ Nguyên Mới Cho Sáng Tạo AI</span>
+<BaseLayout
+  lang={locale}
+  seo={{
+    metaTitle: "GuAI Studio - Sáng tạo nội dung với AI",
+    metaDescription: "GuAI Studio cung cấp các giải pháp sáng tạo nội dung mạnh mẽ dựa trên công nghệ AI."
+  }}
+>
+<div
+      data-w-id="bd1cbc60-077b-0eeb-98c4-c170d090ec19"
+      class="home-1-section"
+    >
+      <div class="parallax-video-banner">
+        <figure
+          data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg"
+          data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.webm"
+          data-autoplay="true"
+          data-loop="true"
+          data-wf-ignore="true"
+          id="BG-video"
+          class="home-1-video w-node-bd1cbc60-077b-0eeb-98c4-c170d090ec1d-50f20c2b w-background-video w-background-video-atom"
+        >
+          <video
+            id="bd1cbc60-077b-0eeb-98c4-c170d090ec1d-video"
+            autoplay=""
+            loop=""
+            style="
+              background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg&quot;);
+            "
+            muted=""
+            playsinline=""
+            data-wf-ignore="true"
+            data-object-fit="cover"
+          >
+            <source
+              src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4"
+              data-wf-ignore="true"
+            />
+            <source
+              src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.webm"
+              data-wf-ignore="true"
+            />
+          </video>
+          <div class="banner-video-ov"></div>
+        </figure>
       </div>
-
-      <h1 class="hero-title">
-        Biến Mọi Ý Tưởng Thành <span class="gradient-text">Hiện Thực Điền Ảnh Với AI</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        GUAI Studio tiên phong sản xuất TVC quảng cáo AI, thiết kế Virtual KOL 3D và xây dựng nội dung truyền thông đỉnh cao cho thương hiệu hàng đầu.
-      </p>
-
-      <div class="hero-cta">
-        <Button href="/services" variant="primary">Khám Phá Dịch Vụ</Button>
-        <Button href="/work/kakao-wcopilot-ai-campaign" variant="secondary">Xem Showreel 2026</Button>
+      <div
+        id="w-node-bd1cbc60-077b-0eeb-98c4-c170d090ec1f-50f20c2b"
+        class="video-ov-banner"
+      >
+        <div class="base-container">
+          <div class="home-hero-content">
+            <div class="home-1-hero-title">
+              <h1
+                data-w-id="44e490e8-94df-d6fc-c177-03801ee8f206"
+                style="opacity: 0"
+                class="title-home-1"
+              >
+                Your video world
+              </h1>
+              <p
+                data-w-id="30ca54f6-73ed-1f90-e7e1-36feec46e296"
+                style="opacity: 0"
+                class="banner-long-description"
+              >
+                Welcome to Kakao, the ultimate video streaming platform designed
+                to elevate your entertainment experience. Enjoy the show!
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <!-- Showreel Video Preview -->
-      <div class="showreel-container">
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop" alt="GUAI Studio Showreel" class="showreel-bg" />
-        <div class="showreel-overlay">
-          <div class="play-btn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <section id="Our-Benefits" class="section">
+      <div class="grid-wrapper">
+        <div
+          id="w-node-_6eed7597-876c-9219-30fa-00dd96ea70fd-50f20c2b"
+          data-w-id="6eed7597-876c-9219-30fa-00dd96ea70fd"
+          class="four-column"
+        >
+          <h6 class="h6-subtitle">/Our Services</h6>
+          <div
+            id="w-node-_295f2ac4-6769-314c-6f13-d8c57377d109-50f20c2b"
+            class="flex-container"
+          >
+            <div class="about-us-left-con">
+              <div class="left-info">
+                <div class="text-animation-wrapper">
+                  <h2
+                    data-w-id="295f2ac4-6769-314c-6f13-d8c57377d10f"
+                    style="opacity: 0"
+                    class="text-animation"
+                  >
+                    all your video content needs! Let&#x27;s create!
+                  </h2>
+                </div>
+              </div>
+              <div
+                data-w-id="295f2ac4-6769-314c-6f13-d8c57377d111"
+                style="opacity: 0"
+                class="right-arrow-wrap"
+              >
+                <div class="load-3">
+                  <a href="#recent-work" class="btn-circle w-inline-block"
+                    ><div class="clip">
+                      <div class="button-icon">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-bottom"
+                        />
+                      </div>
+                      <div class="button-icon button-icon-top">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-bottom"
+                        />
+                      </div></div
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="advantages-wrap">
+              <div
+                data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11a"
+                style="width: 0%"
+                class="top-line-advantages"
+              ></div>
+              <div
+                data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11b"
+                style="opacity: 0"
+                class="advantages-list"
+              >
+                <a
+                  href="#"
+                  id="w-node-df6ce8cb-439e-de31-1da6-3751b435b23a-50f20c2b"
+                  class="mini-video-lightbox w-inline-block w-lightbox"
+                  ><div
+                    data-w-id="295f2ac4-6769-314c-6f13-d8c57377d11c"
+                    class="methods-container"
+                  >
+                    <div class="service-video-wrap">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="video-services w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="3e26340e-9c1b-827c-c665-659d44a063af-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                      </div>
+                    </div>
+                    <div class="metods-content-card">
+                      <div class="services-top">
+                        <h4 class="methods-title">{services[0]?.title}</h4>
+                      </div>
+                      <p class="methods-text">
+                        {services[0]?.short_description || services[0]?.description}<br />
+                      </p>
+                    </div>
+                  </div>
+                  <script type="application/json" class="w-json">
+                    {
+                      "items": [
+                        {
+                          "url": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "originalUrl": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "width": 940,
+                          "height": 528,
+                          "thumbnailUrl": "https://i.ytimg.com/vi/5G2OlPQRSik/hqdefault.jpg",
+                          "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2F5G2OlPQRSik%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5G2OlPQRSik&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2F5G2OlPQRSik%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube\" width=\"940\" height=\"528\" scrolling=\"no\" title=\"YouTube embed\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen=\"true\"></iframe>",
+                          "type": "video"
+                        }
+                      ],
+                      "group": ""
+                    }
+                  </script></a
+                ><a
+                  href="#"
+                  id="w-node-_001034bc-a625-d06b-8bef-c1341427cf02-50f20c2b"
+                  class="mini-video-lightbox w-inline-block w-lightbox"
+                  ><div class="methods-container">
+                    <div class="metods-content-card">
+                      <div class="services-top">
+                        <h4 class="methods-title">{services[1]?.title}</h4>
+                      </div>
+                      <p class="methods-text">
+                        {services[1]?.short_description || services[1]?.description}<br />
+                      </p>
+                    </div>
+                    <div class="service-video-wrap">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="video-services w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="a38ddbd0-58bb-6f16-47d8-b5809c9111bc-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                  <script type="application/json" class="w-json">
+                    {
+                      "items": [
+                        {
+                          "url": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "originalUrl": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "width": 940,
+                          "height": 528,
+                          "thumbnailUrl": "https://i.ytimg.com/vi/5G2OlPQRSik/hqdefault.jpg",
+                          "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2F5G2OlPQRSik%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5G2OlPQRSik&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2F5G2OlPQRSik%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube\" width=\"940\" height=\"528\" scrolling=\"no\" title=\"YouTube embed\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen=\"true\"></iframe>",
+                          "type": "video"
+                        }
+                      ],
+                      "group": ""
+                    }
+                  </script></a
+                ><a
+                  href="#"
+                  id="w-node-_4b42da0d-52b6-b48d-9644-74c6d7a51ccc-50f20c2b"
+                  class="mini-video-lightbox w-inline-block w-lightbox"
+                  ><div class="methods-container">
+                    <div class="metods-content-card">
+                      <div class="services-top">
+                        <h4 class="methods-title">{services[2]?.title}</h4>
+                      </div>
+                      <p class="methods-text">
+                        {services[2]?.short_description || services[2]?.description}<br />
+                      </p>
+                    </div>
+                    <div class="service-video-wrap">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="video-services w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="976650fc-fdb0-b8e4-1162-d618140e5ee1-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                  <script type="application/json" class="w-json">
+                    {
+                      "items": [
+                        {
+                          "url": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "originalUrl": "https://www.youtube.com/watch?v=5G2OlPQRSik",
+                          "width": 940,
+                          "height": 528,
+                          "thumbnailUrl": "https://i.ytimg.com/vi/5G2OlPQRSik/hqdefault.jpg",
+                          "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2F5G2OlPQRSik%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5G2OlPQRSik&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2F5G2OlPQRSik%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube\" width=\"940\" height=\"528\" scrolling=\"no\" title=\"YouTube embed\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen=\"true\"></iframe>",
+                          "type": "video"
+                        }
+                      ],
+                      "group": ""
+                    }
+                  </script></a
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- Tech Stack Marquee -->
-    <div style="padding: var(--space-md) 0; border-y: 1px solid var(--color-white-10); background: var(--color-surface);">
-      <Marquee speed="25s">
-        {techStack.map(item => (
-          <span class="marquee-item">• {item}</span>
-        ))}
-      </Marquee>
-    </div>
-
-    <!-- Featured Services Section -->
-    <Section id="services">
-      <div class="section-header">
-        <h2 class="section-title">Dịch Vụ AI Đột Phá</h2>
-        <p class="section-desc">Giải pháp toàn diện từ sản xuất video, tạo dựng nhân vật ảo đến hiệu ứng thị giác tương lai.</p>
-      </div>
-
-      <div class="services-grid">
-        {services.map((service: any) => (
-          <Card>
-            <div class="service-card-inner">
-              <h3 style="font-size: 1.3rem; margin-bottom: 0.75rem;">{service.attributes?.title}</h3>
-              <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">{service.attributes?.description}</p>
-              
-              {service.attributes?.tags && (
-                <div class="service-tags">
-                  {service.attributes.tags.map((tag: string) => (
-                    <span class="tag-pill">{tag}</span>
-                  ))}
+    <section id="recent-work" class="section without-top-spacing">
+      <div class="best-recent-work-wrapper">
+        <div
+          data-w-id="41adf324-56a4-046a-b606-9aedb502ab91"
+          style="opacity: 0"
+          class="recent-work-grid"
+        >
+          <div
+            id="w-node-_41adf324-56a4-046a-b606-9aedb502ab92-50f20c2b"
+            class="sticky-image-bar"
+          >
+            <div
+              id="w-node-_41adf324-56a4-046a-b606-9aedb502ab93-50f20c2b"
+              class="sticky-image-box"
+            >
+              <div class="sticky-image">
+                <div
+                  data-w-id="1a820061-e62d-316c-d03a-565301540620"
+                  style="display: flex"
+                  class="column-animations"
+                >
+                  <div
+                    data-ix="color-bar-1"
+                    style="height: 100%"
+                    class="top-color"
+                  ></div>
                 </div>
-              )}
+                <div class="sticky-image-wrapper image-three">
+                  <article
+                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg"
+                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm"
+                    data-autoplay="true"
+                    data-loop="true"
+                    data-wf-ignore="true"
+                    class="best-video-work w-background-video w-background-video-atom"
+                  >
+                    <video
+                      id="02c5be9f-5564-2036-7e48-e00b9be6e76f-video"
+                      autoplay=""
+                      loop=""
+                      style="
+                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg&quot;);
+                      "
+                      muted=""
+                      playsinline=""
+                      data-wf-ignore="true"
+                      data-object-fit="cover"
+                    >
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4"
+                        data-wf-ignore="true"
+                      />
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm"
+                        data-wf-ignore="true"
+                      />
+                    </video>
+                  </article>
+                </div>
+                <div class="sticky-image-wrapper image-two">
+                  <div
+                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg"
+                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm"
+                    data-autoplay="true"
+                    data-loop="true"
+                    data-wf-ignore="true"
+                    class="best-video-work w-background-video w-background-video-atom"
+                  >
+                    <video
+                      id="e28611ca-9fb7-3791-b8bc-16d086a20c77-video"
+                      autoplay=""
+                      loop=""
+                      style="
+                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg&quot;);
+                      "
+                      muted=""
+                      playsinline=""
+                      data-wf-ignore="true"
+                      data-object-fit="cover"
+                    >
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4"
+                        data-wf-ignore="true"
+                      />
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm"
+                        data-wf-ignore="true"
+                      />
+                    </video>
+                  </div>
+                </div>
+                <div class="sticky-image-wrapper image-one">
+                  <div
+                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg"
+                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm"
+                    data-autoplay="true"
+                    data-loop="true"
+                    data-wf-ignore="true"
+                    class="best-video-work w-background-video w-background-video-atom"
+                  >
+                    <video
+                      id="9745a9ad-b0ae-6251-72d7-3c2ec23246d2-video"
+                      autoplay=""
+                      loop=""
+                      style="
+                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg&quot;);
+                      "
+                      muted=""
+                      playsinline=""
+                      data-wf-ignore="true"
+                      data-object-fit="cover"
+                    >
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4"
+                        data-wf-ignore="true"
+                      />
+                      <source
+                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm"
+                        data-wf-ignore="true"
+                      />
+                    </video>
+                  </div>
+                </div>
+              </div>
             </div>
-          </Card>
-        ))}
+          </div>
+          <div
+            id="w-node-_41adf324-56a4-046a-b606-9aedb502aba3-50f20c2b"
+            class="sticky-box-list"
+          >
+            <div class="intro-box">
+              <div class="stacked-info">
+                <div class="stacked-info-wrap">
+                  <div class="top-title-con">
+                    <h6 class="best-work">/Best recent work</h6>
+                    <h2 class="best-work-title">
+                      {caseStudies[0]?.title}
+                    </h2>
+                  </div>
+                  <div class="mobile-intro-box-image">
+                    <div class="sticky-image-wrapper image-one">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="best-video-work w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="8e15166e-6d7c-4d3c-b5b2-ceaceecae832-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                        <div
+                          data-w-id="6ac90aad-272f-5970-2e14-992b9197710f"
+                          style="display: flex"
+                          class="column-animations"
+                        >
+                          <div
+                            data-ix="color-bar-1"
+                            style="height: 100%"
+                            class="top-color"
+                          ></div>
+                        </div>
+                      </div>
+                      <a
+                        href="/works-1"
+                        class="best-work-link-wrap w-inline-block"
+                        ><div class="view-link-best-work">
+                          <h6 class="view-more">View</h6>
+                        </div></a
+                      >
+                    </div>
+                  </div>
+                  <p
+                    id="w-node-_41adf324-56a4-046a-b606-9aedb502abae-50f20c2b"
+                    class="services-description"
+                  >
+                    Step into a captivating realm of digital creativity, where
+                    video artistry knows no bounds. Welcome to Kakao, your
+                    gateway to a mesmerizing collection of video masterpieces.
+                  </p>
+                </div>
+                <div class="transparent-btn-wrapper">
+                  <a href="/works-1" class="button-transparent w-inline-block"
+                    ><div class="clip">
+                      <div class="btn-banner-text">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                      <div class="btn-banner-text button-text-bottom">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                    </div>
+                    <div class="clip">
+                      <div class="button-icon">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div>
+                      <div class="button-icon button-icon-bottom">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div></div
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="intro-box">
+              <div class="stacked-info">
+                <div class="stacked-info-wrap">
+                  <div class="top-title-con">
+                    <h6 class="best-work">/Best recent work</h6>
+                    <h2 class="best-work-title">
+                      {caseStudies[1]?.title}
+                    </h2>
+                  </div>
+                  <div class="mobile-intro-box-image">
+                    <div class="sticky-image-wrapper image-two">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="best-video-work w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="51e864f6-7fc4-b27c-01f6-3f9d1c0c28b2-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                        <div
+                          data-w-id="51e864f6-7fc4-b27c-01f6-3f9d1c0c28b3"
+                          style="display: flex"
+                          class="column-animations"
+                        >
+                          <div
+                            data-ix="color-bar-1"
+                            style="height: 100%"
+                            class="top-color"
+                          ></div>
+                        </div>
+                      </div>
+                      <a
+                        data-w-id="0cadff4d-d9a5-3e11-72df-a147b5ebb332"
+                        href="/works-1"
+                        class="best-work-link-wrap w-inline-block"
+                        ><div class="view-link-best-work">
+                          <h6 class="view-more">View</h6>
+                        </div></a
+                      >
+                    </div>
+                  </div>
+                  <p
+                    id="w-node-_41adf324-56a4-046a-b606-9aedb502abbd-50f20c2b"
+                    class="services-description"
+                  >
+                    Step into a captivating realm of digital creativity, where
+                    video artistry knows no bounds. Welcome to Kakao, your
+                    gateway to a mesmerizing collection of video masterpieces.
+                  </p>
+                </div>
+                <div class="transparent-btn-wrapper">
+                  <a href="/works-1" class="button-transparent w-inline-block"
+                    ><div class="clip">
+                      <div class="btn-banner-text">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                      <div class="btn-banner-text button-text-bottom">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                    </div>
+                    <div class="clip">
+                      <div class="button-icon">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div>
+                      <div class="button-icon button-icon-bottom">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div></div
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="intro-box">
+              <div class="stacked-info">
+                <div class="stacked-info-wrap">
+                  <div class="top-title-con">
+                    <h6 class="best-work">/Best recent work</h6>
+                    <h2 class="best-work-title">
+                      {caseStudies[2]?.title}
+                    </h2>
+                  </div>
+                  <div class="mobile-intro-box-image">
+                    <div class="sticky-image-wrapper image-three">
+                      <div
+                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-poster-00001.jpg"
+                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.webm"
+                        data-autoplay="true"
+                        data-loop="true"
+                        data-wf-ignore="true"
+                        class="best-video-work w-background-video w-background-video-atom"
+                      >
+                        <video
+                          id="90e6484f-1c6f-3102-89da-51e7ed6bc912-video"
+                          autoplay=""
+                          loop=""
+                          style="
+                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-poster-00001.jpg&quot;);
+                          "
+                          muted=""
+                          playsinline=""
+                          data-wf-ignore="true"
+                          data-object-fit="cover"
+                        >
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.mp4"
+                            data-wf-ignore="true"
+                          />
+                          <source
+                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.webm"
+                            data-wf-ignore="true"
+                          />
+                        </video>
+                        <div
+                          data-w-id="90e6484f-1c6f-3102-89da-51e7ed6bc913"
+                          style="display: flex"
+                          class="column-animations"
+                        >
+                          <div
+                            data-ix="color-bar-1"
+                            style="height: 100%"
+                            class="top-color"
+                          ></div>
+                        </div>
+                      </div>
+                      <a
+                        href="/works-1"
+                        class="best-work-link-wrap w-inline-block"
+                        ><div class="view-link-best-work">
+                          <h6 class="view-more">View</h6>
+                        </div></a
+                      >
+                    </div>
+                  </div>
+                  <p
+                    id="w-node-_41adf324-56a4-046a-b606-9aedb502abcc-50f20c2b"
+                    class="services-description"
+                  >
+                    Step into a captivating realm of digital creativity, where
+                    video artistry knows no bounds. Welcome to Kakao, your
+                    gateway to a mesmerizing collection of video masterpieces.
+                  </p>
+                </div>
+                <div class="transparent-btn-wrapper">
+                  <a href="/works-1" class="button-transparent w-inline-block"
+                    ><div class="clip">
+                      <div class="btn-banner-text">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                      <div class="btn-banner-text button-text-bottom">
+                        <div class="btn-title-text">Learn More</div>
+                      </div>
+                    </div>
+                    <div class="clip">
+                      <div class="button-icon">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div>
+                      <div class="button-icon button-icon-bottom">
+                        <img
+                          src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp"
+                          loading="lazy"
+                          alt="Project icon"
+                          class="icon-top"
+                        />
+                      </div></div
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </Section>
-
-    <!-- Featured Works Section -->
-    <Section id="works" class="section-dark">
-      <div class="section-header">
-        <h2 class="section-title">Dự Án Tiêu Biểu</h2>
-        <p class="section-desc">Các sản phẩm quảng cáo và chiến dịch AI đột phá chúng tôi đã thực hiện.</p>
+    </section>
+    <div data-w-id="92dba6dd-f1b4-079e-312a-4872224e3139" class="video-section">
+      <div
+        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg"
+        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.webm"
+        data-autoplay="true"
+        data-loop="true"
+        data-wf-ignore="true"
+        class="video-large w-background-video w-background-video-atom"
+      >
+        <video
+          id="092f1ee7-344c-69f4-9fa1-2314c15c1bc4-video"
+          autoplay=""
+          loop=""
+          style="
+            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg&quot;);
+          "
+          muted=""
+          playsinline=""
+          data-wf-ignore="true"
+          data-object-fit="cover"
+        >
+          <source
+            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4"
+            data-wf-ignore="true"
+          />
+          <source
+            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.webm"
+            data-wf-ignore="true"
+          />
+        </video>
+        <div class="img-overlay">
+          <div class="base-video-container">
+            <h2
+              data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d933"
+              style="opacity: 0"
+              class="video-info-content"
+            >
+              Get ready to go on an amazing video watching adventure!<br />
+            </h2>
+            <h2
+              data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d936"
+              style="opacity: 0"
+              class="video-content-tablet"
+            >
+              Your amazing video watching adventure!<br />
+            </h2>
+            <div
+              id="w-node-bc01e66f-1ae7-85fd-6d81-f7f02352d939-50f20c2b"
+              data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d939"
+              style="opacity: 0"
+              class="hero-video-wrapper-2"
+            >
+              <div class="vertical-video-line top"></div>
+              <a
+                href="#"
+                data-w-id="bc01e66f-1ae7-85fd-6d81-f7f02352d93b"
+                class="best-video-lightbox w-inline-block w-lightbox"
+                ><div class="video-button">
+                  <div
+                    style="
+                      -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
+                        rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);
+                      -moz-transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
+                        rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);
+                      -ms-transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
+                        rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);
+                      transform: translate3d(0, 0, 0) scale3d(1, 1, 1)
+                        rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);
+                    "
+                    class="play-button-icon-2"
+                  >
+                    
+                  </div>
+                </div>
+                <script type="application/json" class="w-json">
+                  {
+                    "items": [
+                      {
+                        "url": "https://www.youtube.com/watch?v=BjLCw-TxwbI",
+                        "originalUrl": "https://www.youtube.com/watch?v=BjLCw-TxwbI",
+                        "width": 940,
+                        "height": 528,
+                        "thumbnailUrl": "https://i.ytimg.com/vi/BjLCw-TxwbI/hqdefault.jpg",
+                        "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2FBjLCw-TxwbI%3Ffeature%3Doembed&display_name=YouTube&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DBjLCw-TxwbI&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2FBjLCw-TxwbI%2Fhqdefault.jpg&key=96f1f04c5f4143bcb0f2e68c87d65feb&type=text%2Fhtml&schema=youtube\" width=\"940\" height=\"528\" scrolling=\"no\" title=\"YouTube embed\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen=\"true\"></iframe>",
+                        "type": "video"
+                      }
+                    ],
+                    "group": ""
+                  }
+                </script></a
+              >
+              <div class="vertical-video-line bottom-max"></div>
+            </div>
+          </div>
+        </div>
+        <div
+          data-w-id="56bab206-c8b9-5c67-8e2a-038b0cc9f8b9"
+          style="display: flex"
+          class="column-animations"
+        >
+          <div
+            data-ix="color-bar-1"
+            style="height: 100%"
+            class="top-color"
+          ></div>
+        </div>
       </div>
-
-      <div class="works-grid">
-        {caseStudies.map((work: any) => (
-          <Card>
-            {work.attributes?.image && (
-              <img src={work.attributes.image} alt={work.attributes.title} class="work-thumb" />
-            )}
-            {work.attributes?.metrics && (
-              <span class="work-metrics">{work.attributes.metrics}</span>
-            )}
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">{work.attributes?.title}</h3>
-            <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem;">{work.attributes?.description}</p>
-            <Button href={`/work/${work.attributes?.slug}`} variant="ghost">Xem chi tiết dự án →</Button>
-          </Card>
-        ))}
+    </div>
+    <div class="page-content-wrapper">
+      <div class="top-page-content">
+        <div class="section">
+          <div class="grid-wrapper">
+            <div
+              id="w-node-_1fa657f2-2a49-ec56-894e-32eb0772da6b-50f20c2b"
+              data-w-id="1fa657f2-2a49-ec56-894e-32eb0772da6b"
+              class="four-column"
+            >
+              <div
+                id="w-node-_1fa657f2-2a49-ec56-894e-32eb0772da6c-50f20c2b"
+                data-w-id="1fa657f2-2a49-ec56-894e-32eb0772da6c"
+                style="opacity: 0"
+                class="left-sidebar"
+              >
+                <div class="work-wrap">
+                  <h6 class="h6-subtitle">/Our Work</h6>
+                </div>
+                <a
+                  href="/works-1"
+                  data-w-id="1fa657f2-2a49-ec56-894e-32eb0772da70"
+                  class="sticky-circle w-inline-block"
+                  ><div class="circle-link-text">View all</div>
+                  <div class="outline-circle-wrapper">
+                    <div
+                      id="w-node-_1fa657f2-2a49-ec56-894e-32eb0772da74-50f20c2b"
+                      class="outline-clip top"
+                    >
+                      <div class="outline-circle"></div>
+                    </div>
+                    <div
+                      id="w-node-_1fa657f2-2a49-ec56-894e-32eb0772da76-50f20c2b"
+                      class="outline-clip bottom"
+                    >
+                      <div class="outline-circle"></div>
+                    </div></div
+                ></a>
+              </div>
+              <div
+                id="w-node-_935df64f-9cae-75df-6124-3c83142f0935-50f20c2b"
+                class="our-work-wrapper"
+              >
+                <div
+                  id="w-node-_1fa657f2-2a49-ec56-894e-32eb0772da78-50f20c2b"
+                  class="work-collection-list-wrapper w-dyn-list"
+                >
+                  <div role="list" class="project-grid w-dyn-items">
+                    <div role="listitem" class="project-item w-dyn-item">
+                      <a
+                        href="/works/digital-dreamscape"
+                        class="project-image w-inline-block"
+                        ><div class="view-link">
+                          <h6 class="view-more">View</h6>
+                        </div>
+                        <div class="view-link-cover-item"></div>
+                        <div class="project-image-wrapper">
+                          <div
+                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-poster-00001.jpg"
+                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.webm"
+                            data-autoplay="true"
+                            data-loop="true"
+                            data-wf-ignore="true"
+                            class="work-bg-video w-background-video w-background-video-atom"
+                          >
+                            <video
+                              id="70d3c56f-db27-5a51-c05b-09bc16eb5cf2-video"
+                              autoplay=""
+                              loop=""
+                              style="
+                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-poster-00001.jpg&quot;);
+                              "
+                              muted=""
+                              playsinline=""
+                              data-wf-ignore="true"
+                              data-object-fit="cover"
+                            >
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.mp4"
+                                data-wf-ignore="true"
+                              />
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.webm"
+                                data-wf-ignore="true"
+                              />
+                            </video>
+                            <div
+                              data-w-id="57721d16-613a-6890-985a-83e86ef55ab1"
+                              style="display: flex"
+                              class="column-animations"
+                            >
+                              <div
+                                data-ix="color-bar-1"
+                                style="height: 100%"
+                                class="top-color"
+                              ></div>
+                            </div>
+                          </div>
+                          <div
+                            style="
+                              background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/64abe12320c8ecf9bf32c2b4_Blog%205.jpg&quot;);
+                            "
+                            class="background"
+                          ></div></div
+                      ></a>
+                      <div class="project-card-info">
+                        <div class="card-info">
+                          <a
+                            id="w-node-f983ceb0-fdcf-28dd-a644-5cbe2003f18b-50f20c2b"
+                            href="/work-categories/creative-chronicles"
+                            class="work-category-link"
+                            >Creative Chronicles</a
+                          >
+                          <div class="stacked-title">
+                            <a
+                              id="w-node-_2215db28-820d-d233-e77d-3c088f8e8b01-50f20c2b"
+                              href="/works/digital-dreamscape"
+                              class="work-title-link w-inline-block"
+                              ><h3 class="work-title">Digital Dreamscape</h3></a
+                            ><a
+                              id="w-node-_5700a51b-65a3-d80e-7016-39c82e845963-50f20c2b"
+                              href="/works/digital-dreamscape"
+                              class="underline-link w-inline-block"
+                              ><div>Learn more</div>
+                              <div class="hover-line">
+                                <div class="hover-line-fill"></div></div
+                            ></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    role="navigation"
+                    aria-label="List"
+                    class="w-pagination-wrapper pagination"
+                  ></div>
+                </div>
+                <div class="work-collection-list-wrapper w-dyn-list">
+                  <div role="list" class="project-grid w-dyn-items">
+                    <div role="listitem" class="project-item-middle w-dyn-item">
+                      <a
+                        data-w-id="fb9dc426-40a1-496f-d0e0-a31fc46a67a0"
+                        href="/works/visual-alchemy"
+                        class="project-image w-inline-block"
+                        ><div class="view-link">
+                          <h6 class="view-more">View</h6>
+                        </div>
+                        <div class="view-link-cover-item"></div>
+                        <div class="project-image-wrapper">
+                          <div
+                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-poster-00001.jpg"
+                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.webm"
+                            data-autoplay="true"
+                            data-loop="true"
+                            data-wf-ignore="true"
+                            class="work-bg-video w-background-video w-background-video-atom"
+                          >
+                            <video
+                              id="fb9dc426-40a1-496f-d0e0-a31fc46a67a6-video"
+                              autoplay=""
+                              loop=""
+                              style="
+                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-poster-00001.jpg&quot;);
+                              "
+                              muted=""
+                              playsinline=""
+                              data-wf-ignore="true"
+                              data-object-fit="cover"
+                            >
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.mp4"
+                                data-wf-ignore="true"
+                              />
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.webm"
+                                data-wf-ignore="true"
+                              />
+                            </video>
+                            <div
+                              data-w-id="78b581a4-55a2-26d6-95a1-95cac686c5bb"
+                              style="display: flex"
+                              class="column-animations"
+                            >
+                              <div
+                                data-ix="color-bar-1"
+                                style="height: 100%"
+                                class="top-color"
+                              ></div>
+                            </div>
+                          </div>
+                          <div
+                            style="background-image: none"
+                            class="background"
+                          ></div></div
+                      ></a>
+                      <div class="project-card-info">
+                        <div class="card-info">
+                          <a
+                            id="w-node-fb9dc426-40a1-496f-d0e0-a31fc46a67aa-50f20c2b"
+                            href="/work-categories/emotional-journeys"
+                            class="work-category-link"
+                            >Emotional Journeys</a
+                          >
+                          <div class="stacked-title">
+                            <a
+                              id="w-node-_0bb0f03f-8c62-be6a-d12c-94bfaaadd16e-50f20c2b"
+                              href="/works/visual-alchemy"
+                              class="work-title-link w-inline-block"
+                              ><h3 class="work-title">Visual Alchemy</h3></a
+                            ><a
+                              id="w-node-fb9dc426-40a1-496f-d0e0-a31fc46a67ad-50f20c2b"
+                              href="/works/visual-alchemy"
+                              class="underline-link w-inline-block"
+                              ><div>Learn more</div>
+                              <div class="hover-line">
+                                <div class="hover-line-fill"></div></div
+                            ></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    role="navigation"
+                    aria-label="List"
+                    class="w-pagination-wrapper pagination"
+                  ></div>
+                </div>
+                <div class="work-collection-list-wrapper w-dyn-list">
+                  <div role="list" class="project-grid w-dyn-items">
+                    <div role="listitem" class="project-item w-dyn-item">
+                      <a
+                        data-w-id="0d005b11-1760-8e3f-e30b-a777e3a28856"
+                        href="/works/motion-mosaics"
+                        class="project-image w-inline-block"
+                        ><div class="view-link">
+                          <h6 class="view-more">View</h6>
+                        </div>
+                        <div class="view-link-cover-item"></div>
+                        <div class="project-image-wrapper">
+                          <div
+                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-poster-00001.jpg"
+                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.webm"
+                            data-autoplay="true"
+                            data-loop="true"
+                            data-wf-ignore="true"
+                            class="work-bg-video w-background-video w-background-video-atom"
+                          >
+                            <video
+                              id="0d005b11-1760-8e3f-e30b-a777e3a2885c-video"
+                              autoplay=""
+                              loop=""
+                              style="
+                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-poster-00001.jpg&quot;);
+                              "
+                              muted=""
+                              playsinline=""
+                              data-wf-ignore="true"
+                              data-object-fit="cover"
+                            >
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.mp4"
+                                data-wf-ignore="true"
+                              />
+                              <source
+                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.webm"
+                                data-wf-ignore="true"
+                              />
+                            </video>
+                            <div
+                              data-w-id="8ce7ebd5-e12d-e04f-2355-6b7bc10f48dc"
+                              style="display: flex"
+                              class="column-animations"
+                            >
+                              <div
+                                data-ix="color-bar-1"
+                                style="height: 100%"
+                                class="top-color"
+                              ></div>
+                            </div>
+                          </div>
+                          <div
+                            style="
+                              background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/64abe12320c8ecf9bf32c2b4_Blog%205.jpg&quot;);
+                            "
+                            class="background"
+                          ></div></div
+                      ></a>
+                      <div class="project-card-info">
+                        <div class="card-info">
+                          <a
+                            id="w-node-_0d005b11-1760-8e3f-e30b-a777e3a28860-50f20c2b"
+                            href="/work-categories/visual-symphony"
+                            class="work-category-link"
+                            >Visual Symphony</a
+                          >
+                          <div class="stacked-title">
+                            <a
+                              id="w-node-_2f1e4f64-533f-0cf5-8967-1b8a60b133ff-50f20c2b"
+                              href="/works/motion-mosaics"
+                              class="work-title-link w-inline-block"
+                              ><h3 class="work-title">Motion Mosaics</h3></a
+                            ><a
+                              id="w-node-_0d005b11-1760-8e3f-e30b-a777e3a28863-50f20c2b"
+                              href="/works/motion-mosaics"
+                              class="underline-link w-inline-block"
+                              ><div>Learn more</div>
+                              <div class="hover-line">
+                                <div class="hover-line-fill"></div></div
+                            ></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    role="navigation"
+                    aria-label="List"
+                    class="w-pagination-wrapper pagination"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            data-w-id="4d6a2a48-5ca1-3be0-106a-b6642969b597"
+            style="width: 0%"
+            class="bottom-line-advantages"
+          ></div>
+        </div>
       </div>
-    </Section>
-  </main>
+      <div class="bottom-page-content">
+        <div class="sectiohn-scroll-headings">
+          <div
+            data-w-id="6cec96c1-27dd-c3ca-74bf-7c44a069c9d1"
+            class="scroll-headings"
+          >
+            <div class="scroll-top">
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+            </div>
+            <div class="scroll-bottom">
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+              <h2 class="stroke-title">Imagination</h2>
+              <div class="large-dot"></div>
+              <h2 class="filled-title">Video</h2>
+              <div class="large-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-w-id="8aae5442-0870-8d5f-f437-7d94d987e1c9"
+      class="section-scroll-video"
+    >
+      <div class="sticky-wrapper">
+        <div
+          data-w-id="8aae5442-0870-8d5f-f437-7d94d987e1cb"
+          style="opacity: 0"
+          class="bg-video-wrapper"
+        >
+          <div
+            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-poster-00001.jpg"
+            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-transcode.webm"
+            data-autoplay="true"
+            data-loop="true"
+            data-wf-ignore="true"
+            class="scroll-bg-video w-background-video w-background-video-atom"
+          >
+            <video
+              id="8aae5442-0870-8d5f-f437-7d94d987e1cc-video"
+              autoplay=""
+              loop=""
+              style="
+                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-poster-00001.jpg&quot;);
+              "
+              muted=""
+              playsinline=""
+              data-wf-ignore="true"
+              data-object-fit="cover"
+            >
+              <source
+                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-transcode.mp4"
+                data-wf-ignore="true"
+              />
+              <source
+                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495903766e3dd98f0fb16cb_pexels kate branch 8149564 1280x720 30fps-transcode.webm"
+                data-wf-ignore="true"
+              />
+            </video>
+            <div class="bg-video-black-bar"></div>
+            <div class="bg-video-content-wrap">
+              <div class="video-content-wrapper">
+                <div class="video-title-wrap">
+                  <div class="large-width">
+                    <h2
+                      data-w-id="a949b443-892a-eff5-d528-b47bce75350b"
+                      style="opacity: 0"
+                      class="lets-create-content"
+                    >
+                      Let&#x27;s create smile-worthy digital content
+                      together.<br />
+                    </h2>
+                  </div>
+                  <div
+                    data-w-id="a949b443-892a-eff5-d528-b47bce75350e"
+                    style="opacity: 0"
+                    class="small-width"
+                  >
+                    <p class="white-text">
+                      Get ready to unlock the power of visual storytelling and
+                      take your video journey to new heights. Join us today and
+                      let your videos shine on Kakao!
+                    </p>
+                  </div>
+                </div>
+                <div
+                  id="w-node-a949b443-892a-eff5-d528-b47bce753511-50f20c2b"
+                  class="circle-link-wrapper"
+                >
+                  <a href="/contact-us" class="circle-link w-inline-block"
+                    ><div class="button-text">Hire us!</div>
+                    <div class="circle-ov"></div>
+                    <div class="link-hover-fill"></div
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div class="video-dark-overlay"></div>
+            <div class="gradient-ov"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-news">
+      <div class="grid-wrapper">
+        <div
+          id="w-node-_59c4c094-e1d1-660b-e009-fd66a97618df-50f20c2b"
+          data-w-id="59c4c094-e1d1-660b-e009-fd66a97618df"
+          class="four-column"
+        >
+          <div
+            id="w-node-_59c4c094-e1d1-660b-e009-fd66a97618e0-50f20c2b"
+            data-w-id="59c4c094-e1d1-660b-e009-fd66a97618e0"
+            style="opacity: 0"
+            class="left-sidebar"
+          >
+            <div class="work-wrap"><h6 class="h6-subtitle">/Our NEWS</h6></div>
+            <a href="/news" class="sticky-circle w-inline-block"
+              ><div class="circle-link-text">View all</div>
+              <div class="outline-circle-wrapper">
+                <div
+                  id="w-node-_59c4c094-e1d1-660b-e009-fd66a97618e8-50f20c2b"
+                  class="outline-clip top"
+                >
+                  <div class="outline-circle"></div>
+                </div>
+                <div
+                  id="w-node-_59c4c094-e1d1-660b-e009-fd66a97618ea-50f20c2b"
+                  class="outline-clip bottom"
+                >
+                  <div class="outline-circle"></div>
+                </div></div
+            ></a>
+          </div>
+          <div
+            id="w-node-_7306fa17-44e3-f589-1a53-d4ad73a49628-50f20c2b"
+            data-w-id="7306fa17-44e3-f589-1a53-d4ad73a49628"
+            style="opacity: 0"
+            class="collection-our-blog-list-wrapper w-dyn-list"
+          >
+            <div role="list" class="news-list w-dyn-items">
+              <div role="listitem" class="collection-news w-dyn-item">
+                <a
+                  data-w-id="de30d5d7-0b00-00f4-5bce-0e9b98549f84"
+                  href="/blog-posts/measuring-video-success"
+                  class="list-news-item w-inline-block"
+                  ><h3
+                    id="w-node-_8f81a6c6-fbf3-d0d5-50f5-fe7101cd2802-50f20c2b"
+                    class="blog-clip-heading"
+                  >
+                    6.17.23
+                  </h3>
+                  <div
+                    id="w-node-de30d5d7-0b00-00f4-5bce-0e9b98549f87-50f20c2b"
+                    class="news-line"
+                  ></div>
+                  <div class="news-title-wrap">
+                    <div
+                      data-w-id="e6d22654-adaf-4ec0-4e42-4a23aa445be4"
+                      class="fixed-hover-image"
+                    >
+                      <div
+                        style="
+                          background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/649196fe9b31a591b44d0ace_Blog%202.jpg&quot;);
+                        "
+                        class="background-blog"
+                      ></div>
+                    </div>
+                    <div class="news-title">
+                      <div class="title left">
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Measuring Video Success
+                        </h3>
+                      </div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16df-50f20c2b"
+                        class="news-dot"
+                      ></div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16e0-50f20c2b"
+                        class="title right"
+                      >
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Measuring Video Success
+                        </h3>
+                      </div>
+                    </div>
+                  </div></a
+                >
+              </div>
+              <div role="listitem" class="collection-news w-dyn-item">
+                <a
+                  data-w-id="de30d5d7-0b00-00f4-5bce-0e9b98549f84"
+                  href="/blog-posts/virtual-reality-and-video"
+                  class="list-news-item w-inline-block"
+                  ><h3
+                    id="w-node-_8f81a6c6-fbf3-d0d5-50f5-fe7101cd2802-50f20c2b"
+                    class="blog-clip-heading"
+                  >
+                    6.12.23
+                  </h3>
+                  <div
+                    id="w-node-de30d5d7-0b00-00f4-5bce-0e9b98549f87-50f20c2b"
+                    class="news-line"
+                  ></div>
+                  <div class="news-title-wrap">
+                    <div
+                      data-w-id="e6d22654-adaf-4ec0-4e42-4a23aa445be4"
+                      class="fixed-hover-image"
+                    >
+                      <div
+                        style="
+                          background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/649197122f088d3de8dcd0de_Blog%201.jpg&quot;);
+                        "
+                        class="background-blog"
+                      ></div>
+                    </div>
+                    <div class="news-title">
+                      <div class="title left">
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Virtual Reality and Video
+                        </h3>
+                      </div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16df-50f20c2b"
+                        class="news-dot"
+                      ></div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16e0-50f20c2b"
+                        class="title right"
+                      >
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Virtual Reality and Video
+                        </h3>
+                      </div>
+                    </div>
+                  </div></a
+                >
+              </div>
+              <div role="listitem" class="collection-news w-dyn-item">
+                <a
+                  data-w-id="de30d5d7-0b00-00f4-5bce-0e9b98549f84"
+                  href="/blog-posts/capturing-aerial-perspectives"
+                  class="list-news-item w-inline-block"
+                  ><h3
+                    id="w-node-_8f81a6c6-fbf3-d0d5-50f5-fe7101cd2802-50f20c2b"
+                    class="blog-clip-heading"
+                  >
+                    6.8.23
+                  </h3>
+                  <div
+                    id="w-node-de30d5d7-0b00-00f4-5bce-0e9b98549f87-50f20c2b"
+                    class="news-line"
+                  ></div>
+                  <div class="news-title-wrap">
+                    <div
+                      data-w-id="e6d22654-adaf-4ec0-4e42-4a23aa445be4"
+                      class="fixed-hover-image"
+                    >
+                      <div
+                        style="
+                          background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/6491972055ece2717e968d9b_Blog%204.jpg&quot;);
+                        "
+                        class="background-blog"
+                      ></div>
+                    </div>
+                    <div class="news-title">
+                      <div class="title left">
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Capturing Aerial Perspectives
+                        </h3>
+                      </div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16df-50f20c2b"
+                        class="news-dot"
+                      ></div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16e0-50f20c2b"
+                        class="title right"
+                      >
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Capturing Aerial Perspectives
+                        </h3>
+                      </div>
+                    </div>
+                  </div></a
+                >
+              </div>
+              <div role="listitem" class="collection-news w-dyn-item">
+                <a
+                  data-w-id="de30d5d7-0b00-00f4-5bce-0e9b98549f84"
+                  href="/blog-posts/exploring-color-grading"
+                  class="list-news-item w-inline-block"
+                  ><h3
+                    id="w-node-_8f81a6c6-fbf3-d0d5-50f5-fe7101cd2802-50f20c2b"
+                    class="blog-clip-heading"
+                  >
+                    6.1.23
+                  </h3>
+                  <div
+                    id="w-node-de30d5d7-0b00-00f4-5bce-0e9b98549f87-50f20c2b"
+                    class="news-line"
+                  ></div>
+                  <div class="news-title-wrap">
+                    <div
+                      data-w-id="e6d22654-adaf-4ec0-4e42-4a23aa445be4"
+                      class="fixed-hover-image"
+                    >
+                      <div
+                        style="
+                          background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/64919733b2f3619875f940c5_Blog%205.jpg&quot;);
+                        "
+                        class="background-blog"
+                      ></div>
+                    </div>
+                    <div class="news-title">
+                      <div class="title left">
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Exploring Color Grading
+                        </h3>
+                      </div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16df-50f20c2b"
+                        class="news-dot"
+                      ></div>
+                      <div
+                        id="w-node-_493f2618-a512-3ae0-cb10-8ba0776f16e0-50f20c2b"
+                        class="title right"
+                      >
+                        <h3 id="outsmall" class="clip-blog-heading">
+                          Exploring Color Grading
+                        </h3>
+                      </div>
+                    </div>
+                  </div></a
+                >
+              </div>
+            </div>
+            <div
+              role="navigation"
+              aria-label="List"
+              class="w-pagination-wrapper"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-content-wrapper">
+      <div class="top-page-content">
+        <div class="bottom-video-section">
+          <div
+            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-poster-00001.jpg"
+            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-transcode.webm"
+            data-autoplay="true"
+            data-loop="true"
+            data-wf-ignore="true"
+            data-w-id="a214d360-cc53-ac39-fd1b-afe4b43eb27f"
+            style="opacity: 0"
+            class="light-video w-background-video w-background-video-atom"
+          >
+            <video
+              id="a214d360-cc53-ac39-fd1b-afe4b43eb27f-video"
+              autoplay=""
+              loop=""
+              style="
+                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-poster-00001.jpg&quot;);
+              "
+              muted=""
+              playsinline=""
+              data-wf-ignore="true"
+              data-object-fit="cover"
+            >
+              <source
+                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-transcode.mp4"
+                data-wf-ignore="true"
+              />
+              <source
+                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649549f51324cf7a6515c9f6_pexels florian delée 15689259 2560x1440 30fps-transcode.webm"
+                data-wf-ignore="true"
+              />
+            </video>
+            <div class="light-overlay"></div>
+            <div
+              data-w-id="0085d093-13cd-9980-3976-a7069eb54fef"
+              style="display: flex"
+              class="column-animations"
+            >
+              <div
+                data-ix="color-bar-1"
+                style="height: 100%"
+                class="top-color"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+</div>
 </BaseLayout>
