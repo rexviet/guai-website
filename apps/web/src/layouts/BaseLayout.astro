@@ -23,6 +23,25 @@ const seoHtml = generateSeoTags(seo);
     <link href="https://cdn.prod.website-files.com" rel="preconnect" crossorigin="anonymous" />
     <link href="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/css/kakao-wcopilot.webflow.41a000530.css" rel="stylesheet" type="text/css" />
     
+    <style is:global>
+      a.w-webflow-badge, .w-webflow-badge { 
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+    </style>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        const removeBadge = () => {
+          const badge = document.querySelector('.w-webflow-badge');
+          if (badge) badge.remove();
+        };
+        removeBadge();
+        const observer = new MutationObserver(removeBadge);
+        observer.observe(document.body, { childList: true, subtree: true });
+        setTimeout(() => observer.disconnect(), 5000); // stop observing after 5s
+      });
+    </script>
     <style>@media (min-width:992px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="e6d22654-adaf-4ec0-4e42-4a23aa445be4"] {display:none;-webkit-transform:translate3d(0, 0, 0) scale3d(0.3, 0.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, -20deg);-moz-transform:translate3d(0, 0, 0) scale3d(0.3, 0.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, -20deg);-ms-transform:translate3d(0, 0, 0) scale3d(0.3, 0.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, -20deg);transform:translate3d(0, 0, 0) scale3d(0.3, 0.3, 1) rotateX(0) rotateY(0) rotateZ(0) skew(-20deg, -20deg);opacity:0;}}</style>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
