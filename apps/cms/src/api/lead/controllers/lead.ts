@@ -7,8 +7,8 @@ import { factories } from '@strapi/strapi';
 export default factories.createCoreController('api::lead.lead', ({ strapi }) => ({
   async submit(ctx) {
     try {
-      const body = ctx.request.body || {};
-      const files = ctx.request.files || {};
+      const body = (ctx.request as any).body || {};
+      const files = (ctx.request as any).files || {};
 
       const name = body.name?.trim();
       const email = body.email?.trim();
@@ -37,12 +37,12 @@ export default factories.createCoreController('api::lead.lead', ({ strapi }) => 
           body: new URLSearchParams({
             secret: turnstileSecret,
             response: turnstileToken,
-            remoteip: ctx.ip || ctx.request.ip || '',
+            remoteip: ctx.ip || (ctx.request as any).ip || '',
           }),
         });
 
-        const outcome = await verifyResponse.json().catch(() => ({ success: false }));
-        if (!outcome.success) {
+        const outcome = (await verifyResponse.json().catch(() => ({ success: false }))) as { success?: boolean };
+        if (!outcome || !outcome.success) {
           strapi.log.warn(`Turnstile validation failed for IP ${ctx.ip}: ${JSON.stringify(outcome)}`);
           return ctx.badRequest('Xác thực bảo mật Turnstile thất bại, vui lòng thử lại');
         }
@@ -73,7 +73,7 @@ export default factories.createCoreController('api::lead.lead', ({ strapi }) => 
         company: company || null,
         service_interest: service_interest || null,
         message,
-        ip_address: ctx.ip || ctx.request.ip || null,
+        ip_address: ctx.ip || (ctx.request as any).ip || null,
         status: 'new',
       };
 
@@ -81,7 +81,7 @@ export default factories.createCoreController('api::lead.lead', ({ strapi }) => 
         leadData.attachment = attachmentId;
       }
 
-      const lead = await strapi.documents('api::lead.lead').create({
+      const lead = await (strapi as any).documents('api::lead.lead').create({
         data: leadData,
       });
 
