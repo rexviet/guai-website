@@ -1,0 +1,26 @@
+.github/workflows/build-and-deploy.yml
+  h_43770622f8f2a6 1-70
+apps/cms/src/index.ts
+  h_43770622f8f2a6 72-100
+apps/cms/src/services/github-dispatch.test.ts
+  h_43770622f8f2a6 1-60
+apps/cms/src/services/github-dispatch.ts
+  h_43770622f8f2a6 1-83
+docs/journals/2026-08-07-phase-6-ci-cd-pipeline.md
+  h_43770622f8f2a6 1-32
+docs/plans/260804-2236/phase-06-ci-cd-pipeline.md
+  h_43770622f8f2a6 8,24-26,37-40
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "2b9a75e5f2291ed3ff06ae5bbf0a8572c49c8d91",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
