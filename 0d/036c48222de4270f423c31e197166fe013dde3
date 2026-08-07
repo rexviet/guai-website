@@ -1,0 +1,38 @@
+apps/cms/src/api/lead/content-types/lead/schema.json
+  h_43770622f8f2a6 1-50
+apps/cms/src/api/lead/controllers/lead.ts
+  h_43770622f8f2a6 1-132
+apps/cms/src/api/lead/routes/lead-custom.ts
+  h_43770622f8f2a6 1-14
+apps/cms/src/api/lead/routes/lead.ts
+  h_43770622f8f2a6 1-7
+apps/cms/src/api/lead/services/lead.ts
+  h_43770622f8f2a6 1-7
+apps/web/src/components/forms/ContactForm.astro
+  h_43770622f8f2a6 1-511
+apps/web/src/lib/lead-client.test.ts
+  h_43770622f8f2a6 1-60
+apps/web/src/lib/lead-client.ts
+  h_43770622f8f2a6 1-91
+apps/web/src/pages/contact.astro
+  h_43770622f8f2a6 1-263
+apps/web/src/pages/en/contact.astro
+  h_43770622f8f2a6 1-263
+docs/journals/2026-08-07-phase-5-contact-lead-pipeline.md
+  h_43770622f8f2a6 1-22
+docs/plans/260804-2236/phase-05-contact-lead-pipeline.md
+  h_43770622f8f2a6 8,23,25-27,29-31,45-49
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "0d036c48222de4270f423c31e197166fe013dde3",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
