@@ -1,0 +1,52 @@
+apps/web/src/pages/en/work/[slug].astro
+  h_43770622f8f2a6 1-35
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 35
+docs/plans/260804-2236/phase-04-astro-pages.md
+  h_43770622f8f2a6 8
+apps/web/src/pages/services/index.astro
+  h_43770622f8f2a6 1-27
+apps/web/astro.config.mjs
+  h_43770622f8f2a6 3,6-16
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 2-3,5-12,15-46
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 3,6-7,10-11,15,19,21-47
+apps/web/src/pages/work/[slug].astro
+  h_43770622f8f2a6 1-35
+apps/web/package.json
+  h_43770622f8f2a6 15-20,22
+apps/web/src/pages/about.astro
+  h_43770622f8f2a6 1-15
+apps/web/src/pages/en/virtual-kol.astro
+  h_43770622f8f2a6 1-15
+apps/web/src/lib/strapi-client.ts
+  h_43770622f8f2a6 1-73
+apps/web/src/lib/strapi-client.test.ts
+  h_43770622f8f2a6 1-8
+apps/web/src/lib/seo.ts
+  h_43770622f8f2a6 1-21
+apps/web/src/pages/en/index.astro
+  h_43770622f8f2a6 1-46
+docs/journals/2026-08-07-phase-4-astro-pages-seo.md
+  h_43770622f8f2a6 1-23
+apps/web/src/pages/virtual-kol.astro
+  h_43770622f8f2a6 1-15
+apps/web/package-lock.json
+  h_43770622f8f2a6 11-16,239-249,1878-1902,1952-1957,2081-2109,2443-2456,2469-2486,2493-2504,2643-2688,2710-2721,2739-2762,3231-3239,3438-3449,3638-3653,3866-3937,3944-3962,3994-3999,4124-4129
+apps/web/src/pages/en/about.astro
+  h_43770622f8f2a6 1-15
+apps/web/src/pages/en/services/index.astro
+  h_43770622f8f2a6 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "fb49ea6aae7f74d6a576024e723a3f69376abbb1",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
