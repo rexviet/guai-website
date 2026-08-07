@@ -27,11 +27,10 @@ The user requested integrating the Kakao Wcopilot HTML/CSS theme into our Astro-
 - Added strict fallback logic for all multimedia fields to prevent structure collapse if Strapi data is incomplete.
 - Chose to inject dynamic data natively using Astro's JSX interpolation rather than attempting complex client-side hydration, maximizing performance and SEO.
 
-## Unresolved Issues (To-Do for Next Session)
-- **CSS Overlaps / Z-index conflicts:** Several elements are currently overlapping or bleeding into each other (e.g., the large "GUAI" typography is overlapping with the "Variety/Quality/Innovation" sections, and sticky elements are bleeding into other sections). We need to debug the z-index, absolute positioning, and flex layout overrides that are causing this.
+## Resolved Issues
+- **CSS Overlaps / Z-index conflicts (FIXED 2026-08-07 22:55):** The Kakao theme uses a "sticky footer reveal" pattern where `.footer-con` has `position: sticky; inset: auto 0% 0%`. Content sections must have `position: relative` + proper `z-index` to scroll OVER the footer. Added CSS overrides in `BaseLayout.astro` establishing a z-index hierarchy: header (z:1000, from `.w-nav`), hero (z:90), content sections (z:50 down to z:15), footer (z:1). All sections now stack correctly.
 
 ## Next Steps
-- **Fix CSS Overlaps:** Resolve the layout/overlapping issues documented above.
 - Verify if the user wants to adapt other pages (e.g., About Us, Contact) to this Webflow theme structure.
 - Replace the mock Strapi data with the real API endpoints once the backend is fully populated.
 - Clean up any unused legacy Astro components that were replaced by the Webflow structure.

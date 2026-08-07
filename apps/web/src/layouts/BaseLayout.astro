@@ -31,6 +31,63 @@ const seoHtml = generateSeoTags(seo);
     <script type="text/javascript" is:inline>!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
     <link href="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6492b40bd9bfcd3d8eeb6ddd_Favicon%20Kakao.png" rel="shortcut icon" type="image/x-icon" />
     <link href="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6492b413c475e74ad601a788_Webclip%20Kakao.png" rel="apple-touch-icon" />
+    <!-- CSS overrides: fix z-index stacking for sticky footer pattern -->
+    <style is:inline>
+      /*
+       * Kakao/Webflow uses a "sticky footer reveal" pattern:
+       *   .footer-con { position: sticky; inset: auto 0% 0%; }
+       * Content sections must have position:relative + z-index to scroll
+       * OVER the footer. Without this, footer bleeds through content.
+       */
+
+      /* Ensure all content sections stack above footer */
+      .home-1-section {
+        z-index: 90;
+        position: relative;
+      }
+
+      section.section,
+      #Our-Benefits,
+      #recent-work {
+        position: relative;
+        z-index: 50;
+        background-color: var(--primary-black, #0e0e0e);
+      }
+
+      .video-section {
+        position: relative;
+        z-index: 40;
+      }
+
+      .page-content-wrapper {
+        position: relative;
+        z-index: 30;
+      }
+
+      .section-scroll-video {
+        position: relative;
+        z-index: 25;
+      }
+
+      .section-news {
+        position: relative;
+        z-index: 20;
+        background-color: var(--primary-black, #0e0e0e);
+      }
+
+      /* Footer should be lowest in the stack */
+      .footer-con {
+        z-index: 1;
+      }
+
+      /* Ensure scroll headings marquee doesn't overflow sideways */
+      .sectiohn-scroll-headings,
+      .bottom-page-content {
+        position: relative;
+        z-index: 15;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body class="body">
     {showNav && <Header lang={lang} />}
