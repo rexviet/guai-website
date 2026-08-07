@@ -17,6 +17,16 @@ Sau khi đăng nhập thành công, thanh điều hướng bên trái bao gồm:
 - **Media Library:** Nơi quản lý toàn bộ tệp hình ảnh, video showreel, tài liệu đính kèm.
 - **Settings:** Quản lý tài khoản, phân quyền và cài đặt ngôn ngữ i18n.
 
+### 1.3 Cấu Hình Quyền API Public (Giải Quyết Lỗi HTTP 403 Forbidden)
+Khi khởi tạo hệ thống Strapi mới, mặc định các API sẽ bị khóa. Cần thực hiện các bước sau để giao diện Web công khai lấy được dữ liệu:
+1. Vào **Settings** ➔ **Users & Permissions plugin** ➔ **Roles** ➔ Bấm vào role **Public**.
+2. Tại bảng danh sách Permissions, tích chọn các quyền đọc (`find`, `findOne`):
+   - **Service**: `find`, `findOne`
+   - **Case-study**: `find`, `findOne`
+   - **Virtual-kol**: `find`, `findOne`
+   - **Site-setting**: `find`
+3. Bấm **Save** ở góc trên bên phải.
+
 ---
 
 ## 2. Quản Lý Nội Dung Chi Tiết (Content Manager)

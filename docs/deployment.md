@@ -28,6 +28,17 @@ docker compose -f infra/docker-compose.yml up -d
 - **Strapi Admin UI:** `http://localhost:1337/admin` *(Lần đầu khởi chạy sẽ hiển thị màn hình tạo tài khoản Admin)*.
 - **Strapi REST API:** `http://localhost:1337/api`
 
+#### ⚠️ Bước Bắt Buộc Khi Khởi Chạy Lần Đầu (Tránh Lỗi HTTP 403 Forbidden):
+Mặc định Strapi sẽ khóa tất cả các API công khai. Bạn phải bật quyền Public cho API thì Astro Web Frontend mới lấy được dữ liệu:
+1. Đăng nhập vào Strapi Admin: `http://localhost:1337/admin`
+2. Vào **Settings** ➔ **Users & Permissions plugin** ➔ **Roles** ➔ Chọn **Public**.
+3. Tại danh sách Permissions bên dưới, tích chọn quyền đọc cho các mục:
+   - **Service**: `find`, `findOne`
+   - **Case-study**: `find`, `findOne`
+   - **Virtual-kol**: `find`, `findOne`
+   - **Site-setting**: `find`
+4. Bấm **Save** ở góc trên bên phải.
+
 #### Bước 4: Chạy Astro Web Frontend nối với Strapi local
 ```bash
 npm run dev --prefix apps/web
