@@ -3,127 +3,103 @@ export interface Props {
   lang?: string;
 }
 
-const { lang = 'vi' } = Astro.props;
-const isEn = lang === 'en';
+const { lang = "vi" } = Astro.props;
 ---
 
-<style>
-  .site-footer {
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-white-10);
-    padding: var(--space-xl) var(--space-md) var(--space-md);
-    margin-top: var(--space-xl);
-  }
-
-  .footer-container {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 2fr repeat(3, 1fr);
-    gap: var(--space-lg);
-  }
-
-  .footer-brand h3 {
-    font-size: 1.5rem;
-    margin-bottom: var(--space-xs);
-    background: linear-gradient(135deg, #ffffff 0%, #3898ec 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .footer-brand p {
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-    max-width: 320px;
-  }
-
-  .footer-col h4 {
-    font-size: 0.95rem;
-    color: var(--color-text);
-    margin-bottom: var(--space-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .footer-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .footer-col li {
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-col a {
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-    transition: color var(--transition-fast);
-  }
-
-  .footer-col a:hover {
-    color: var(--color-accent);
-  }
-
-  .footer-bottom {
-    max-width: 1280px;
-    margin: var(--space-lg) auto 0;
-    padding-top: var(--space-md);
-    border-top: 1px solid var(--color-white-5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-  }
-
-  @media (max-width: 768px) {
-    .footer-container {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
-
-<footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-brand">
-      <h3>GUAI STUDIO</h3>
-      <p>{isEn ? 'Pioneering AI Creative Studio in Vietnam & APAC' : 'Studio tiên phong ứng dụng công nghệ AI sáng tạo tại Việt Nam & APAC'}</p>
-    </div>
-
-    <div class="footer-col">
-      <h4>{isEn ? 'Services' : 'Dịch vụ'}</h4>
-      <ul>
-        <li><a href="#">GenAI Video Ads</a></li>
-        <li><a href="#">Virtual KOL & Avatar</a></li>
-        <li><a href="#">AI 3D Motion Graphics</a></li>
-        <li><a href="#">AI Voice & Audio Sync</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>{isEn ? 'Company' : 'Công ty'}</h4>
-      <ul>
-        <li><a href={isEn ? '/en/about' : '/about'}>{isEn ? 'About Us' : 'Về chúng tôi'}</a></li>
-        <li><a href={isEn ? '/en/virtual-kol' : '/virtual-kol'}>Virtual KOL</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Press Kit</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>{isEn ? 'Connect' : 'Kết nối'}</h4>
-      <ul>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">YouTube</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Behance</a></li>
-      </ul>
+<div class="footer-con">
+  <div class="footer">
+    <div class="base-container w-container">
+      <div class="hero-kakao-footer">
+        <div class="top-footer-grid">
+          <div id="w-node-_5a730425-243d-1d22-750e-63a86d6b2473-6d6b246f" class="footer-left-navigation">
+            <div class="footer-list">
+              <h6 class="nav-footer-item left-item">/GuAI Studio</h6>
+            </div>
+          </div>
+          <div id="w-node-_5a730425-243d-1d22-750e-63a86d6b2477-6d6b246f" class="footer-navigation">
+            <div class="footer-list">
+              <h6 class="nav-footer-item">/Navigation</h6>
+              <div class="footer-items">
+                <a href="/about" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">About Us</div></div>
+                </a>
+                <a href="/services" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Services</div></div>
+                </a>
+                <a href="/contact" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Contact Us</div></div>
+                </a>
+              </div>
+            </div>
+            <div class="footer-list">
+              <h6 class="nav-footer-item">/Our Works</h6>
+              <div class="footer-items">
+                <a href="/work" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Case Studies</div></div>
+                </a>
+              </div>
+            </div>
+            <div class="footer-list last-list">
+              <h6 class="nav-footer-item">/Socials</h6>
+              <div class="footer-items last">
+                <a href="https://www.instagram.com/" target="_blank" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Instagram</div></div>
+                </a>
+                <a href="https://twitter.com/" target="_blank" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Twitter</div></div>
+                </a>
+                <a href="https://www.facebook.com/" target="_blank" class="footer-arrow-link w-inline-block">
+                  <div class="button-text-wrapper"><div class="link-text">Facebook</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24a8" class="middle-footer-con">
+          <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24a9" class="footer-kakao-container">
+            <a id="w-node-_5a730425-243d-1d22-750e-63a86d6b24aa-6d6b246f" href="/" aria-current="page" class="footer-brand-logo w-inline-block w--current">
+              <div class="footer-logo-text">GuAI</div>
+            </a>
+            <div class="footer-video">
+              <div data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-poster-00001.jpg" data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" class="footer-bg-video w-background-video w-background-video-atom">
+                <video id="5a730425-243d-1d22-750e-63a86d6b24ae-video" autoplay="" loop="" style="background-image:url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-poster-00001.jpg&quot;)" muted="" playsinline="" data-wf-ignore="true" data-object-fit="cover">
+                  <source src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-transcode.mp4" data-wf-ignore="true">
+                  <source src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6491d2258cef89498092786a_pexels-marian-croitoru-4524588-1920x1080-25fps-transcode.webm" data-wf-ignore="true">
+                </video>
+                <div class="footer-ov">
+                  <a href="/contact" class="circle-footer-lin w-inline-block">
+                    <div class="button-text">Hire us!</div>
+                    <div class="link-hover-fill"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="footer-form">
+              <p class="footer-white-paradraph">Get in touch with our team. Contact Us and let's create something extraordinary.</p>
+              <div class="footer-hero-form w-form">
+                <form id="wf-form-form" name="wf-form-form" data-name="form" method="get" class="form-wrap">
+                  <input class="input-footer w-input" autocomplete="email" maxlength="256" name="email-2" data-name="Email 2" placeholder="Your e-mail" type="email" id="email-2" required="">
+                  <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24ba" class="form-submit-wrap">
+                    <div class="arrow-wrap">
+                      <div class="form-submit-result-wrap">
+                        <div form-submitted="anim" class="form-submit-result"><img src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/648c021d480360c9daeee454_Vector%206.webp" loading="lazy" alt="Project icon" class="form-icon"></div>
+                      </div>
+                      <input type="submit" data-wait=" " class="form-submit w-button" value=" ">
+                    </div>
+                  </div>
+                </form>
+                <div class="success-message-transparent with-borders w-form-done"><div>Thank you! Your submission has been received!</div></div>
+                <div class="error-message-white w-form-fail"><div>Oops! Something went wrong while submitting the form.</div></div>
+              </div>
+            </div>
+          </div>
+          <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24c6" class="top-line-advantages"></div>
+          <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24c7" class="bottom-line-advantages"></div>
+        </div>
+        <div data-w-id="5a730425-243d-1d22-750e-63a86d6b24c8" class="footer-bottom-wrapper">
+          <div class="footer-copyright">© GuAI Studio. All Rights Reserved.</div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="footer-bottom">
-    <div>© 2026 GUAI Studio. All rights reserved.</div>
-    <div>Designed for High-End AI Innovation</div>
-  </div>
-</footer>
+</div>
