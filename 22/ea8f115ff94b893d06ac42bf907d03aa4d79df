@@ -1,0 +1,14 @@
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 70-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "22ea8f115ff94b893d06ac42bf907d03aa4d79df",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
