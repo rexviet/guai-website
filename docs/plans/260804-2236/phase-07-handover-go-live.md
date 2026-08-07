@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P2
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Prepare the user manual for the non-tech ops team, finalize go-live checklist, and complete project handover.
 
 ## Requirements
@@ -31,10 +31,10 @@
 3. Add the client as a collaborator to the GitHub repository.
 
 ## Todo List
-- [ ] Draft Ops Manual
-- [ ] Finalize Go-live checklist
-- [ ] Run Lighthouse performance and SEO audit
-- [ ] Grant repository access
+- [x] Draft Ops Manual
+- [x] Finalize Go-live checklist
+- [x] Run Lighthouse performance and SEO audit
+- [x] Grant repository access
 
 ## Success Criteria
 - Ops team can independently update website content.
