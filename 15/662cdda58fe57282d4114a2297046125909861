@@ -1,0 +1,68 @@
+docs/journals/2026-08-07-phase-4-astro-pages-seo.md
+  h_43770622f8f2a6 1-23
+apps/web/astro.config.mjs
+  h_43770622f8f2a6 3,6-16
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 2,7,9-16,193,227-231,233-235,237-239,241-242,245-247,255-259,320-321
+  h_43770622f8f2a6 3-6,17-21,24-192,194-226,232,236,240,243-244,248-254,260-319
+apps/web/src/lib/strapi-client.test.ts
+  h_43770622f8f2a6 1-8
+apps/web/package.json
+  h_43770622f8f2a6 15-20,22
+apps/web/src/pages/en/virtual-kol.astro
+  h_43770622f8f2a6 1-2,6-15,17-22,30-32
+  h_43770622f8f2a6 3-5,16,23-29
+apps/web/src/pages/en/services/index.astro
+  h_43770622f8f2a6 1-2,5-18,20-21,25-29,33-35,37-43
+  h_43770622f8f2a6 3-4,19,22-24,30-32,36
+apps/web/src/pages/work/[slug].astro
+  h_43770622f8f2a6 1-2,6-26,29-30,33-35,38-41,44-51
+  h_43770622f8f2a6 3-5,27-28,31-32,36-37,42-43
+docs/plans/260804-2236/phase-04-astro-pages.md
+  h_43770622f8f2a6 8
+apps/web/src/pages/virtual-kol.astro
+  h_43770622f8f2a6 1-2,6-15,17-22,30-32
+  h_43770622f8f2a6 3-5,16,23-29
+apps/web/src/lib/seo.ts
+  h_43770622f8f2a6 1-21
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 35
+apps/web/package-lock.json
+  h_43770622f8f2a6 11-16,239-249,1878-1902,1952-1957,2081-2109,2443-2456,2469-2486,2493-2504,2643-2688,2710-2721,2739-2762,3231-3239,3438-3449,3638-3653,3866-3937,3944-3962,3994-3999,4124-4129
+apps/web/src/pages/en/work/[slug].astro
+  h_43770622f8f2a6 1-2,6-26,29-30,33-35,38-41,44-51
+  h_43770622f8f2a6 3-5,27-28,31-32,36-37,42-43
+apps/web/src/pages/about.astro
+  h_43770622f8f2a6 1-2,6-15,17-20,33,36,39-41
+  h_43770622f8f2a6 3-5,16,21-32,34-35,37-38
+apps/web/src/pages/en/about.astro
+  h_43770622f8f2a6 1-2,6-19,40-41
+  h_43770622f8f2a6 3-5,20-39
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 3,8-9,13-14,18,22,24-25
+  h_43770622f8f2a6 4-5,10,28,30
+apps/web/src/lib/strapi-client.ts
+  h_43770622f8f2a6 1-55,57,102-114,116,157
+  h_43770622f8f2a6 56,58-101,115,117-156
+apps/web/src/pages/en/index.astro
+  h_43770622f8f2a6 1-2,7-16,22,193,227-231,233-235,237,243,245,247-248,250-259,320-321
+  h_43770622f8f2a6 3-6,17-21,23-192,194-226,232,236,238-242,244,246,249,260-319
+apps/web/src/pages/services/index.astro
+  h_43770622f8f2a6 1-2,5-18,20-21,25-29,33-35,37-43
+  h_43770622f8f2a6 3-4,19,22-24,30-32,36
+apps/web/src/components/layout/Footer.astro
+  h_43770622f8f2a6 1-129
+apps/web/src/components/layout/Header.astro
+  h_43770622f8f2a6 1-155
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "15662cdda58fe57282d4114a2297046125909861",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
