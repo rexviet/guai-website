@@ -1,0 +1,18 @@
+apps/web/src/pages/en/index.astro
+  h_43770622f8f2a6 9-10,13-37,42-91,93-112,114,116-158,160-179,181-182,184-186
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 9-10,13-56,58-82,84-339,344-888,890-1219,1221-1339,1341,1343-1346,1348-1590,1592-1640,1642-1643
+kakao_home.html
+  h_43770622f8f2a6 1-2592
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "d12441eb8304e53a0d968d822da371f402469457",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
