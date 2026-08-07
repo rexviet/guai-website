@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Button from '../../components/ui/Button.astro';
+import { getServices } from '../../lib/strapi-client';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const services = await getServices('vi');
+  return services.map((service: any) => ({
+    params: { slug: service?.slug || 'genai-commercial-video' },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const title = service?.title || 'Dịch Vụ AI';
+const seo = {
+  title: `${title} | GUAI Studio`,
+  description: service?.short_description || 'Dịch vụ sáng tạo AI tại GUAI Studio.',
+};
+
+const fullDescriptionHtml = service?.full_description ? marked.parse(service.full_description) : '';
+---
+
+<BaseLayout seo={seo} lang="vi">
+  <main class="page-service-detail" style="padding-top: 120px;">
+    <Section>
+      <div style="max-width: 800px; margin: 0 auto;">
+        <span style="font-weight: 700; color: var(--color-accent); font-size: 0.85rem; text-transform: uppercase;">Dịch Vụ</span>
+        <h1 style="font-size: 3.5rem; margin: 0.5rem 0 1.5rem; line-height: 1.1;">{title}</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.6; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--color-white-10);">{service?.short_description}</p>
+        
+        <div class="rich-text-content" style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text-main);" set:html={fullDescriptionHtml} />
+
+        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--color-white-10);">
+          <Button href="/services" variant="secondary">← Xem tất cả dịch vụ</Button>
+          <Button href="/contact" variant="primary">Liên hệ tư vấn</Button>
+        </div>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>
+
+<style is:global>
+  .rich-text-content h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-white);
+  }
+  .rich-text-content h3 {
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .rich-text-content p {
+    margin-bottom: 1.5rem;
+  }
+  .rich-text-content ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .rich-text-content li {
+    margin-bottom: 0.5rem;
+  }
+</style>

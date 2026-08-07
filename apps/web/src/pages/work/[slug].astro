@@ -8,16 +8,16 @@ import { getCaseStudies } from '../../lib/strapi-client';
 export async function getStaticPaths() {
   const caseStudies = await getCaseStudies('vi');
   return caseStudies.map((work: any) => ({
-    params: { slug: work.attributes?.slug || 'kakao-wcopilot-ai-campaign' },
+    params: { slug: work?.slug || 'kakao-wcopilot-ai-campaign' },
     props: { work },
   }));
 }
 
 const { work } = Astro.props;
-const title = work?.attributes?.title || 'Chi tiết dự án';
+const title = work?.title || 'Chi tiết dự án';
 const seo = {
   title: `${title} | GUAI Studio`,
-  description: work?.attributes?.description || 'Chi tiết dự án sáng tạo AI.',
+  description: work?.description || 'Chi tiết dự án sáng tạo AI.',
 };
 ---
 
@@ -25,20 +25,20 @@ const seo = {
   <main class="page-work-detail" style="padding-top: 120px;">
     <Section>
       <div style="max-width: 900px; margin: 0 auto;">
-        <span style="font-weight: 700; color: var(--color-accent); font-size: 0.85rem; text-transform: uppercase;">{work?.attributes?.category || 'GenAI Commercial'} • {work?.attributes?.client || 'Client'}</span>
-        <h1 style="font-size: 3.5rem; margin: 0.5rem 0 1.5rem; line-height: 1.1;">{title}</h1>
-        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem;">{work?.attributes?.description}</p>
+        <span style="font-weight: 700; color: var(--color-accent); font-size: 0.85rem; text-transform: uppercase;">{work?.category || 'GenAI Commercial'} • {work?.client || 'Client'}</span>
+        <h1 style="font-size: 3rem; margin: 1rem 0; line-height: 1.2;">{title}</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem;">{work?.description}</p>
         
-        {work?.attributes?.metrics && (
-          <div style="display: inline-block; padding: 0.5rem 1rem; border-radius: var(--radius-md); background: rgba(56, 152, 236, 0.15); border: 1px solid rgba(56, 152, 236, 0.3); color: var(--color-accent); font-weight: 700; margin-bottom: 2rem;">
-            📊 Kết quả: {work.attributes.metrics}
+        {work?.metrics && (
+          <div style="display: inline-block; padding: 0.75rem 1.5rem; background: var(--color-accent); color: var(--color-bg); font-weight: bold; border-radius: 50px; margin-bottom: 2rem;">
+            📊 Kết quả: {work.metrics}
           </div>
         )}
 
-        {work?.attributes?.image && (
-          <Card style="padding: 0; overflow: hidden; margin-bottom: 3rem;">
-            <img src={work.attributes.image} alt={title} style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" />
-          </Card>
+        {work?.image && (
+          <div style="margin-top: var(--space-lg); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-white-10);">
+            <img src={work.image} alt={title} style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" />
+          </div>
         )}
 
         <div style="display: flex; gap: 1rem; align-items: center;">

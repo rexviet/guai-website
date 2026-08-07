@@ -52,7 +52,9 @@ export async function getServices(locale: string = "vi"): Promise<any[]> {
       locale,
       populate: "*",
     });
-    if (data?.data && data.data.length > 0) return data.data;
+    if (data?.data && data.data.length > 0) {
+      return data.data;
+    }
   } catch (e) {
     // Return rich fallback mock data when Strapi is offline
   }
@@ -60,44 +62,40 @@ export async function getServices(locale: string = "vi"): Promise<any[]> {
   const isEn = locale === 'en';
   return [
     {
+      documentId: 'mock-doc-1',
       id: 1,
-      attributes: {
-        title: isEn ? "GenAI Commercial Video Production" : "Sản Xuất Video Quảng Cáo AI (GenAI Video Ads)",
-        description: isEn ? "Cinematic TVC and viral video ads powered by Google Veo 3.1, Midjourney v6, and Runway Gen-3." : "Sản xuất TVC điện ảnh và video ngắn truyền thông đỉnh cao với Google Veo 3.1, Midjourney v6 và Runway Gen-3.",
-        icon: "video",
-        tags: ["Veo 3.1", "Midjourney", "Commercial Ads", "4K Production"],
-        slug: "genai-commercial-video"
-      }
+      title: isEn ? "GenAI Commercial Video Production" : "Sản Xuất Video Quảng Cáo AI (GenAI Video Ads)",
+      short_description: isEn ? "Cinematic TVC and viral video ads powered by Google Veo 3.1, Midjourney v6, and Runway Gen-3." : "Sản xuất TVC điện ảnh và video ngắn truyền thông đỉnh cao với Google Veo 3.1, Midjourney v6 và Runway Gen-3.",
+      full_description: isEn ? "Full description for GenAI Commercial Video Production." : "Triển khai từ khâu ý tưởng đến sản phẩm hoàn chỉnh.\n\nDịch vụ bao gồm:\n- Tư vấn concept và định hướng phong cách video.\n- Lên ý tưởng, kịch bản và storyboard tùy dự án.\n- Tạo hình ảnh/scene bằng AI.\n- AI voice hoặc phối hợp voice-over theo yêu cầu.\n- Animation, motion, editing, subtitle và hậu kỳ.\n- Video TikTok, Reels, YouTube Shorts, product video, branded video và AI commercial.",
+      icon: "video",
+      slug: "genai-commercial-video"
     },
     {
+      documentId: 'mock-doc-2',
       id: 2,
-      attributes: {
-        title: isEn ? "Virtual KOL & Digital Human Creation" : "Thiết Kế & Vận Hành Virtual KOL / AI Avatar",
-        description: isEn ? "Next-gen hyper-realistic 3D AI influencers with natural voice synthesis and real-time facial tracking." : "Tạo dựng hình mẫu ảnh hưởng ảo 3D siêu thực với giọng nói AI tự nhiên và chuyển động khuôn mặt theo thời gian thực.",
-        icon: "user-check",
-        tags: ["3D Avatar", "Voice Cloning", "Livestream AI", "Brand Ambassador"],
-        slug: "virtual-kol-creation"
-      }
+      title: isEn ? "Virtual KOL & Digital Human Creation" : "Thiết Kế & Vận Hành Virtual KOL / AI Avatar",
+      short_description: isEn ? "Next-gen hyper-realistic 3D AI influencers with natural voice synthesis and real-time facial tracking." : "Tạo dựng hình mẫu ảnh hưởng ảo 3D siêu thực với giọng nói AI tự nhiên và chuyển động khuôn mặt theo thời gian thực.",
+      full_description: isEn ? "Full description for Virtual KOL." : "GuAI Studio phát triển AI KOL phù hợp với định vị, sản phẩm và khách hàng mục tiêu của doanh nghiệp.\n\nDịch vụ bao gồm:\n- Thiết kế AI KOL phù hợp với hình ảnh thương hiệu.\n- Xây dựng ngoại hình, phong cách, tính cách và đặc điểm nhận diện.\n- Định hướng giọng nói và phong cách giao tiếp.\n- Thiết lập character consistency cho hình ảnh/video.",
+      icon: "user-check",
+      slug: "virtual-kol-creation"
     },
     {
+      documentId: 'mock-doc-3',
       id: 3,
-      attributes: {
-        title: isEn ? "AI VFX & Motion Graphics" : "Kỹ Thảo Kỹ Thuật Số & Motion Graphics AI",
-        description: isEn ? "Futuristic motion graphics and spatial visual effects crafted specifically for high-end luxury brands." : "Hiệu ứng thị giác tương lai và chuyển động đồ họa cao cấp dành riêng cho các thương hiệu hàng đầu.",
-        icon: "layers",
-        tags: ["Motion Design", "Visual Effects", "VFX", "Spatial UI"],
-        slug: "ai-vfx-motion"
-      }
+      title: isEn ? "AI VFX & Motion Graphics" : "Kỹ Thảo Kỹ Thuật Số & Motion Graphics AI",
+      short_description: isEn ? "Futuristic motion graphics and spatial visual effects crafted specifically for high-end luxury brands." : "Hiệu ứng thị giác tương lai và chuyển động đồ họa cao cấp dành riêng cho các thương hiệu hàng đầu.",
+      full_description: isEn ? "Full description for AI VFX & Motion Graphics." : "Nâng tầm hình ảnh thương hiệu bằng các hiệu ứng thị giác tương lai.\n\nDịch vụ bao gồm:\n- Thiết kế motion graphics.\n- Tạo dựng spatial visual effects.\n- 3D modeling và animation cơ bản.",
+      icon: "layers",
+      slug: "ai-vfx-motion"
     },
     {
+      documentId: 'mock-doc-4',
       id: 4,
-      attributes: {
-        title: isEn ? "AI Brand Storytelling & Creative Direction" : "Chiến Lược Thương Hiệu & Kịch Bản AI",
-        description: isEn ? "Emotional, high-converting storytelling scripts combined with custom-trained GenAI visual pipelines." : "Xây dựng kịch bản cảm xúc kết hợp quy trình sản xuất hình ảnh AI đào tạo riêng theo nhận diện thương hiệu.",
-        icon: "sparkles",
-        tags: ["Storytelling", "AI Pipeline", "Brand Strategy"],
-        slug: "ai-brand-storytelling"
-      }
+      title: isEn ? "AI Brand Storytelling & Creative Direction" : "Chiến Lược Thương Hiệu & Kịch Bản AI",
+      short_description: isEn ? "Emotional, high-converting storytelling scripts combined with custom-trained GenAI visual pipelines." : "Xây dựng kịch bản cảm xúc kết hợp quy trình sản xuất hình ảnh AI đào tạo riêng theo nhận diện thương hiệu.",
+      full_description: isEn ? "Full description for AI Brand Storytelling." : "Dành cho thương hiệu cần một chiến dịch ra mắt sản phẩm, branding, seasonal campaign hoặc social campaign với concept thống nhất trên nhiều định dạng.\n\nDịch vụ bao gồm:\n- Nghiên cứu brief, thương hiệu và mục tiêu chiến dịch.\n- Phát triển creative concept / big idea.\n- Key message, content direction và visual direction.",
+      icon: "sparkles",
+      slug: "ai-brand-storytelling"
     }
   ];
 }
@@ -111,7 +109,9 @@ export async function getCaseStudies(locale: string = "vi"): Promise<any[]> {
       locale,
       populate: "*",
     });
-    if (data?.data && data.data.length > 0) return data.data;
+    if (data?.data && data.data.length > 0) {
+      return data.data;
+    }
   } catch (e) {
     // Return rich fallback mock data when Strapi is offline
   }
@@ -119,40 +119,37 @@ export async function getCaseStudies(locale: string = "vi"): Promise<any[]> {
   const isEn = locale === 'en';
   return [
     {
+      documentId: 'mock-doc-5',
       id: 1,
-      attributes: {
-        title: isEn ? "Kakao Wcopilot AI Campaign" : "Chiến Dịch Quảng Bá Kakao Wcopilot",
-        client: "Kakao Mobility",
-        category: "GenAI Video Ads",
-        description: isEn ? "High-energy futuristic commercial created 100% using AI visual engines for Kakao Mobility." : "TVC phong cách viễn tưởng sản xuất 100% bằng công nghệ AI cho thương hiệu Kakao Mobility.",
-        metrics: "+350% Engagement | 12M+ Views",
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
-        slug: "kakao-wcopilot-ai-campaign"
-      }
+      title: isEn ? "Kakao Wcopilot AI Campaign" : "Chiến Dịch Quảng Bá Kakao Wcopilot",
+      client: "Kakao Mobility",
+      category: "GenAI Video Ads",
+      description: isEn ? "High-energy futuristic commercial created 100% using AI visual engines for Kakao Mobility." : "TVC phong cách viễn tưởng sản xuất 100% bằng công nghệ AI cho thương hiệu Kakao Mobility.",
+      metrics: "+350% Engagement | 12M+ Views",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
+      slug: "kakao-wcopilot-ai-campaign"
     },
     {
+      documentId: 'mock-doc-6',
       id: 2,
-      attributes: {
-        title: isEn ? "Cyberpunk Virtual KOL 'AURA'" : "Virtual KOL 3D 'AURA' - Thời Trang Tương Lai",
-        client: "Fashion House APAC",
-        category: "Virtual KOL",
-        description: isEn ? "Creation of digital ambassador AURA for APAC Autumn/Winter fashion collection launch." : "Tạo hình và vận hành KOL ảo AURA đại diện bộ sưu tập thời trang Thu-Đông khu vực APAC.",
-        metrics: "500K+ Followers | $1.2M Earned Media",
-        image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop",
-        slug: "cyberpunk-virtual-kol-aura"
-      }
+      title: isEn ? "Cyberpunk Virtual KOL 'AURA'" : "Virtual KOL 3D 'AURA' - Thời Trang Tương Lai",
+      client: "Fashion House APAC",
+      category: "Virtual KOL",
+      description: isEn ? "Creation of digital ambassador AURA for APAC Autumn/Winter fashion collection launch." : "Tạo hình và vận hành KOL ảo AURA đại diện bộ sưu tập thời trang Thu-Đông khu vực APAC.",
+      metrics: "500K+ Followers | $1.2M Earned Media",
+      image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop",
+      slug: "cyberpunk-virtual-kol-aura"
     },
     {
+      documentId: 'mock-doc-7',
       id: 3,
-      attributes: {
-        title: isEn ? "NeuraCar AI Spatial Launch" : "Sự Kiện Ra Mắt Xe Điện NeuraCar AI",
-        client: "Neura Motors",
-        category: "AI VFX",
-        description: isEn ? "3D visual projections and futuristic launch film for next-gen autonomous electric vehicle." : "Trình diễn hình ảnh 3D và phim ngắn ra mắt dòng xe điện tự lái thế hệ mới.",
-        metrics: "Top 1 Trending Tech Release",
-        image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1200&auto=format&fit=crop",
-        slug: "neuracar-ai-spatial-launch"
-      }
+      title: isEn ? "NeuraCar AI Spatial Launch" : "Sự Kiện Ra Mắt Xe Điện NeuraCar AI",
+      client: "Neura Motors",
+      category: "AI VFX",
+      description: isEn ? "3D visual projections and futuristic launch film for next-gen autonomous electric vehicle." : "Trình diễn hình ảnh 3D và phim ngắn ra mắt dòng xe điện tự lái thế hệ mới.",
+      metrics: "Top 1 Trending Tech Release",
+      image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1200&auto=format&fit=crop",
+      slug: "neuracar-ai-spatial-launch"
     }
   ];
 }

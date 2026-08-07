@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Section from '../../../components/ui/Section.astro';
 import Card from '../../../components/ui/Card.astro';
+import Button from '../../../components/ui/Button.astro';
 import { getServices } from '../../../lib/strapi-client';
 
 const locale = 'en';
@@ -25,15 +26,19 @@ const seo = {
         {services.map((service: any) => (
           <Card>
             <div style="padding: var(--space-sm);">
-              <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-accent);">{service.attributes?.title}</h2>
-              <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem;">{service.attributes?.description}</p>
-              {service.attributes?.tags && (
+              <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-accent);">{service?.title}</h2>
+              <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem;">{service?.short_description}</p>
+              {service?.tags && (
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                  {service.attributes.tags.map((tag: string) => (
+                  {service.tags.map((tag: string) => (
                     <span style="font-size: 0.8rem; padding: 4px 10px; border-radius: var(--radius-sm); background: var(--color-white-5); border: 1px solid var(--color-white-10); color: var(--color-text-muted);">{tag}</span>
                   ))}
                 </div>
               )}
+              
+              <div style="margin-top: 2rem;">
+                <Button href={`/en/services/${service?.slug}`} variant="primary" style="width: 100%;">Learn more</Button>
+              </div>
             </div>
           </Card>
         ))}
