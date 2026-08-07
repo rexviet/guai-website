@@ -37,10 +37,10 @@ const services = await getServices(lang);
                           <div class="nav-dropdown-item-icon w-icon-dropdown-toggle"></div>
                           <p class="nav-menu-item">Services</p>
                         </div>
-                        <nav class="dropdown-nav-list w-dropdown-list">
+                        <nav class="dropdown-nav-list w-dropdown-list" style="width: 320px;">
                           {services.map((service) => (
                             <div class="nav-dropdown-link-wrapper-3">
-                              <a href={`/services/${service.slug}`} class="nav-dropdown-intro-link w-dropdown-link"><span class="nav-dropdowm-link-line-2"> </span>{service.title}</a>
+                              <a href={`/services/${service.slug}`} class="nav-dropdown-intro-link w-dropdown-link" style="white-space: normal; line-height: 1.4;"><span class="nav-dropdowm-link-line-2"> </span>{service.title}</a>
                             </div>
                           ))}
                         </nav>
