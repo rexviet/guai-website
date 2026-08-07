@@ -1,0 +1,16 @@
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 34-90
+docs/journals/260807-2235-kakao-theme-integration.md
+  h_43770622f8f2a6 30-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "8ee5a6aeb369cca5603d3fcdc3398021dbe211da",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
