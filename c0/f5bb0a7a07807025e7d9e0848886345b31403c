@@ -1,0 +1,24 @@
+apps/web
+  h_43770622f8f2a6 1
+docs/plans/260804-2236/phase-02-strapi-content-model.md
+  h_43770622f8f2a6 59-61
+docs/plans/260804-2236/phase-03-design-system.md
+  h_43770622f8f2a6 8,12,14-16
+docs/plans/260804-2236/phase-04-astro-pages.md
+  h_43770622f8f2a6 12,14,18
+docs/plans/260804-2236/plan.md
+  h_43770622f8f2a6 34
+kakao_home.html
+  h_43770622f8f2a6 1-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "c0f5bb0a7a07807025e7d9e0848886345b31403c",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
