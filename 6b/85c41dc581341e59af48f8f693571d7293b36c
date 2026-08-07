@@ -1,0 +1,18 @@
+apps/web/src/components/layout/Footer.astro
+  h_43770622f8f2a6 6,9-102,105
+apps/web/src/components/layout/Header.astro
+  h_43770622f8f2a6 6,9-125,129
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 17,19,23-33,35,39-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "6b85c41dc581341e59af48f8f693571d7293b36c",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
