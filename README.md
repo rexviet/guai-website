@@ -50,16 +50,20 @@ docker compose -f infra/docker-compose.yml down --volumes  # Stop and remove vol
 > single-purpose production VPS (see the script's own header comment). On a
 > local machine with other Docker projects, it will delete unrelated work.
 
+### Full Deployment Guide
+Tham khảo hướng dẫn chi tiết đầy đủ tại: **[`docs/deployment.md`](docs/deployment.md)**.
+
 ## Phase Status
 
 | Phase | Component | Status |
 |-------|-----------|--------|
 | 1 | Monorepo setup, Strapi CMS, Docker infrastructure | ✅ Complete |
 | 2 | Content model (i18n, R2 provider, content types) | ✅ Complete |
-| 3 | API design and integration | Planned |
-| 4 | Astro frontend | Planned |
-| 5 | Deployment pipeline | Planned |
-| 6–7 | VPS setup, DNS, SSL/TLS | Planned |
+| 3 | Design system & Tailwind tokens | ✅ Complete |
+| 4 | Astro frontend & SEO | ✅ Complete |
+| 5 | Contact form & lead pipeline | ✅ Complete |
+| 6 | CI/CD build & deploy pipeline | ✅ Complete |
+| 7 | Handover, Ops manual & Go-live | ✅ Complete |
 
 ## Phase 2: Content Model (Complete)
 
