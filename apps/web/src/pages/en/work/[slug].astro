@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/ui/Section.astro';
+import Card from '../../../components/ui/Card.astro';
+import Button from '../../../components/ui/Button.astro';
+import { getCaseStudies } from '../../../lib/strapi-client';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCaseStudies('en');
+  return caseStudies.map((work: any) => ({
+    params: { slug: work.attributes?.slug || 'kakao-wcopilot-ai-campaign' },
+    props: { work },
+  }));
+}
+
+const { work } = Astro.props;
+const title = work?.attributes?.title || 'Case Study';
+const seo = {
+  title: `${title} | GUAI Studio`,
+  description: work?.attributes?.description || 'AI Creative Case Study.',
+};
+---
+
+<BaseLayout seo={seo} lang="en">
+  <main class="page-work-detail" style="padding-top: 120px;">
+    <Section>
+      <div style="max-width: 900px; margin: 0 auto;">
+        <span style="font-weight: 700; color: var(--color-accent); font-size: 0.85rem; text-transform: uppercase;">{work?.attributes?.category || 'GenAI Commercial'} • {work?.attributes?.client || 'Client'}</span>
+        <h1 style="font-size: 3.5rem; margin: 0.5rem 0 1.5rem; line-height: 1.1;">{title}</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem;">{work?.attributes?.description}</p>
+        
+        {work?.attributes?.metrics && (
+          <div style="display: inline-block; padding: 0.5rem 1rem; border-radius: var(--radius-md); background: rgba(56, 152, 236, 0.15); border: 1px solid rgba(56, 152, 236, 0.3); color: var(--color-accent); font-weight: 700; margin-bottom: 2rem;">
+            📊 Impact: {work.attributes.metrics}
+          </div>
+        )}
+
+        {work?.attributes?.image && (
+          <Card style="padding: 0; overflow: hidden; margin-bottom: 3rem;">
+            <img src={work.attributes.image} alt={title} style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" />
+          </Card>
+        )}
+
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <Button href="/en" variant="secondary">← Back to Home</Button>
+          <Button href="/en/contact" variant="primary">Start Similar Project</Button>
+        </div>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

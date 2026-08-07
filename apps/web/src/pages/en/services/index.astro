@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/ui/Section.astro';
+import Card from '../../../components/ui/Card.astro';
+import { getServices } from '../../../lib/strapi-client';
+
+const locale = 'en';
+const services = await getServices(locale);
+
+const seo = {
+  title: 'AI Services | GUAI Studio',
+  description: 'Breakthrough AI solutions for forward-thinking brands.',
+};
+---
+
+<BaseLayout seo={seo} lang={locale}>
+  <main class="page-services" style="padding-top: 120px;">
+    <Section id="all-services">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto var(--space-xl);">
+        <h1 style="font-size: 3rem; margin-bottom: var(--space-xs);">Our AI Services</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.1rem;">Comprehensive AI creative pipelines from concept to final delivery.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg);">
+        {services.map((service: any) => (
+          <Card>
+            <div style="padding: var(--space-sm);">
+              <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-accent);">{service.attributes?.title}</h2>
+              <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: 1.5rem;">{service.attributes?.description}</p>
+              {service.attributes?.tags && (
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                  {service.attributes.tags.map((tag: string) => (
+                    <span style="font-size: 0.8rem; padding: 4px 10px; border-radius: var(--radius-sm); background: var(--color-white-5); border: 1px solid var(--color-white-10); color: var(--color-text-muted);">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

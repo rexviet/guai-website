@@ -32,7 +32,7 @@ Build a multi-page company profile and portfolio website for GuAI Studio using a
 | 1 | [Setup Infrastructure](./phase-01-setup-infra.md) | Completed |
 | 2 | [Strapi Content Model & i18n](./phase-02-strapi-content-model.md) | Completed |
 | 3 | [Design System](./phase-03-design-system.md) | Completed |
-| 4 | [Astro Pages & SEO](./phase-04-astro-pages.md) | Pending |
+| 4 | [Astro Pages & SEO](./phase-04-astro-pages.md) | Completed |
 | 5 | [Contact Form & Lead Pipeline](./phase-05-contact-lead-pipeline.md) | Pending |
 | 6 | [CI/CD Pipeline](./phase-06-ci-cd-pipeline.md) | Pending |
 | 7 | [Handover & Go-live](./phase-07-handover-go-live.md) | Pending |

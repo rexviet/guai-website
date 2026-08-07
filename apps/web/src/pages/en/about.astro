@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+
+const seo = {
+  title: 'About Us | GUAI Studio',
+  description: 'GUAI Studio is a pioneering AI technology creative studio.',
+};
+---
+
+<BaseLayout seo={seo} lang="en">
+  <main class="page-about" style="padding-top: 120px;">
+    <Section>
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">About GUAI Studio</span>
+        <h1 style="font-size: 3.5rem; margin: 1rem 0 1.5rem; line-height: 1.1;">Shaping the Future of Creative Work With Artificial Intelligence</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.7; margin-bottom: 2rem;">
+          We are APAC's premier GenAI creative studio utilizing Google Veo 3.1, Midjourney v6, and Runway Gen-3 to produce high-end commercial ad campaigns.
+        </p>
+        <Button href="/en/contact" variant="primary">Work With Us</Button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem;">
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: var(--color-accent); margin-bottom: 0.5rem;">50M+</h2>
+          <p style="color: var(--color-text-muted);">Views across AI commercial campaigns</p>
+        </Card>
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: #a855f7; margin-bottom: 0.5rem;">100%</h2>
+          <p style="color: var(--color-text-muted);">Hyper-realistic 4K AI Video Production</p>
+        </Card>
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: #3898ec; margin-bottom: 0.5rem;">3X</h2>
+          <p style="color: var(--color-text-muted);">Faster turnaround vs traditional VFX pipelines</p>
+        </Card>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

@@ -1,18 +1,18 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/ui/Section.astro';
-import Card from '../components/ui/Card.astro';
-import Button from '../components/ui/Button.astro';
-import Marquee from '../components/advanced/Marquee.astro';
-import { getServices, getCaseStudies } from '../lib/strapi-client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+import Marquee from '../../components/advanced/Marquee.astro';
+import { getServices, getCaseStudies } from '../../lib/strapi-client';
 
-const locale = 'vi';
+const locale = 'en';
 const services = await getServices(locale);
 const caseStudies = await getCaseStudies(locale);
 
 const seo = {
-  title: 'GUAI Studio | Studio Công Nghệ AI Đột Phá',
-  description: 'Studio tiên phong sáng tạo Video TVC AI, Virtual KOL và Kỹ thảo kỹ thuật số tại Việt Nam.',
+  title: 'GUAI Studio | Next-Gen AI Technology Studio',
+  description: 'Pioneering AI Commercial Video Ads, Virtual KOLs, and Motion VFX in APAC.',
 };
 
 const techStack = [
@@ -231,20 +231,20 @@ const techStack = [
       <div class="hero-glow"></div>
       
       <div class="badge-tag">
-        <span>✨ Kỷ Nguyên Mới Cho Sáng Tạo AI</span>
+        <span>✨ Next-Gen AI Creative Studio</span>
       </div>
 
       <h1 class="hero-title">
-        Biến Mọi Ý Tưởng Thành <span class="gradient-text">Hiện Thực Điền Ảnh Với AI</span>
+        Transforming Visions Into <span class="gradient-text">Cinematic AI Realities</span>
       </h1>
 
       <p class="hero-subtitle">
-        GUAI Studio tiên phong sản xuất TVC quảng cáo AI, thiết kế Virtual KOL 3D và xây dựng nội dung truyền thông đỉnh cao cho thương hiệu hàng đầu.
+        GUAI Studio produces high-end GenAI commercial ads, 3D Virtual KOLs, and futuristic visual effects for global brands.
       </p>
 
       <div class="hero-cta">
-        <Button href="/services" variant="primary">Khám Phá Dịch Vụ</Button>
-        <Button href="/work/kakao-wcopilot-ai-campaign" variant="secondary">Xem Showreel 2026</Button>
+        <Button href="/en/services" variant="primary">Explore Services</Button>
+        <Button href="/en/work/kakao-wcopilot-ai-campaign" variant="secondary">Watch 2026 Showreel</Button>
       </div>
 
       <!-- Showreel Video Preview -->
@@ -270,8 +270,8 @@ const techStack = [
     <!-- Featured Services Section -->
     <Section id="services">
       <div class="section-header">
-        <h2 class="section-title">Dịch Vụ AI Đột Phá</h2>
-        <p class="section-desc">Giải pháp toàn diện từ sản xuất video, tạo dựng nhân vật ảo đến hiệu ứng thị giác tương lai.</p>
+        <h2 class="section-title">Breakthrough AI Services</h2>
+        <p class="section-desc">End-to-end solutions from GenAI video production to 3D Virtual Human creation.</p>
       </div>
 
       <div class="services-grid">
@@ -295,10 +295,10 @@ const techStack = [
     </Section>
 
     <!-- Featured Works Section -->
-    <Section id="works" class="section-dark">
+    <Section id="works">
       <div class="section-header">
-        <h2 class="section-title">Dự Án Tiêu Biểu</h2>
-        <p class="section-desc">Các sản phẩm quảng cáo và chiến dịch AI đột phá chúng tôi đã thực hiện.</p>
+        <h2 class="section-title">Selected Works</h2>
+        <p class="section-desc">Explore our flagship AI commercial campaigns and creative productions.</p>
       </div>
 
       <div class="works-grid">
@@ -312,7 +312,7 @@ const techStack = [
             )}
             <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">{work.attributes?.title}</h3>
             <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem;">{work.attributes?.description}</p>
-            <Button href={`/work/${work.attributes?.slug}`} variant="ghost">Xem chi tiết dự án →</Button>
+            <Button href={`/en/work/${work.attributes?.slug}`} variant="ghost">View Case Study →</Button>
           </Card>
         ))}
       </div>

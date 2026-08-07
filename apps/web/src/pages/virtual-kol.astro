@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+
+const seo = {
+  title: 'Virtual KOL & Digital Human | GUAI Studio',
+  description: 'Dịch vụ thiết kế và vận hành người ảnh hưởng ảo 3D AI.',
+};
+---
+
+<BaseLayout seo={seo} lang="vi">
+  <main class="page-kol" style="padding-top: 120px;">
+    <Section>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div>
+          <span style="font-weight: 700; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">Virtual KOL Solution</span>
+          <h1 style="font-size: 3.5rem; margin: 1rem 0 1.5rem; line-height: 1.1;">Đại Sứ Thương Hiệu Ảo Siêu Thực</h1>
+          <p style="color: var(--color-text-muted); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+            Tạo dựng nhân vật 3D AI độc quyền cho thương hiệu của bạn. Tương tác livestream, quay TVC và đại diện thương hiệu 24/7 với chi phí vận hành tối ưu.
+          </p>
+          <Button href="/contact" variant="primary">Đặt Hàng Virtual KOL</Button>
+        </div>
+
+        <Card style="padding: 0; overflow: hidden; border-radius: var(--radius-lg);">
+          <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop" alt="Virtual KOL Showcase" style="width: 100%; aspect-ratio: 4/5; object-fit: cover;" />
+        </Card>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

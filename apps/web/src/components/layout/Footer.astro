@@ -1,0 +1,129 @@
+---
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'vi' } = Astro.props;
+const isEn = lang === 'en';
+---
+
+<style>
+  .site-footer {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-white-10);
+    padding: var(--space-xl) var(--space-md) var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .footer-brand h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xs);
+    background: linear-gradient(135deg, #ffffff 0%, #3898ec 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .footer-brand p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    max-width: 320px;
+  }
+
+  .footer-col h4 {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-col li {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-col a {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-col a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: var(--space-lg) auto 0;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-white-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h3>GUAI STUDIO</h3>
+      <p>{isEn ? 'Pioneering AI Creative Studio in Vietnam & APAC' : 'Studio tiên phong ứng dụng công nghệ AI sáng tạo tại Việt Nam & APAC'}</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>{isEn ? 'Services' : 'Dịch vụ'}</h4>
+      <ul>
+        <li><a href="#">GenAI Video Ads</a></li>
+        <li><a href="#">Virtual KOL & Avatar</a></li>
+        <li><a href="#">AI 3D Motion Graphics</a></li>
+        <li><a href="#">AI Voice & Audio Sync</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>{isEn ? 'Company' : 'Công ty'}</h4>
+      <ul>
+        <li><a href={isEn ? '/en/about' : '/about'}>{isEn ? 'About Us' : 'Về chúng tôi'}</a></li>
+        <li><a href={isEn ? '/en/virtual-kol' : '/virtual-kol'}>Virtual KOL</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press Kit</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>{isEn ? 'Connect' : 'Kết nối'}</h4>
+      <ul>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Behance</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2026 GUAI Studio. All rights reserved.</div>
+    <div>Designed for High-End AI Innovation</div>
+  </div>
+</footer>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+
+const seo = {
+  title: 'Virtual KOL & Digital Human | GUAI Studio',
+  description: 'Design and operation of hyper-realistic 3D AI influencers.',
+};
+---
+
+<BaseLayout seo={seo} lang="en">
+  <main class="page-kol" style="padding-top: 120px;">
+    <Section>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div>
+          <span style="font-weight: 700; color: #a855f7; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">Virtual KOL Solution</span>
+          <h1 style="font-size: 3.5rem; margin: 1rem 0 1.5rem; line-height: 1.1;">Hyper-Realistic Digital Ambassadors</h1>
+          <p style="color: var(--color-text-muted); font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+            Create custom 3D AI avatars for your brand. Engage audience via live streaming, TVCs, and 24/7 brand representation.
+          </p>
+          <Button href="/en/contact" variant="primary">Build Virtual KOL</Button>
+        </div>
+
+        <Card style="padding: 0; overflow: hidden; border-radius: var(--radius-lg);">
+          <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop" alt="Virtual KOL Showcase" style="width: 100%; aspect-ratio: 4/5; object-fit: cover;" />
+        </Card>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,155 @@
+---
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  lang?: string;
+}
+
+const { lang = 'vi' } = Astro.props;
+
+const isEn = lang === 'en';
+const prefix = isEn ? '/en' : '';
+
+const navItems = [
+  { label: isEn ? 'Services' : 'Dịch vụ', href: `${prefix}/services` },
+  { label: isEn ? 'Works' : 'Dự án', href: `${prefix}/work/ai-commercial-video` },
+  { label: isEn ? 'Virtual KOL' : 'Virtual KOL', href: `${prefix}/virtual-kol` },
+  { label: isEn ? 'About' : 'Về chúng tôi', href: `${prefix}/about` },
+];
+---
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-white-10);
+    transition: all var(--transition-fast);
+  }
+
+  .header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .brand-logo .accent {
+    background: linear-gradient(135deg, #3898ec 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .brand-badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: var(--radius-full);
+    background: rgba(56, 152, 236, 0.15);
+    color: var(--color-accent);
+    border: 1px solid rgba(56, 152, 236, 0.3);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--color-white-5);
+    padding: 3px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-white-10);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .lang-btn {
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+  }
+
+  .lang-btn.active {
+    background: var(--color-white-15, rgba(255, 255, 255, 0.15));
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>
+
+<header class="site-header">
+  <div class="header-container">
+    <a href={prefix || '/'} class="brand-logo">
+      <span>GUAI <span class="accent">STUDIO</span></span>
+      <span class="brand-badge">AI agency</span>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        {navItems.map(item => (
+          <li>
+            <a href={item.href} class="nav-link">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <div class="lang-switcher">
+        <a href="/" class={`lang-btn ${!isEn ? 'active' : ''}`}>VI</a>
+        <a href="/en" class={`lang-btn ${isEn ? 'active' : ''}`}>EN</a>
+      </div>
+      <Button href={`${prefix}/contact`} variant="primary">
+        {isEn ? 'Contact Us' : 'Tư vấn ngay'}
+      </Button>
+    </div>
+  </div>
+</header>

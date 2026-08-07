@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+
+const seo = {
+  title: 'Về Chúng Tôi | GUAI Studio',
+  description: 'GUAI Studio là agency tiên phong sáng tạo công nghệ AI hàng đầu.',
+};
+---
+
+<BaseLayout seo={seo} lang="vi">
+  <main class="page-about" style="padding-top: 120px;">
+    <Section>
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <span style="font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">Về GUAI Studio</span>
+        <h1 style="font-size: 3.5rem; margin: 1rem 0 1.5rem; line-height: 1.1;">Định Hình Tương Lai Sáng Tạo Bằng Trí Tuệ Nhân Tạo</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.2rem; line-height: 1.7; margin-bottom: 2rem;">
+          Chúng tôi là studio tiên phong tại Việt Nam chuyên ứng dụng các mô hình AI mới nhất (Veo 3.1, Midjourney v6, Runway Gen-3) để sản xuất nội dung truyền thông đỉnh cao cho các thương hiệu hàng đầu khu vực APAC.
+        </p>
+        <Button href="/contact" variant="primary">Hợp tác cùng chúng tôi</Button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 4rem;">
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: var(--color-accent); margin-bottom: 0.5rem;">50M+</h2>
+          <p style="color: var(--color-text-muted);">Lượt xem Video TVC sản xuất bằng AI</p>
+        </Card>
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: #a855f7; margin-bottom: 0.5rem;">100%</h2>
+          <p style="color: var(--color-text-muted);">Chất lượng 4K & Render siêu thực</p>
+        </Card>
+        <Card style="text-align: center;">
+          <h2 style="font-size: 2.5rem; color: #3898ec; margin-bottom: 0.5rem;">3X</h2>
+          <p style="color: var(--color-text-muted);">Tốc độ sản xuất so với studio truyền thống</p>
+        </Card>
+      </div>
+    </Section>
+  </main>
+</BaseLayout>

@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Build the actual web pages, fetch content from Strapi, and implement i18n routing and dynamic SEO metadata.
 
 ## Requirements

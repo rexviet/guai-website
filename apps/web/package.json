@@ -12,6 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.0"
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.0",
+    "qs": "^6.15.3"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.15.1"
   }
 }
