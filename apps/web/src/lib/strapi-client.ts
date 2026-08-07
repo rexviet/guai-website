@@ -109,7 +109,7 @@ export async function getCaseStudies(locale: string = "vi"): Promise<any[]> {
   try {
     const data = await fetchApi<any>("/case-studies", {
       locale,
-      populate: "deep",
+      populate: "*",
     });
     if (data?.data && data.data.length > 0) return data.data;
   } catch (e) {
