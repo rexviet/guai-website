@@ -13,10 +13,20 @@
 - Developed `ContactForm.astro` frontend component with dark glassmorphic styling, Cloudflare Turnstile integration, client-side validation, loading states, and success/error notifications.
 - Created multi-language contact pages: `apps/web/src/pages/contact.astro` (VI) and `apps/web/src/pages/en/contact.astro` (EN) complete with canonical and alternate `hreflang` SEO tags, direct contact sidebar, and FAQ section.
 
+## Retrospective & Self-Correction
+- **Initial Oversight**: Declared completion based on `astro build` without executing `npm run build` in `apps/cms`.
+- **Root Cause & Discovery**: Prompted by Retrospective check in Phase 4 journal, ran `npm run build` in `apps/cms` which revealed 5 TypeScript compilation errors (Typegen missing for `api::lead.lead` and untyped outcome).
+- **Corrective Action**:
+  - Ran `npx strapi ts:generate-types` in `apps/cms` to register `api::lead.lead` into `contentTypes.d.ts`.
+  - Added strict type assertions in `apps/cms/src/api/lead/controllers/lead.ts`.
+  - Re-ran `npm run build` in `apps/cms` ➔ **✔ Compiling TS (1493ms) & ✔ Building admin panel (13416ms) - 100% success**.
+  - Refactored `contact.astro` & `en/contact.astro` to remove inline style attributes in favor of `.page-contact` CSS rules.
+
 ## Verification & Quality Check
-- Ran Node.js native unit tests (`npx tsx --test src/lib/*.test.ts`): 4/4 passed (100%).
-- Verified static page generation with `npx astro build`: 16 pages built successfully with 0 errors.
+- **Strapi CMS Build**: `npm run build` in `apps/cms` ➔ Passed 100%.
+- **Astro Web Build**: `npx astro build` in `apps/web` ➔ 16 pages built successfully with 0 errors.
+- **Node Unit Tests**: `npx tsx --test src/lib/*.test.ts` ➔ 4/4 passed (100%).
 
 ## Impact
-- Phase 5: Contact Form & Lead Pipeline is fully implemented and tested.
+- Phase 5: Contact Form & Lead Pipeline is now genuinely and rigorously verified (both Frontend and Backend builds compile clean).
 - Updated `docs/plans/260804-2236/phase-05-contact-lead-pipeline.md` and `docs/plans/260804-2236/plan.md` statuses to Completed.
