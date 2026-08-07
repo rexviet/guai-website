@@ -1,9 +1,12 @@
 ---
+import { getServices } from "../../lib/strapi-client";
+
 export interface Props {
   lang?: string;
 }
 
 const { lang = "vi" } = Astro.props;
+const services = await getServices(lang);
 ---
 
 <div data-animation="over-left" class="main-header w-nav" data-easing2="ease" data-easing="ease" data-collapse="medium" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
@@ -35,9 +38,11 @@ const { lang = "vi" } = Astro.props;
                           <p class="nav-menu-item">Services</p>
                         </div>
                         <nav class="dropdown-nav-list w-dropdown-list">
-                          <div class="nav-dropdown-link-wrapper-3">
-                            <a href="/services" class="nav-dropdown-intro-link w-dropdown-link"><span class="nav-dropdowm-link-line-2"> </span>All Services</a>
-                          </div>
+                          {services.map((service) => (
+                            <div class="nav-dropdown-link-wrapper-3">
+                              <a href={`/services/${service.slug}`} class="nav-dropdown-intro-link w-dropdown-link"><span class="nav-dropdowm-link-line-2"> </span>{service.title}</a>
+                            </div>
+                          ))}
                         </nav>
                       </div>
                       <div data-hover="true" data-delay="0" class="nav-menu-dropdown-white w-dropdown">
