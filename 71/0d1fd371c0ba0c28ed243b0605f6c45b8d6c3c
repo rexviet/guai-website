@@ -1,0 +1,14 @@
+apps/web/src/lib/strapi-client.ts
+  h_43770622f8f2a6 16-18,22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "710d1fd371c0ba0c28ed243b0605f6c45b8d6c3c",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
