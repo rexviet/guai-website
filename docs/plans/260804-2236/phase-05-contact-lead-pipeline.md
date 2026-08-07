@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Build the frontend contact form with Cloudflare Turnstile, and implement a custom Strapi endpoint to process leads, upload attachments to R2, and send email notifications.
 
 ## Requirements
@@ -20,10 +20,15 @@
 
 ## Related Code Files
 - `[NEW]` `apps/web/src/pages/contact.astro`
+- `[NEW]` `apps/web/src/pages/en/contact.astro`
 - `[NEW]` `apps/web/src/components/forms/ContactForm.astro`
+- `[NEW]` `apps/web/src/lib/lead-client.ts`
+- `[NEW]` `apps/web/src/lib/lead-client.test.ts`
+- `[NEW]` `apps/cms/src/api/lead/content-types/lead/schema.json`
 - `[NEW]` `apps/cms/src/api/lead/routes/lead-custom.ts`
-- `[NEW]` `apps/cms/src/api/lead/controllers/lead-custom.ts`
-- `[NEW]` `apps/cms/src/api/lead/services/lead-custom.ts`
+- `[NEW]` `apps/cms/src/api/lead/routes/lead.ts`
+- `[NEW]` `apps/cms/src/api/lead/controllers/lead.ts`
+- `[NEW]` `apps/cms/src/api/lead/services/lead.ts`
 
 ## Implementation Steps
 1. Create the `lead` Content-Type in Strapi (no public read/write via default routes).
@@ -37,11 +42,11 @@
 5. Implement success/error states and redirects on the frontend.
 
 ## Todo List
-- [ ] Create `lead` schema in Strapi
-- [ ] Implement Turnstile validation logic
-- [ ] Implement custom Lead controller in Strapi
-- [ ] Setup Resend/Brevo email integration
-- [ ] Build frontend Contact Form with Turnstile
+- [x] Create `lead` schema in Strapi
+- [x] Implement Turnstile validation logic
+- [x] Implement custom Lead controller in Strapi
+- [x] Setup Resend/Brevo email integration
+- [x] Build frontend Contact Form with Turnstile
 
 ## Success Criteria
 - Submitting the form creates a Lead record in Strapi.
