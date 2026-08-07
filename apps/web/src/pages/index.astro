@@ -81,6 +81,52 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
         </div>
       </div>
     </div>
+    
+    <style is:inline>
+      /* Turn the services grid into a horizontal slider */
+      .advantages-list {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding-bottom: 20px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.3) transparent;
+      }
+      
+      .advantages-list::-webkit-scrollbar {
+        height: 6px;
+      }
+      
+      .advantages-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      .advantages-list::-webkit-scrollbar-thumb {
+        background-color: rgba(255,255,255,0.3);
+        border-radius: 10px;
+      }
+      
+      .advantages-list > .mini-video-lightbox {
+        flex: 0 0 calc(33.3333% - 10px) !important; /* Show 3 items */
+        scroll-snap-align: start;
+        min-width: 280px;
+      }
+      
+      @media (max-width: 991px) {
+        .advantages-list > .mini-video-lightbox {
+          flex: 0 0 calc(50% - 7.5px) !important; /* Show 2 items on tablet */
+        }
+      }
+      
+      @media (max-width: 479px) {
+        .advantages-list > .mini-video-lightbox {
+          flex: 0 0 100% !important; /* Show 1 item on mobile */
+        }
+      }
+    </style>
+
     <section id="Our-Benefits" class="section">
       <div class="grid-wrapper">
         <div
