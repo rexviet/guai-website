@@ -5,7 +5,7 @@
 
 ## Overview
 - **Priority:** P1
-- **Current status:** Pending
+- **Current status:** Completed
 - **Brief description:** Automate the build and deploy process using GitHub Actions triggered by Strapi webhooks.
 
 ## Requirements
@@ -21,7 +21,9 @@
 
 ## Related Code Files
 - `[NEW]` `.github/workflows/build-and-deploy.yml`
-- `[NEW]` `apps/cms/src/index.ts` (Strapi lifecycle hooks)
+- `[NEW]` `apps/cms/src/services/github-dispatch.ts`
+- `[NEW]` `apps/cms/src/services/github-dispatch.test.ts`
+- `[MODIFY]` `apps/cms/src/index.ts` (Strapi database lifecycles)
 
 ## Implementation Steps
 1. Create `.github/workflows/build-and-deploy.yml` reacting to `push` on `main` and `repository_dispatch`.
@@ -32,10 +34,10 @@
 6. Configure concurrency in GHA (`concurrency: production-build`) to cancel overlapping builds.
 
 ## Todo List
-- [ ] Create GHA Workflow YAML
-- [ ] Configure GitHub Secrets (SSH_DEPLOY_KEY, VPS_HOST, STRAPI_API_URL)
-- [ ] Implement Strapi webhook to trigger GHA
-- [ ] Test end-to-end automated deployment
+- [x] Create GHA Workflow YAML
+- [x] Configure GitHub Secrets (SSH_DEPLOY_KEY, VPS_HOST, STRAPI_API_URL)
+- [x] Implement Strapi webhook to trigger GHA
+- [x] Test end-to-end automated deployment
 
 ## Success Criteria
 - Modifying content in Strapi triggers a build on GitHub.

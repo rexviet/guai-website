@@ -1,0 +1,70 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types:
+      - strapi_content_update
+
+concurrency:
+  group: production-build
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy Astro Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix apps/web
+
+      - name: Build Astro static site
+        run: |
+          npm run build --prefix apps/web
+        env:
+          STRAPI_API_URL: ${{ secrets.STRAPI_API_URL || 'http://127.0.0.1:1337' }}
+          SITE_URL: ${{ secrets.SITE_URL || 'https://guai.studio' }}
+
+      - name: Setup SSH Deploy Key
+        if: ${{ secrets.VPS_HOST != '' && secrets.SSH_DEPLOY_KEY != '' }}
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
+
+      - name: Deploy to VPS via rsync & Atomic Symlink Swap
+        if: ${{ secrets.VPS_HOST != '' && secrets.SSH_DEPLOY_KEY != '' }}
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER || 'deploy' }}
+          VPS_TARGET_DIR: ${{ secrets.VPS_TARGET_DIR || '/var/www/guai-studio' }}
+          RELEASE_NAME: ${{ github.sha }}
+        run: |
+          # Add VPS to known hosts
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+          # Target release directory path
+          RELEASE_DIR="$VPS_TARGET_DIR/releases/$RELEASE_NAME"
+
+          # 1. Create release directory on remote VPS
+          ssh "$VPS_USER@$VPS_HOST" "mkdir -p $RELEASE_DIR"
+
+          # 2. Rsync dist static files to release directory
+          rsync -avz --delete apps/web/dist/ "$VPS_USER@$VPS_HOST:$RELEASE_DIR/"
+
+          # 3. Atomic symlink swap to point 'current' to new release
+          ssh "$VPS_USER@$VPS_HOST" "ln -sfn $RELEASE_DIR $VPS_TARGET_DIR/current"
+
+          # 4. Prune old releases (keep last 5 releases)
+          ssh "$VPS_USER@$VPS_HOST" "cd $VPS_TARGET_DIR/releases && ls -1t | tail -n +6 | xargs -r rm -rf"

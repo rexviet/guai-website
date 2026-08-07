@@ -34,7 +34,7 @@ Build a multi-page company profile and portfolio website for GuAI Studio using a
 | 3 | [Design System](./phase-03-design-system.md) | Completed |
 | 4 | [Astro Pages & SEO](./phase-04-astro-pages.md) | Completed |
 | 5 | [Contact Form & Lead Pipeline](./phase-05-contact-lead-pipeline.md) | Completed |
-| 6 | [CI/CD Pipeline](./phase-06-ci-cd-pipeline.md) | Pending |
+| 6 | [CI/CD Pipeline](./phase-06-ci-cd-pipeline.md) | Completed |
 | 7 | [Handover & Go-live](./phase-07-handover-go-live.md) | Pending |
 
 ## Dependencies

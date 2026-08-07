@@ -69,6 +69,35 @@ export default {
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     await seedI18nLocales({ strapi });
 
+    // Register lifecycle subscriber to dispatch GitHub Actions rebuild workflow on content changes
+    const { triggerGitHubDispatch } = await import('./services/github-dispatch.js');
+    strapi.db.lifecycles.subscribe({
+      models: [
+        'api::service.service',
+        'api::case-study.case-study',
+        'api::virtual-kol.virtual-kol',
+        'api::site-setting.site-setting',
+      ],
+      async afterCreate(event) {
+        triggerGitHubDispatch({
+          eventType: 'strapi_content_update',
+          clientPayload: { model: event.model.uid, action: 'afterCreate' },
+        });
+      },
+      async afterUpdate(event) {
+        triggerGitHubDispatch({
+          eventType: 'strapi_content_update',
+          clientPayload: { model: event.model.uid, action: 'afterUpdate' },
+        });
+      },
+      async afterDelete(event) {
+        triggerGitHubDispatch({
+          eventType: 'strapi_content_update',
+          clientPayload: { model: event.model.uid, action: 'afterDelete' },
+        });
+      },
+    });
+
     // NOTE: Public API read access (find/findOne) for `service`, `case-study`,
     // `virtual-kol`, and `site-setting` is intentionally NOT configured here.
     // Per the phase-02 plan's Security Considerations ("limit API public
