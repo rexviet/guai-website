@@ -1,0 +1,16 @@
+apps/web/package-lock.json
+  h_43770622f8f2a6 12,14,1862-1867,3239-3250
+apps/web/package.json
+  h_43770622f8f2a6 16,18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "45ad1e7b484ddf2dac96523bdd39b2b04d6ca4de",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
