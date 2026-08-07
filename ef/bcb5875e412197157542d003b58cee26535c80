@@ -1,0 +1,20 @@
+apps/cms/src/api/lead/controllers/lead.ts
+  h_43770622f8f2a6 10-11,40,44-45,76,84
+apps/cms/types/generated/contentTypes.d.ts
+  h_43770622f8f2a6 540-576,1326
+apps/web/src/pages/contact.astro
+  h_43770622f8f2a6 25,110-114
+apps/web/src/pages/en/contact.astro
+  h_43770622f8f2a6 25,110-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "efbcb5875e412197157542d003b58cee26535c80",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
