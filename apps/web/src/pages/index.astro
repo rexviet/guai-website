@@ -1154,47 +1154,108 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
         </div>
       </div>
       <div class="bottom-page-content">
-        <div class="sectiohn-scroll-headings">
-          <div
-            data-w-id="6cec96c1-27dd-c3ca-74bf-7c44a069c9d1"
-            class="scroll-headings"
-          >
-            <div class="scroll-top">
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-            </div>
-            <div class="scroll-bottom">
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-              <h2 class="stroke-title">Imagination</h2>
-              <div class="large-dot"></div>
-              <h2 class="filled-title">Video</h2>
-              <div class="large-dot"></div>
-            </div>
+        <div style="text-align: center; padding: 60px 20px 20px;">
+          <h6 class="h6-subtitle" style="justify-content: center; margin: 0;">/Solution Pipeline</h6>
+          <h3 style="color: white; max-width: 800px; margin: 20px auto 0; font-size: 1.4rem; line-height: 1.5; font-weight: 300; text-transform: none;">
+            GuAI Studio hướng tới mô hình giải pháp trọn vòng: từ thu hút sự chú ý đến tạo lead và hỗ trợ bán hàng.
+          </h3>
+        </div>
+        <style>
+          .pipeline-container {
+            max-width: 1400px;
+            margin: 60px auto 80px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+          }
+          .pipeline-container::-webkit-scrollbar {
+            display: none;
+          }
+          .pipeline-step {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
+            flex-shrink: 0;
+          }
+          .pipeline-step:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 12px 40px 0 rgba(0,0,0,0.4);
+          }
+          .pipeline-arrow {
+            color: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-arrow 2s infinite;
+          }
+          @keyframes pulse-arrow {
+            0% { transform: translateX(0); opacity: 0.5; }
+            50% { transform: translateX(4px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 0.5; }
+          }
+          @media (max-width: 991px) {
+            .pipeline-step {
+              font-size: 12px;
+              padding: 12px 20px;
+            }
+            .pipeline-arrow svg {
+              width: 18px;
+              height: 18px;
+            }
+          }
+          @media (max-width: 767px) {
+            .pipeline-container {
+              flex-direction: column;
+              gap: 15px;
+            }
+            .pipeline-arrow {
+              transform: rotate(90deg);
+            }
+            @keyframes pulse-arrow {
+              0% { transform: rotate(90deg) translateY(0); opacity: 0.5; }
+              50% { transform: rotate(90deg) translateY(-4px); opacity: 1; }
+              100% { transform: rotate(90deg) translateY(0); opacity: 0.5; }
+            }
+          }
+        </style>
+        <div class="pipeline-container">
+          <div class="pipeline-step">1. AI CREATIVE / KOL</div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
+          <div class="pipeline-step">2. VIDEO &amp; CONTENT</div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="pipeline-step">3. SOCIAL CHANNEL</div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="pipeline-step">4. LEAD</div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="pipeline-step">5. AI SALES AGENT</div>
+          <div class="pipeline-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="pipeline-step">6. SALES TEAM</div>
         </div>
       </div>
     </div>
