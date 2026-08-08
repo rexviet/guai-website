@@ -59,6 +59,19 @@ const seoHtml = generateSeoTags(seo);
        * OVER the footer. Without this, footer bleeds through content.
        */
 
+      /* Fix floating header gap (both normal and scrolled states) */
+      .main-header {
+        top: 0 !important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+      .menu-dark-container {
+        top: 0 !important;
+        margin-top: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+      }
+
       /* Ensure all content sections stack above footer */
       .home-1-section {
         z-index: 90;
