@@ -28,7 +28,7 @@ const alternateEn = `${siteUrl}/en/contact`;
         <span class="badge">Contact Us</span>
         <h1 class="hero-title">Kết Nối & Hợp Tác Sáng Tạo</h1>
         <p class="hero-subtitle">
-          Liên hệ với GuAI Studio để biến ý tưởng truyền thông của thương hiệu thành các sản phẩm hình ảnh & video AI điện ảnh tiên phong.
+          Gửi cho chúng tôi sản phẩm hoặc campaign brief. Team sẽ đề xuất cách AI có thể được ứng dụng vào chiến dịch.
         </p>
       </div>
 
@@ -42,63 +42,71 @@ const alternateEn = `${siteUrl}/en/contact`;
         <div class="info-sidebar">
           <!-- Info Card -->
           <Card class="sidebar-card info-card">
-            <h3 class="card-title">Thông Tin Liên Hệ Direct</h3>
+            <h3 class="card-title">Thông Tin Liên Hệ</h3>
             
             <div class="info-list">
               <div class="info-item">
+                <div class="info-icon">📍</div>
+                <div>
+                  <span class="info-label">AI MEDIA STUDIO</span>
+                  <p class="info-value">Ho Chi Minh City, Vietnam</p>
+                </div>
+              </div>
+
+              <div class="info-item">
                 <div class="info-icon">✉</div>
                 <div>
-                  <span class="info-label">Email Brief & Partnership</span>
-                  <a href="mailto:contact@guai.studio" class="info-value">contact@guai.studio</a>
+                  <span class="info-label">Email</span>
+                  <a href="mailto:contact@guai.studio" class="info-value track-cta" data-tracking="click_email">contact@guai.studio</a>
                 </div>
               </div>
 
               <div class="info-item">
                 <div class="info-icon">📞</div>
                 <div>
-                  <span class="info-label">Hotline & Zalo Official</span>
-                  <a href="tel:+84901234567" class="info-value">+84 (0) 901 234 567</a>
+                  <span class="info-label">Phone / Zalo</span>
+                  <a href="tel:+84901234567" class="info-value track-cta" data-tracking="click_phone">+84 (0) 901 234 567</a>
                 </div>
               </div>
 
               <div class="info-item">
-                <div class="info-icon">📍</div>
+                <div class="info-icon">🌐</div>
                 <div>
-                  <span class="info-label">Studio Creative Hub</span>
-                  <p class="info-value">Quận 1, TP. Hồ Chí Minh, Việt Nam</p>
-                </div>
-              </div>
-
-              <div class="info-item">
-                <div class="info-icon">⏰</div>
-                <div>
-                  <span class="info-label">Thời Gian Làm Việc</span>
-                  <p class="info-value">Thứ 2 - Thứ 6: 09:00 - 18:00</p>
+                  <span class="info-label">Social Media</span>
+                  <div class="social-links" style="display: flex; gap: 10px; margin-top: 5px;">
+                    <a href="#" class="info-value track-cta" data-tracking="click_facebook">Facebook</a>
+                    <a href="#" class="info-value track-cta" data-tracking="click_tiktok">TikTok</a>
+                    <a href="#" class="info-value track-cta" data-tracking="click_youtube">YouTube</a>
+                    <a href="#" class="info-value track-cta" data-tracking="click_linkedin">LinkedIn</a>
+                  </div>
                 </div>
               </div>
             </div>
           </Card>
 
-          <!-- FAQ Card -->
+          <!-- CTA Nhanh Card -->
           <Card class="sidebar-card faq-card">
-            <h3 class="card-title">Câu Hỏi Thường Gặp</h3>
-            
-            <div class="faq-list">
-              <div class="faq-item">
-                <h4 class="faq-q">1. Thời gian phản hồi brief là bao lâu?</h4>
-                <p class="faq-a">Đội ngũ GuAI Studio sẽ phân tích brief và gửi phản hồi kèm đề xuất sơ bộ trong vòng 24 giờ làm việc.</p>
-              </div>
-
-              <div class="faq-item">
-                <h4 class="faq-q">2. GuAI Studio có hỗ trợ kịch bản không?</h4>
-                <p class="faq-a">Có. Chúng tôi cung cấp dịch vụ trọn gói từ Creative Direction, Scriptwriting đến AI Visual Rendering và Post-production.</p>
-              </div>
-
-              <div class="faq-item">
-                <h4 class="faq-q">3. Tốc độ sản xuất video AI nhanh như thế nào?</h4>
-                <p class="faq-a">Nhờ quy trình tự động hóa GenAI độc quyền, thời gian thực hiện TVC/Viral video rút ngắn 50% - 70% so với studio truyền thống.</p>
-              </div>
+            <h3 class="card-title">Hỗ Trợ Nhanh</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <a href="#" class="btn-submit track-cta" data-tracking="click_zalo" style="text-align: center; text-decoration: none; padding: 10px; border-radius: 8px; background: #0068FF; color: white; font-weight: bold;">
+                Chat Zalo
+              </a>
+              <a href="#" class="btn-submit track-cta" data-tracking="click_messenger" style="text-align: center; text-decoration: none; padding: 10px; border-radius: 8px; background: #0084FF; color: white; font-weight: bold;">
+                Messenger
+              </a>
             </div>
+          </Card>
+
+          <!-- Partner Notes Card -->
+          <Card class="sidebar-card partner-card" style="background: rgba(17, 17, 17, 0.8);">
+            <h3 class="card-title" style="color: var(--color-accent); font-size: 1.3rem; border-bottom: none; margin-bottom: 0.5rem; padding-bottom: 0;">Lưu ý dành cho Partner</h3>
+            <ul style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.2rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>Giá trong tài liệu là mức tham khảo/starting price, không phải báo giá cố định.</li>
+              <li>Partner cần xác nhận scope với GuAI Studio trước khi gửi báo giá chính thức cho khách.</li>
+              <li>Không tự ý giảm giá hoặc cam kết tính năng/timeline chưa được Production xác nhận.</li>
+              <li>Với dự án có yêu cầu tích hợp kỹ thuật, CRM, API hoặc automation, cần khảo sát hệ thống trước khi báo giá.</li>
+              <li>Ưu tiên bán giải pháp theo tháng/retainer để khách hàng có kết quả dài hạn và GuAI có thể liên tục tối ưu.</li>
+            </ul>
           </Card>
         </div>
       </div>

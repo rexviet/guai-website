@@ -37,9 +37,13 @@ export function validateLeadForm(data: LeadFormData): ValidationResult {
   }
 
   if (!data.email || !data.email.trim()) {
-    errors.email = "Vui lòng nhập địa chỉ email";
-  } else if (!EMAIL_REGEX.test(data.email.trim())) {
-    errors.email = "Địa chỉ email không hợp lệ";
+    errors.email = "Vui lòng nhập Email hoặc Số điện thoại";
+  } else {
+    const val = data.email.trim();
+    const isPhoneLike = /^[0-9+\-\s()]+$/.test(val) && val.replace(/[^0-9]/g, '').length >= 8;
+    if (!EMAIL_REGEX.test(val) && !isPhoneLike) {
+      errors.email = "Email hoặc Số điện thoại không hợp lệ";
+    }
   }
 
   if (!data.message || !data.message.trim()) {

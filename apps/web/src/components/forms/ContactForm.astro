@@ -12,21 +12,20 @@ const strapiUrl = import.meta.env?.STRAPI_URL || 'http://localhost:1337';
 const texts = {
   vi: {
     title: 'Gửi Brief Dự Án',
-    subtitle: 'Hãy chia sẻ nhu cầu sản xuất của bạn. Đội ngũ chuyên gia GuAI Studio sẽ tư vấn và phản hồi trong 24 giờ làm việc.',
-    fullName: 'Họ và tên',
+    subtitle: 'Gửi cho chúng tôi sản phẩm hoặc campaign brief. Team sẽ đề xuất cách AI có thể được ứng dụng vào chiến dịch.',
+    fullName: 'Họ tên',
     fullNamePlaceholder: 'Nguyễn Văn A',
-    email: 'Địa chỉ Email',
-    emailPlaceholder: 'name@company.com',
-    phone: 'Số điện thoại / Zalo',
-    phonePlaceholder: '090 123 4567',
-    company: 'Doanh nghiệp / Thương hiệu',
+    email: 'Email / Phone',
+    emailPlaceholder: 'name@company.com hoặc 0901234567',
+    website: 'Website / Facebook',
+    websitePlaceholder: 'https://...',
+    company: 'Công ty',
     companyPlaceholder: 'Tên công ty hoặc thương hiệu',
-    service: 'Dịch vụ quan tâm',
-    selectService: '-- Chọn dịch vụ --',
-    message: 'Nội dung Brief / Yêu cầu',
+    service: 'Nhu cầu',
+    message: 'Mô tả dự án',
     messagePlaceholder: 'Mô tả ngắn gọn về thương hiệu, mục tiêu chiến dịch, ngân sách dự kiến...',
-    attachment: 'Đính kèm file brief / Ý tưởng (PDF, DOCX, PNG, MP4, tối đa 10MB)',
-    submit: 'Gửi Yêu Cầu Tư Vấn',
+    attachment: 'Upload Product/Brief (PDF, DOCX, PNG, MP4, tối đa 10MB)',
+    submit: 'GỬI BRIEF',
     submitting: 'Đang gửi thông tin...',
     successTitle: 'Gửi brief thành công!',
     successDesc: 'Cảm ơn bạn đã liên hệ với GuAI Studio. Chúng tôi sẽ nghiên cứu brief và phản hồi sớm nhất.',
@@ -36,21 +35,20 @@ const texts = {
   },
   en: {
     title: 'Submit Your Project Brief',
-    subtitle: 'Share your campaign requirements with us. GuAI Studio specialists will analyze your brief and respond within 24 business hours.',
+    subtitle: 'Send us your product or campaign brief. Our team will propose how AI can be applied to your campaign.',
     fullName: 'Full Name',
     fullNamePlaceholder: 'Alex Morgan',
-    email: 'Email Address',
-    emailPlaceholder: 'alex@company.com',
-    phone: 'Phone Number',
-    phonePlaceholder: '+84 90 123 4567',
-    company: 'Company / Brand Name',
+    email: 'Email / Phone',
+    emailPlaceholder: 'alex@company.com or +84901234567',
+    website: 'Website / Facebook',
+    websitePlaceholder: 'https://...',
+    company: 'Company',
     companyPlaceholder: 'Your company name',
-    service: 'Service Interest',
-    selectService: '-- Select Service --',
-    message: 'Project Brief / Requirements',
+    service: 'Requirements',
+    message: 'Project Description',
     messagePlaceholder: 'Brief description of your brand, campaign goals, target timeline, estimated budget...',
-    attachment: 'Attach Brief File (PDF, DOCX, PNG, MP4, max 10MB)',
-    submit: 'Send Request',
+    attachment: 'Upload Product/Brief (PDF, DOCX, PNG, MP4, max 10MB)',
+    submit: 'SEND BRIEF',
     submitting: 'Submitting brief...',
     successTitle: 'Brief Submitted Successfully!',
     successDesc: 'Thank you for reaching out to GuAI Studio. Our creative team will review your brief and get back to you shortly.',
@@ -63,11 +61,12 @@ const texts = {
 const t = isEn ? texts.en : texts.vi;
 
 const serviceOptions = [
-  { value: 'genai-commercial-video', label: isEn ? 'GenAI Commercial Video Ads (TVC / Viral)' : 'Sản Xuất Video Quảng Cáo AI (GenAI Video Ads)' },
-  { value: 'virtual-kol-creation', label: isEn ? 'Virtual KOL & 3D Digital Human' : 'Thiết Kế & Vận Hành Virtual KOL / AI Avatar' },
-  { value: 'ai-vfx-motion', label: isEn ? 'AI VFX & Motion Graphics' : 'Kỹ Thảo Kỹ Thuật Số & Motion Graphics AI' },
-  { value: 'ai-brand-storytelling', label: isEn ? 'AI Brand Storytelling & Creative Direction' : 'Chiến Lược Thương Hiệu & Kịch Bản AI' },
-  { value: 'other', label: isEn ? 'Other Custom AI Solution' : 'Giải Pháp AI Khác' },
+  { value: 'ai-video', label: isEn ? 'AI Video' : 'AI Video' },
+  { value: 'ai-kol', label: isEn ? 'AI KOL' : 'AI KOL' },
+  { value: 'ai-ads', label: isEn ? 'AI Ads' : 'AI Ads' },
+  { value: 'social-content', label: isEn ? 'Social Content' : 'Social Content' },
+  { value: 'channel-building', label: isEn ? 'Xây Channel' : 'Xây Channel' },
+  { value: 'other', label: isEn ? 'Other' : 'Khác' },
 ];
 ---
 
@@ -75,10 +74,6 @@ const serviceOptions = [
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <div class="contact-form-card" data-strapi-url={strapiUrl}>
-  <div class="form-header">
-    <h2 class="form-title">{t.title}</h2>
-    <p class="form-subtitle">{t.subtitle}</p>
-  </div>
 
   <div id="form-alert-success" class="alert alert-success hidden" role="alert">
     <div class="alert-icon">✓</div>
@@ -112,32 +107,6 @@ const serviceOptions = [
         <span class="field-error" id="err-name"></span>
       </div>
 
-      <!-- Email -->
-      <div class="form-group">
-        <label for="lead-email" class="form-label">{t.email} <span class="required">*</span></label>
-        <input
-          type="email"
-          id="lead-email"
-          name="email"
-          class="form-input"
-          placeholder={t.emailPlaceholder}
-          required
-        />
-        <span class="field-error" id="err-email"></span>
-      </div>
-
-      <!-- Phone -->
-      <div class="form-group">
-        <label for="lead-phone" class="form-label">{t.phone}</label>
-        <input
-          type="tel"
-          id="lead-phone"
-          name="phone"
-          class="form-input"
-          placeholder={t.phonePlaceholder}
-        />
-      </div>
-
       <!-- Company -->
       <div class="form-group">
         <label for="lead-company" class="form-label">{t.company}</label>
@@ -149,17 +118,45 @@ const serviceOptions = [
           placeholder={t.companyPlaceholder}
         />
       </div>
+
+      <!-- Email / Phone -->
+      <div class="form-group">
+        <label for="lead-email" class="form-label">{t.email} <span class="required">*</span></label>
+        <input
+          type="text"
+          id="lead-email"
+          name="email"
+          class="form-input"
+          placeholder={t.emailPlaceholder}
+          required
+        />
+        <span class="field-error" id="err-email"></span>
+      </div>
+
+      <!-- Website / Facebook -->
+      <div class="form-group">
+        <label for="lead-website" class="form-label">{t.website}</label>
+        <input
+          type="text"
+          id="lead-website"
+          name="phone"
+          class="form-input"
+          placeholder={t.websitePlaceholder}
+        />
+      </div>
     </div>
 
-    <!-- Service Interest -->
+    <!-- Service Interest (Checkboxes) -->
     <div class="form-group">
-      <label for="lead-service" class="form-label">{t.service}</label>
-      <select id="lead-service" name="service_interest" class="form-select">
-        <option value="">{t.selectService}</option>
-        {serviceOptions.map((opt) => (
-          <option value={opt.value}>{opt.label}</option>
+      <label class="form-label">{t.service}</label>
+      <div class="checkbox-grid">
+        {serviceOptions.map((opt, i) => (
+          <label class="checkbox-label" for={`service-${i}`}>
+            <input type="checkbox" id={`service-${i}`} name="service_interest[]" value={opt.value} class="form-checkbox" />
+            <span class="checkbox-text">{opt.label}</span>
+          </label>
         ))}
-      </select>
+      </div>
     </div>
 
     <!-- Message -->
@@ -200,7 +197,7 @@ const serviceOptions = [
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" id="btn-submit-lead" class="btn-submit">
+    <button type="submit" id="btn-submit-lead" class="btn-submit track-cta" data-tracking="submit_brief">
       <span class="btn-text">{t.submit}</span>
       <span class="btn-spinner hidden"></span>
     </button>
@@ -209,51 +206,22 @@ const serviceOptions = [
 
 <style>
   .contact-form-card {
-    background: rgba(17, 17, 17, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-lg);
-    padding: var(--space-md);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-  }
-
-  @media (min-width: 768px) {
-    .contact-form-card {
-      padding: var(--space-lg);
-    }
-  }
-
-  .form-header {
-    margin-bottom: var(--space-md);
-  }
-
-  .form-title {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, var(--color-accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .form-subtitle {
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
   }
 
   .lead-form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 2rem;
   }
 
   .form-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 2rem;
   }
 
   @media (min-width: 640px) {
@@ -265,13 +233,15 @@ const serviceOptions = [
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.75rem;
   }
 
   .form-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
   }
 
   .required {
@@ -282,23 +252,22 @@ const serviceOptions = [
   .form-select,
   .form-textarea {
     width: 100%;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-md);
-    color: var(--color-text);
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    color: #ffffff;
     font-family: var(--font-primary);
-    font-size: 0.95rem;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    font-size: 1rem;
+    transition: all 0.3s ease;
   }
 
   .form-input:focus,
   .form-select:focus,
   .form-textarea:focus {
     outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(56, 152, 236, 0.2);
-    background: rgba(255, 255, 255, 0.07);
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .form-select option {
@@ -306,15 +275,39 @@ const serviceOptions = [
     color: #ffffff;
   }
 
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 0.9rem;
+  }
+
+  .form-checkbox {
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+
   .form-file-input {
     color: var(--color-text-muted);
-    font-size: 0.875rem;
-    padding: 0.5rem;
+    font-size: 0.95rem;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-md);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 0;
     width: 100%;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
 
   .form-file-input::file-selector-button {
@@ -339,7 +332,7 @@ const serviceOptions = [
   }
 
   .turnstile-wrapper {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     display: flex;
     justify-content: flex-start;
   }
@@ -349,22 +342,24 @@ const serviceOptions = [
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 0.9rem 1.5rem;
-    background: linear-gradient(135deg, var(--color-accent) 0%, #0066cc 100%);
-    color: #ffffff;
+    padding: 1.25rem 2rem;
+    background: #ffffff;
+    color: #000000;
     font-family: var(--font-primary);
     font-weight: 700;
     font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 0;
     cursor: pointer;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
-    box-shadow: 0 4px 16px rgba(56, 152, 236, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 1rem;
   }
 
   .btn-submit:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(56, 152, 236, 0.5);
+    background: rgba(255,255,255,0.8);
+    transform: none;
   }
 
   .btn-submit:disabled {
