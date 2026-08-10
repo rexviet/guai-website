@@ -256,7 +256,29 @@ export default {
    * An asynchronous register function that runs before
    * your application is initialized.
    *
-  register() {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    strapi.server.use(async (ctx, next) => {
+      if (ctx.path === '/api/proxy-video' && ctx.method === 'GET') {
+        const targetUrl = ctx.query.url as string;
+        if (!targetUrl) {
+          ctx.status = 400;
+          ctx.body = { error: 'Missing url parameter' };
+          return;
+        }
+        try {
+          const res = await fetch(targetUrl);
+          ctx.set('Access-Control-Allow-Origin', '*');
+          ctx.set('Content-Type', res.headers.get('content-type') || 'video/mp4');
+          ctx.body = res.body;
+        } catch (e: any) {
+          ctx.status = 500;
+          ctx.body = { error: e.message };
+        }
+        return;
+      }
+      await next();
+    });
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
@@ -271,6 +293,42 @@ export default {
 
     // Register lifecycle subscriber to dispatch GitHub Actions rebuild workflow on content changes
     const { triggerGitHubDispatch } = await import('./services/github-dispatch.js');
+    const autoSyncVideoUrls = async (event: any) => {
+      try {
+        const data = event.params?.data;
+        if (!data) return;
+
+        const syncComponent = async (videoComp: any) => {
+          if (!videoComp) return;
+          if (videoComp.video_file) {
+            const fileId = typeof videoComp.video_file === 'object' ? videoComp.video_file.id : videoComp.video_file;
+            if (fileId) {
+              const fileObj = await strapi.db.query('plugin::upload.file').findOne({ where: { id: fileId } });
+              if (fileObj && fileObj.url) {
+                videoComp.mp4_url = fileObj.url;
+              }
+            }
+          }
+          if (videoComp.poster_file) {
+            const fileId = typeof videoComp.poster_file === 'object' ? videoComp.poster_file.id : videoComp.poster_file;
+            if (fileId) {
+              const fileObj = await strapi.db.query('plugin::upload.file').findOne({ where: { id: fileId } });
+              if (fileObj && fileObj.url) {
+                videoComp.poster_url = fileObj.url;
+              }
+            }
+          }
+        };
+
+        if (data.featured_video) await syncComponent(data.featured_video);
+        if (data.video) await syncComponent(data.video);
+        if (data.banner_video) await syncComponent(data.banner_video);
+        if (data.cta_video) await syncComponent(data.cta_video);
+      } catch (err) {
+        console.error('Error in autoSyncVideoUrls lifecycle:', err);
+      }
+    };
+
     strapi.db.lifecycles.subscribe({
       models: [
         'api::service.service',
@@ -278,6 +336,12 @@ export default {
         'api::virtual-kol.virtual-kol',
         'api::site-setting.site-setting',
       ],
+      async beforeCreate(event) {
+        await autoSyncVideoUrls(event);
+      },
+      async beforeUpdate(event) {
+        await autoSyncVideoUrls(event);
+      },
       async afterCreate(event) {
         triggerGitHubDispatch({
           eventType: 'strapi_content_update',
