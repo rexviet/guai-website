@@ -1,0 +1,26 @@
+apps/web/src/components/forms/ContactForm.astro
+  h_43770622f8f2a6 256-258,269-271,315-316,326,347-348,353,355,357,359,363-365,369
+apps/web/src/components/layout/Footer.astro
+  h_43770622f8f2a6 21,24,27,30,35,38,43,71,78,81,91-92
+apps/web/src/components/layout/Header.astro
+  h_43770622f8f2a6 38,51,55,60,68-69,113-114
+apps/web/src/layouts/BaseLayout.astro
+  h_43770622f8f2a6 56-61,64-142
+apps/web/src/pages/contact.astro
+  h_43770622f8f2a6 27-33,36-54,57-62,65-70,73-82,86-112,138,143-144,155,193-194
+apps/web/src/pages/index.astro
+  h_43770622f8f2a6 70-71,138,151,483,486,585,588,686,689,754,761,841,847,947,1038,1131,1311,1320,1328-1329
+apps/web/src/styles/design-tokens.css
+  h_43770622f8f2a6 6-14,16-21,24-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "95f412025eb30b5c7fe92d3a02b87d04acd0c584",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
