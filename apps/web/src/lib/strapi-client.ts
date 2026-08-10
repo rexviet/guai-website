@@ -48,26 +48,12 @@ function normalizeVideoSource(videoObj: any, fallback: any) {
   const videoFileUrl = videoObj.video_file?.url
     ? (videoObj.video_file.url.startsWith("http") ? videoObj.video_file.url : `${API_URL}${videoObj.video_file.url}`)
     : null;
-  const posterFileUrl = videoObj.poster_file?.url
-    ? (videoObj.poster_file.url.startsWith("http") ? videoObj.poster_file.url : `${API_URL}${videoObj.poster_file.url}`)
-    : null;
 
   const mp4Url = videoFileUrl || videoObj.mp4_url || fallback.mp4_url;
-  
-  let posterUrl = posterFileUrl;
-  if (!posterUrl) {
-    if (videoObj.poster_url && !videoObj.poster_url.includes("website-files.com")) {
-      posterUrl = videoObj.poster_url;
-    } else if (!videoFileUrl && !(videoObj.mp4_url && videoObj.mp4_url.includes("cdn.guai.studio"))) {
-      posterUrl = fallback.poster_url;
-    } else {
-      posterUrl = "";
-    }
-  }
 
   return {
     mp4_url: mp4Url,
-    poster_url: posterUrl,
+    poster_url: videoFileUrl ? "" : (videoObj.poster_url || fallback.poster_url),
   };
 }
 

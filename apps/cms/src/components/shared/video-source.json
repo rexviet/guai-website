@@ -3,7 +3,7 @@
   "info": {
     "displayName": "Video Source",
     "icon": "play",
-    "description": "Video Asset with Auto Poster & String URL Fallbacks"
+    "description": "Video Asset"
   },
   "options": {},
   "attributes": {
@@ -12,18 +12,6 @@
       "multiple": false,
       "required": false,
       "allowedTypes": ["files", "videos"]
-    },
-    "poster_file": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
-    },
-    "mp4_url": {
-      "type": "string"
-    },
-    "poster_url": {
-      "type": "string"
     }
   }
 }
