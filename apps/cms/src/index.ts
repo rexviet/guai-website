@@ -97,8 +97,8 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
 
     await syncComponentLayout('shared.video-source', [
       [{ name: 'video_file', size: 6 }, { name: 'poster_file', size: 6 }],
-      [{ name: 'mp4_url', size: 6 }, { name: 'poster_url', size: 6 }],
-      [{ name: 'webm_url', size: 6 }]
+      [{ name: 'auto_poster', size: 12 }],
+      [{ name: 'mp4_url', size: 6 }, { name: 'poster_url', size: 6 }]
     ]);
 
     await syncLayout('api::service.service', ['featured_video']);

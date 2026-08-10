@@ -19,10 +19,11 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "mp4_url": {
-      "type": "string"
+    "auto_poster": {
+      "type": "customField",
+      "customField": "plugin::shared.auto-poster"
     },
-    "webm_url": {
+    "mp4_url": {
       "type": "string"
     },
     "poster_url": {
