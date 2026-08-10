@@ -53,13 +53,93 @@ const seoHtml = generateSeoTags(seo);
     <!-- CSS overrides: fix z-index stacking for sticky footer pattern -->
     <style is:inline>
       /*
-       * Kakao/Webflow uses a "sticky footer reveal" pattern:
-       *   .footer-con { position: sticky; inset: auto 0% 0%; }
-       * Content sections must have position:relative + z-index to scroll
-       * OVER the footer. Without this, footer bleeds through content.
+       * === GUAI STUDIO — DESIGN SYSTEM OVERRIDES ===
+       * Brief: Midnight Blue #0B1026 + Electric Violet #6C4DFF
+       *        + Cyan #22D3EE + gradient/glow CTAs
+       *
+       * Strategy: Override Kakao's root variables so all Kakao
+       * components automatically pick up the new palette.
        */
 
-      /* Fix floating header gap (both normal and scrolled states) */
+      /* 1. Bridge Kakao variables → Brief palette */
+      :root {
+        --primary-black: #0B1026;    /* Midnight Blue (was black) */
+        --white: #ffffff;
+        --white-50: #ffffff80;
+        --white-25: #ffffff40;
+        --white-5-51: #ffffff0d;
+        --white-1: #ffffff03;
+      }
+
+      /* 2. Global background */
+      body {
+        background-color: #0B1026 !important;
+      }
+
+      /* 3. Section backgrounds inherit Midnight Blue */
+      section.section,
+      #Our-Benefits,
+      #recent-work,
+      .section-news {
+        position: relative;
+        z-index: 50;
+        background-color: #0B1026;
+      }
+
+      /* 4. Accent color override: Webflow blue → Electric Violet */
+      .w-form-formradioinput--inputType-custom.w--redirected-focus {
+        box-shadow: 0 0 3px 1px #6C4DFF;
+      }
+      .w-form-formradioinput--inputType-custom.w--redirected-checked {
+        border-color: #6C4DFF;
+      }
+
+      /* 5. Primary CTA gradient: Violet → Cyan */
+      .primary-gradient-button,
+      .btn-primary {
+        background-color: transparent !important;
+        background-image: linear-gradient(135deg, #6C4DFF 0%, #22D3EE 100%) !important;
+        box-shadow: 0 0 20px rgba(108, 77, 255, 0.35) !important;
+        border-radius: 8px !important;
+        color: #fff !important;
+        transition: all 0.35s ease !important;
+      }
+      .primary-gradient-button:hover,
+      .btn-primary:hover {
+        opacity: 1 !important;
+        background-image: linear-gradient(135deg, #8a6bff 0%, #38e8ff 100%) !important;
+        box-shadow: 0 0 35px rgba(108, 77, 255, 0.65), 0 0 60px rgba(34, 211, 238, 0.2) !important;
+        transform: translateY(-1px);
+      }
+
+      /* 6. Circle CTA buttons — violet glow on hover */
+      .btn-circle:hover,
+      .circle-footer-lin:hover {
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+      }
+
+      /* 7. "Liên Hệ" header button — subtle violet border glow */
+      .button-transparent:hover {
+        box-shadow: 0 0 12px rgba(108, 77, 255, 0.35);
+      }
+
+      /* 8. Violet glow on sticky circle (Our Work section) */
+      .sticky-circle:hover {
+        box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
+      }
+
+      /* 9. h6 subtitle tag — Electric Violet */
+      .h6-subtitle {
+        color: #6C4DFF !important;
+      }
+
+      /* 10. Footer video section */
+      .footer-con {
+        z-index: 1;
+        background-color: #0B1026;
+      }
+
+      /* === Z-index stacking for sticky footer reveal pattern === */
       .main-header {
         top: 0 !important;
         margin-top: 0 !important;
@@ -71,48 +151,22 @@ const seoHtml = generateSeoTags(seo);
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
       }
-
-      /* Ensure all content sections stack above footer */
       .home-1-section {
         z-index: 90;
         position: relative;
       }
-
-      section.section,
-      #Our-Benefits,
-      #recent-work {
-        position: relative;
-        z-index: 50;
-        background-color: var(--primary-black, #0e0e0e);
-      }
-
       .video-section {
         position: relative;
         z-index: 40;
       }
-
       .page-content-wrapper {
         position: relative;
         z-index: 30;
       }
-
       .section-scroll-video {
         position: relative;
         z-index: 25;
       }
-
-      .section-news {
-        position: relative;
-        z-index: 20;
-        background-color: var(--primary-black, #0e0e0e);
-      }
-
-      /* Footer should be lowest in the stack */
-      .footer-con {
-        z-index: 1;
-      }
-
-      /* Ensure scroll headings marquee doesn't overflow sideways */
       .sectiohn-scroll-headings,
       .bottom-page-content {
         position: relative;

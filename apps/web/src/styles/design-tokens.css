@@ -3,17 +3,29 @@
   --font-primary: 'Sora', sans-serif;
   --font-display: 'Syne', sans-serif;
 
-  /* Colors (Dark mode premium aesthetic) */
-  --color-bg: #000000;
-  --color-surface: #111111;
-  --color-surface-elevated: #1a1a1a;
-  
+  /* === Colors from Design Brief ===
+   * Midnight Blue #0B1026 + Electric Violet #6C4DFF
+   * + Cyan #22D3EE + Light Lavender #E9ECFF
+   * Gradient: Violet → Cyan for CTA, glow & highlights
+   */
+  --color-bg: #0B1026;             /* Midnight Blue */
+  --color-surface: #0d1530;        /* Slightly lighter midnight */
+  --color-surface-elevated: #121b3a;
+
   --color-text: #ffffff;
-  --color-text-muted: #aaadb0;
-  
-  --color-accent: #3898ec; /* Electric blue */
-  --color-accent-hover: #0082f3;
+  --color-text-muted: #9aa3c0;     /* Blue-tinted muted */
+
+  --color-accent: #6C4DFF;         /* Electric Violet */
+  --color-accent-hover: #8a6bff;   /* Lighter violet */
+  --color-cyan: #22D3EE;           /* Cyan */
+  --color-lavender: #E9ECFF;       /* Light Lavender */
   --color-danger: #ea384c;
+
+  /* Gradient: Violet → Cyan (for CTAs, glow, highlights) */
+  --gradient-cta: linear-gradient(135deg, #6C4DFF 0%, #22D3EE 100%);
+  --gradient-cta-hover: linear-gradient(135deg, #8a6bff 0%, #38e8ff 100%);
+  --glow-violet: 0 0 20px rgba(108, 77, 255, 0.4);
+  --glow-violet-strong: 0 0 35px rgba(108, 77, 255, 0.65);
 
   /* Glassmorphism / Translucent Whites */
   --color-white-50: rgba(255, 255, 255, 0.5);

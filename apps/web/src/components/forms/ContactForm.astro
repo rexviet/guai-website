@@ -253,9 +253,9 @@ const serviceOptions = [
   .form-textarea {
     width: 100%;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0;
+    background: rgba(11, 16, 38, 0.6);
+    border: 1px solid rgba(108, 77, 255, 0.2);
+    border-radius: 8px;
     color: #ffffff;
     font-family: var(--font-primary);
     font-size: 1rem;
@@ -266,8 +266,9 @@ const serviceOptions = [
   .form-select:focus,
   .form-textarea:focus {
     outline: none;
-    border-color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
+    border-color: #6C4DFF;
+    background: rgba(108, 77, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(108, 77, 255, 0.15);
   }
 
   .form-select option {
@@ -311,8 +312,8 @@ const serviceOptions = [
   }
 
   .form-file-input::file-selector-button {
-    background: rgba(56, 152, 236, 0.15);
-    border: 1px solid var(--color-accent);
+    background: rgba(108, 77, 255, 0.15);
+    border: 1px solid #6C4DFF;
     color: var(--color-text);
     padding: 0.4rem 0.8rem;
     border-radius: var(--radius-sm);
@@ -322,7 +323,7 @@ const serviceOptions = [
   }
 
   .form-file-input::file-selector-button:hover {
-    background: var(--color-accent);
+    background: #6C4DFF;
   }
 
   .field-error {
@@ -343,27 +344,29 @@ const serviceOptions = [
     justify-content: center;
     width: 100%;
     padding: 1.25rem 2rem;
-    background: #ffffff;
-    color: #000000;
+    background: linear-gradient(135deg, #6C4DFF 0%, #22D3EE 100%);
+    color: #ffffff;
     font-family: var(--font-primary);
     font-weight: 700;
     font-size: 1rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     border: none;
-    border-radius: 0;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.35s ease;
     margin-top: 1rem;
+    box-shadow: 0 0 20px rgba(108, 77, 255, 0.35);
   }
 
   .btn-submit:hover:not(:disabled) {
-    background: rgba(255,255,255,0.8);
-    transform: none;
+    background: linear-gradient(135deg, #8a6bff 0%, #38e8ff 100%);
+    box-shadow: 0 0 35px rgba(108, 77, 255, 0.65), 0 0 60px rgba(34, 211, 238, 0.2);
+    transform: translateY(-2px);
   }
 
   .btn-submit:disabled {
-    opacity: 0.65;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 
