@@ -80,6 +80,17 @@ services:
       DATABASE_USERNAME: ${POSTGRES_USER}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_SSL: "false"
+      # --- Cloudflare R2 media upload provider ---
+      # Consumed by apps/cms/config/plugins.ts (the aws-s3 provider pointed at
+      # R2's S3-compatible API). R2_PUBLIC_URL is additionally required by
+      # apps/cms/config/middlewares.ts, which allowlists it in the admin CSP —
+      # without it the admin panel cannot preview any uploaded image or video.
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY}
+      R2_BUCKET: ${R2_BUCKET}
+      R2_ENDPOINT: ${R2_ENDPOINT}
+      R2_REGION: ${R2_REGION:-auto}
+      R2_PUBLIC_URL: ${R2_PUBLIC_URL}
     networks:
       - guai-network
     logging:
