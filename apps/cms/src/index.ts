@@ -97,7 +97,6 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
 
     await syncComponentLayout('shared.video-source', [
       [{ name: 'video_file', size: 6 }, { name: 'poster_file', size: 6 }],
-      [{ name: 'auto_poster', size: 12 }],
       [{ name: 'mp4_url', size: 6 }, { name: 'poster_url', size: 6 }]
     ]);
 
@@ -257,9 +256,7 @@ export default {
    * An asynchronous register function that runs before
    * your application is initialized.
    *
-   * This gives you an opportunity to extend code.
-   */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register() {},
 
   /**
    * An asynchronous bootstrap function that runs before

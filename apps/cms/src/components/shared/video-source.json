@@ -19,10 +19,6 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "auto_poster": {
-      "type": "customField",
-      "customField": "plugin::shared.auto-poster"
-    },
     "mp4_url": {
       "type": "string"
     },

@@ -6,21 +6,9 @@ export default {
     locales: [],
   },
   bootstrap(app: StrapiApp) {
-    app.customFields.register({
-      name: 'auto-poster',
-      pluginId: 'shared',
-      type: 'string',
-      intlLabel: {
-        id: 'shared.auto-poster.label',
-        defaultMessage: 'Auto Poster Generator',
-      },
-      intlDescription: {
-        id: 'shared.auto-poster.description',
-        defaultMessage: 'Generates JPEG poster from video asset',
-      },
-      components: {
-        Input: AutoPosterInput,
-      },
+    app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
+      name: 'auto-poster-tool',
+      Component: AutoPosterInput,
     });
   },
 };
