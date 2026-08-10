@@ -52,10 +52,22 @@ function normalizeVideoSource(videoObj: any, fallback: any) {
     ? (videoObj.poster_file.url.startsWith("http") ? videoObj.poster_file.url : `${API_URL}${videoObj.poster_file.url}`)
     : null;
 
+  const mp4Url = videoFileUrl || videoObj.mp4_url || fallback.mp4_url;
+  
+  let posterUrl = posterFileUrl;
+  if (!posterUrl) {
+    if (videoObj.poster_url && !videoObj.poster_url.includes("website-files.com")) {
+      posterUrl = videoObj.poster_url;
+    } else if (!videoFileUrl && !(videoObj.mp4_url && videoObj.mp4_url.includes("cdn.guai.studio"))) {
+      posterUrl = fallback.poster_url;
+    } else {
+      posterUrl = "";
+    }
+  }
+
   return {
-    mp4_url: videoFileUrl || videoObj.mp4_url || fallback.mp4_url,
-    webm_url: videoObj.webm_url || fallback.webm_url,
-    poster_url: posterFileUrl || videoObj.poster_url || fallback.poster_url,
+    mp4_url: mp4Url,
+    poster_url: posterUrl,
   };
 }
 
