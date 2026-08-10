@@ -124,15 +124,18 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
     });
 
     if (!siteSettings || siteSettings.length === 0) {
-      await docService('api::site-setting.site-setting').create({
+      const created = await docService('api::site-setting.site-setting').create({
         data: {
           site_name: "GuAI Studio",
           tagline: "ĐỊNH HÌNH TƯƠNG LAI SÁNG TẠO BẰNG AI",
           banner_video: bannerVideo,
           cta_video: ctaVideo,
-          status: 'published',
-        }
+        },
+        status: 'published'
       });
+      if (created?.documentId) {
+        await docService('api::site-setting.site-setting').publish({ documentId: created.documentId });
+      }
     } else {
       const setting = siteSettings[0];
       if (!setting.banner_video || !setting.cta_video) {
@@ -144,77 +147,65 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
           }
         });
       }
+      if (!setting.publishedAt) {
+        await docService('api::site-setting.site-setting').publish({ documentId: setting.documentId });
+      }
     }
 
     // 2. Case Studies (Works)
     const existingCaseStudies = await docService('api::case-study.case-study').findMany({
-      populate: ['video']
+      populate: ['video'],
+      status: 'draft'
     });
 
-    if (!existingCaseStudies || existingCaseStudies.length === 0) {
-      const worksData = [
-        {
-          title: "Kakao Wcopilot AI Campaign",
-          slug: "kakao-wcopilot-ai-campaign",
-          category: "Cinematic",
-          description: "TVC phong cách viễn tưởng sản xuất 100% bằng công nghệ AI cho thương hiệu Kakao Mobility.",
-          featured: true,
-          status: 'published',
-          video: {
-            mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4",
-            webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm",
-            poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg"
-          }
-        },
-        {
-          title: "Virtual KOL 3D 'AURA' - Thời Trang Tương Lai",
-          slug: "cyberpunk-virtual-kol-aura",
-          category: "Character",
-          description: "Tạo hình và vận hành KOL ảo AURA đại diện bộ sưu tập thời trang Thu-Đông khu vực APAC.",
-          featured: true,
-          status: 'published',
-          video: {
-            mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4",
-            webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm",
-            poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg"
-          }
-        },
-        {
-          title: "Sự Kiện Ra Mắt Xe Điện NeuraCar AI",
-          slug: "neuracar-ai-spatial-launch",
-          category: "Cinematic",
-          description: "Trình diễn hình ảnh 3D và phim ngắn ra mắt dòng xe điện tự lái thế hệ mới.",
-          featured: true,
-          status: 'published',
-          video: {
-            mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4",
-            webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm",
-            poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg"
-          }
-        }
-      ];
-
-      for (const work of worksData) {
-        await docService('api::case-study.case-study').create({ data: work as any });
-      }
-    } else {
-      const fallbackVideos = [
-        {
+    const worksData = [
+      {
+        title: "Kakao Wcopilot AI Campaign",
+        slug: "kakao-wcopilot-ai-campaign",
+        category: "Cinematic",
+        description: "TVC phong cách viễn tưởng sản xuất 100% bằng công nghệ AI cho thương hiệu Kakao Mobility.",
+        featured: true,
+        video: {
           mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4",
           webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm",
           poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg"
-        },
-        {
+        }
+      },
+      {
+        title: "Virtual KOL 3D 'AURA' - Thời Trang Tương Lai",
+        slug: "cyberpunk-virtual-kol-aura",
+        category: "Character",
+        description: "Tạo hình và vận hành KOL ảo AURA đại diện bộ sưu tập thời trang Thu-Đông khu vực APAC.",
+        featured: true,
+        video: {
           mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4",
           webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm",
           poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg"
-        },
-        {
+        }
+      },
+      {
+        title: "Sự Kiện Ra Mắt Xe Điện NeuraCar AI",
+        slug: "neuracar-ai-spatial-launch",
+        category: "Cinematic",
+        description: "Trình diễn hình ảnh 3D và phim ngắn ra mắt dòng xe điện tự lái thế hệ mới.",
+        featured: true,
+        video: {
           mp4_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4",
           webm_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm",
           poster_url: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg"
         }
-      ];
+      }
+    ];
+
+    if (!existingCaseStudies || existingCaseStudies.length === 0) {
+      for (const work of worksData) {
+        const created = await docService('api::case-study.case-study').create({ data: work as any, status: 'published' });
+        if (created?.documentId) {
+          await docService('api::case-study.case-study').publish({ documentId: created.documentId });
+        }
+      }
+    } else {
+      const fallbackVideos = worksData.map(w => w.video);
       for (let i = 0; i < existingCaseStudies.length; i++) {
         const cs = existingCaseStudies[i];
         if (!cs.video) {
@@ -223,12 +214,14 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
             data: { video: fallbackVideos[i % fallbackVideos.length] }
           });
         }
+        await docService('api::case-study.case-study').publish({ documentId: cs.documentId });
       }
     }
 
-    // 3. Services (Update videos if service exists)
+    // 3. Services (Update videos if service exists & publish draft items)
     const existingServices = await docService('api::service.service').findMany({
-      populate: ['featured_video']
+      populate: ['featured_video'],
+      status: 'draft'
     });
     const serviceVideos = [
       {
@@ -258,6 +251,7 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
             data: { featured_video: video }
           });
         }
+        await docService('api::service.service').publish({ documentId: svc.documentId });
       }
     }
   } catch (err) {
