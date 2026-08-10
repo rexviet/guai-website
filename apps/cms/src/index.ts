@@ -147,15 +147,11 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
           }
         });
       }
-      if (!setting.publishedAt) {
-        await docService('api::site-setting.site-setting').publish({ documentId: setting.documentId });
-      }
     }
 
     // 2. Case Studies (Works)
     const existingCaseStudies = await docService('api::case-study.case-study').findMany({
-      populate: ['video'],
-      status: 'draft'
+      populate: ['video']
     });
 
     const worksData = [
@@ -214,14 +210,12 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
             data: { video: fallbackVideos[i % fallbackVideos.length] }
           });
         }
-        await docService('api::case-study.case-study').publish({ documentId: cs.documentId });
       }
     }
 
-    // 3. Services (Update videos if service exists & publish draft items)
+    // 3. Services
     const existingServices = await docService('api::service.service').findMany({
-      populate: ['featured_video'],
-      status: 'draft'
+      populate: ['featured_video']
     });
     const serviceVideos = [
       {
@@ -251,7 +245,6 @@ export async function seedHomepageData({ strapi }: { strapi: Core.Strapi }): Pro
             data: { featured_video: video }
           });
         }
-        await docService('api::service.service').publish({ documentId: svc.documentId });
       }
     }
   } catch (err) {
