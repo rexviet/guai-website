@@ -1,9 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Flex, Typography, Box } from '@strapi/design-system';
 
 export const AutoPosterInput = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+
+  // Auto sync mp4_url when a video_file is selected/uploaded
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const videoElem = document.querySelector('video') as HTMLVideoElement;
+      const mediaLinks = Array.from(document.querySelectorAll('a[href*=".mp4"]')) as HTMLAnchorElement[];
+      let currentVideoUrl = '';
+
+      if (videoElem && videoElem.src) {
+        currentVideoUrl = videoElem.src;
+      } else if (mediaLinks.length > 0) {
+        currentVideoUrl = mediaLinks[0].href;
+      }
+
+      if (currentVideoUrl) {
+        if (currentVideoUrl.startsWith('/')) {
+          currentVideoUrl = window.location.origin + currentVideoUrl;
+        }
+        const mp4Input = document.querySelector('input[name*="mp4_url"]') as HTMLInputElement;
+        if (mp4Input && mp4Input.value !== currentVideoUrl) {
+          mp4Input.value = currentVideoUrl;
+          mp4Input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    }, 1500);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleGeneratePoster = async () => {
     setLoading(true);
@@ -43,6 +71,13 @@ export const AutoPosterInput = () => {
       // Format full URL if relative
       if (videoUrl.startsWith('/')) {
         videoUrl = window.location.origin + videoUrl;
+      }
+
+      // Sync mp4_url immediately
+      const mp4Input = document.querySelector('input[name*="mp4_url"]') as HTMLInputElement;
+      if (mp4Input) {
+        mp4Input.value = videoUrl;
+        mp4Input.dispatchEvent(new Event('input', { bubbles: true }));
       }
 
       // Create hidden video element to extract 0.5s frame
@@ -101,7 +136,7 @@ export const AutoPosterInput = () => {
           posterInput.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
-        setMessage('✅ Đã tạo & upload Poster lên R2 thành công!');
+        setMessage('✅ Đã cập nhật mp4_url & upload Poster lên R2 thành công!');
       }
     } catch (err: any) {
       console.error('Error generating auto poster:', err);
@@ -115,10 +150,10 @@ export const AutoPosterInput = () => {
     <Box padding={3} background="neutral100" hasRadius borderColor="neutral200">
       <Flex direction="column" alignItems="flex-start" gap={2}>
         <Typography variant="pi" fontWeight="bold">
-          ⚡️ Tự động tạo Poster từ Video (Client-side)
+          ⚡️ Tự động đồng bộ R2 Video URL & tạo Poster
         </Typography>
         <Button onClick={handleGeneratePoster} loading={loading} variant="secondary" size="S">
-          📸 Chụp & Upload Poster lên R2
+          📸 Đồng bộ MP4 URL & Upload Poster lên R2
         </Button>
         {message && (
           <Typography variant="pi" textColor="neutral600">
