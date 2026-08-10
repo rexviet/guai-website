@@ -1,0 +1,19 @@
+CLAUDE.md
+  s_9d6157a1f7a1a4::t_170a13cd5fe6fe 1-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "cfe9fce5df0aac529e291decb6841ed49b90796b",
+  "prompts": {},
+  "sessions": {
+    "s_9d6157a1f7a1a4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2e7af930-9af7-4e84-8071-b38605a19b79",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
