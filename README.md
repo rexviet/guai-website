@@ -10,7 +10,7 @@ A modern, high-performance website and CMS platform for GuAI Studio. Built with 
 
 ## Local Development (Phase 1+)
 
-### Prerequisites
+### Prerequisites 
 - Docker and Docker Compose (v2.20+)
 
 ### Setup
