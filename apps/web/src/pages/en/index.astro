@@ -1,13 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getServices, getCaseStudies } from '../../lib/strapi-client';
+import { getServices, getCaseStudies, getSiteSettings } from '../../lib/strapi-client';
 
 const locale = 'en';
+const siteSettings = await getSiteSettings(locale);
 const services = await getServices(locale);
 const caseStudies = await getCaseStudies(locale);
-
-const bannerVideo = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4";
-const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg";
 ---
 
 <BaseLayout
@@ -21,8 +19,9 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
   <div data-w-id="bd1cbc60-077b-0eeb-98c4-c170d090ec19" class="home-1-section">
     <div class="parallax-video-banner">
       <figure id="BG-video" class="home-1-video w-node-bd1cbc60-077b-0eeb-98c4-c170d090ec1d-50f20c2b w-background-video w-background-video-atom">
-        <video autoplay loop muted playsinline style={`background-image:url("${bannerPoster}")`} data-object-fit="cover">
-          <source src={bannerVideo} />
+        <video autoplay loop muted playsinline style={`background-image:url("${siteSettings.banner_video?.poster_url || ''}")`} data-object-fit="cover">
+          {siteSettings.banner_video?.mp4_url && <source src={siteSettings.banner_video.mp4_url} />}
+          {siteSettings.banner_video?.webm_url && <source src={siteSettings.banner_video.webm_url} />}
         </video>
         <div class="banner-video-ov"></div>
       </figure>
@@ -72,8 +71,9 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   <div class="methods-container">
                     <div class="service-video-wrap">
                       <div class="video-services w-background-video w-background-video-atom">
-                        <video autoplay loop muted playsinline style={`background-image:url("${service.featured_image?.url || bannerPoster}")`} data-object-fit="cover">
-                          {service.featured_image?.url && <source src={service.featured_image.url} />}
+                        <video autoplay loop muted playsinline style={`background-image:url("${service.featured_video?.poster_url || ''}")`} data-object-fit="cover">
+                          {service.featured_video?.mp4_url && <source src={service.featured_video.mp4_url} />}
+                          {service.featured_video?.webm_url && <source src={service.featured_video.webm_url} />}
                         </video>
                       </div>
                     </div>
@@ -106,8 +106,9 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
               {caseStudies.slice(0, 3).map((work, index) => (
                 <div class={`sticky-image-wrapper ${index === 0 ? 'image-three' : index === 1 ? 'image-two' : 'image-one'}`}>
                   <div class="best-video-work w-background-video w-background-video-atom">
-                    <video autoplay loop muted playsinline style={`background-image:url("${work.thumbnail?.url || bannerPoster}")`} data-object-fit="cover">
-                      {work.thumbnail?.url && <source src={work.thumbnail.url} />}
+                    <video autoplay loop muted playsinline style={`background-image:url("${work.video?.poster_url || ''}")`} data-object-fit="cover">
+                      {work.video?.mp4_url && <source src={work.video.mp4_url} />}
+                      {work.video?.webm_url && <source src={work.video.webm_url} />}
                     </video>
                   </div>
                 </div>
@@ -127,8 +128,9 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   <div class="mobile-intro-box-image">
                     <div class={`sticky-image-wrapper ${index === 0 ? 'image-three' : index === 1 ? 'image-two' : 'image-one'}`}>
                       <div class="best-video-work w-background-video w-background-video-atom">
-                        <video autoplay loop muted playsinline style={`background-image:url("${work.thumbnail?.url || bannerPoster}")`} data-object-fit="cover">
-                          {work.thumbnail?.url && <source src={work.thumbnail.url} />}
+                        <video autoplay loop muted playsinline style={`background-image:url("${work.video?.poster_url || ''}")`} data-object-fit="cover">
+                          {work.video?.mp4_url && <source src={work.video.mp4_url} />}
+                          {work.video?.webm_url && <source src={work.video.webm_url} />}
                         </video>
                       </div>
                       <a href={`/en/work/${work.slug}`} class="best-work-link-wrap w-inline-block">
@@ -138,7 +140,7 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                       </a>
                     </div>
                   </div>
-                  <p class="services-description">{work.summary}</p>
+                  <p class="services-description">{work.description || work.summary}</p>
                 </div>
                 <div class="transparent-btn-wrapper">
                   <a href={`/en/work/${work.slug}`} class="button-transparent w-inline-block">
@@ -163,8 +165,9 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
   <!-- Final CTA Video Section -->
   <div data-w-id="92dba6dd-f1b4-079e-312a-4872224e3139" class="video-section">
     <div class="video-large w-background-video w-background-video-atom">
-      <video autoplay loop muted playsinline style={`background-image:url("https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg")`} data-object-fit="cover">
-        <source src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4" />
+      <video autoplay loop muted playsinline style={`background-image:url("${siteSettings.cta_video?.poster_url || ''}")`} data-object-fit="cover">
+        {siteSettings.cta_video?.mp4_url && <source src={siteSettings.cta_video.mp4_url} />}
+        {siteSettings.cta_video?.webm_url && <source src={siteSettings.cta_video.webm_url} />}
       </video>
       <div class="img-overlay">
         <div class="base-video-container">

@@ -1,13 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getServices, getCaseStudies } from '../lib/strapi-client';
+import { getServices, getCaseStudies, getSiteSettings } from '../lib/strapi-client';
 
 const locale = 'vi';
+const siteSettings = await getSiteSettings(locale);
 const services = await getServices(locale);
 const caseStudies = await getCaseStudies(locale);
-
-const bannerVideo = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4";
-const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg";
 ---
 
 <BaseLayout
@@ -23,8 +21,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
     >
       <div class="parallax-video-banner">
         <figure
-          data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg"
-          data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.webm"
+          data-poster-url={siteSettings.banner_video?.poster_url || ''}
+          data-video-urls={`${siteSettings.banner_video?.mp4_url || ''},${siteSettings.banner_video?.webm_url || ''}`}
           data-autoplay="true"
           data-loop="true"
           data-wf-ignore="true"
@@ -35,22 +33,18 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
             id="bd1cbc60-077b-0eeb-98c4-c170d090ec1d-video"
             autoplay=""
             loop=""
-            style="
-              background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-poster-00001.jpg&quot;);
-            "
+            style={`background-image: url("${siteSettings.banner_video?.poster_url || ''}");`}
             muted=""
             playsinline=""
             data-wf-ignore="true"
             data-object-fit="cover"
           >
-            <source
-              src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.mp4"
-              data-wf-ignore="true"
-            />
-            <source
-              src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64ae84a2fd7e81e18cc7150f_pexels shvets production 7547007 2160p-transcode.webm"
-              data-wf-ignore="true"
-            />
+            {siteSettings.banner_video?.mp4_url && (
+              <source src={siteSettings.banner_video.mp4_url} data-wf-ignore="true" />
+            )}
+            {siteSettings.banner_video?.webm_url && (
+              <source src={siteSettings.banner_video.webm_url} data-wf-ignore="true" />
+            )}
           </video>
           <div class="banner-video-ov"></div>
         </figure>
@@ -201,29 +195,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   class="advantages-list"
                 >
                 {services.map((service, index) => {
-                  const fallbackVideos = [
-                    {
-                      poster: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-poster-00001.jpg",
-                      mp4: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.mp4",
-                      webm: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ccf35b706f1aa59b538_pexels mikhail nilov 8058474 1920x1080 25fps-transcode.webm"
-                    },
-                    {
-                      poster: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-poster-00001.jpg",
-                      mp4: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.mp4",
-                      webm: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958cddad3aa0c1f3b11c8d_pexels pixabay 854877 1920x1080 25fps-transcode.webm"
-                    },
-                    {
-                      poster: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-poster-00001.jpg",
-                      mp4: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.mp4",
-                      webm: "https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64958ce7cb95688383fcb95a_pexels koolshooters 7322712 2880x2160 25fps-transcode.webm"
-                    }
-                  ];
-                  const video = fallbackVideos[index % fallbackVideos.length];
+                  const video = service.featured_video || {};
                   
-                  // In Kakao theme, the first item has video first, others have content first. 
-                  // We'll replicate this alternating pattern.
-                  const videoFirst = index % 2 === 0;
-
                   return (
                     <a
                       href={`/services/${service.slug}`}
@@ -244,8 +217,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                         </div>
                         <div class="service-video-wrap">
                           <div
-                            data-poster-url={video.poster}
-                            data-video-urls={`${video.mp4},${video.webm}`}
+                            data-poster-url={video.poster_url || ''}
+                            data-video-urls={`${video.mp4_url || ''},${video.webm_url || ''}`}
                             data-autoplay="true"
                             data-loop="true"
                             data-wf-ignore="true"
@@ -256,12 +229,12 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                               loop
                               muted
                               playsinline
-                              style={`background-image: url("${video.poster}");`}
+                              style={`background-image: url("${video.poster_url || ''}");`}
                               data-wf-ignore="true"
                               data-object-fit="cover"
                             >
-                              <source src={video.mp4} data-wf-ignore="true" />
-                              <source src={video.webm} data-wf-ignore="true" />
+                              {video.mp4_url && <source src={video.mp4_url} data-wf-ignore="true" />}
+                              {video.webm_url && <source src={video.webm_url} data-wf-ignore="true" />}
                             </video>
                           </div>
                         </div>
@@ -305,8 +278,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                 </div>
                 <div class="sticky-image-wrapper image-three">
                   <article
-                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg"
-                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm"
+                    data-poster-url={caseStudies[0]?.video?.poster_url || ''}
+                    data-video-urls={`${caseStudies[0]?.video?.mp4_url || ''},${caseStudies[0]?.video?.webm_url || ''}`}
                     data-autoplay="true"
                     data-loop="true"
                     data-wf-ignore="true"
@@ -316,29 +289,21 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                       id="02c5be9f-5564-2036-7e48-e00b9be6e76f-video"
                       autoplay=""
                       loop=""
-                      style="
-                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-poster-00001.jpg&quot;);
-                      "
+                      style={`background-image: url("${caseStudies[0]?.video?.poster_url || ''}");`}
                       muted=""
                       playsinline=""
                       data-wf-ignore="true"
                       data-object-fit="cover"
                     >
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.mp4"
-                        data-wf-ignore="true"
-                      />
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959a5b7c779f4ff028f8f3_pexels life of pix 852286 1920x1080 60fps (1)-transcode.webm"
-                        data-wf-ignore="true"
-                      />
+                      {caseStudies[0]?.video?.mp4_url && <source src={caseStudies[0].video.mp4_url} data-wf-ignore="true" />}
+                      {caseStudies[0]?.video?.webm_url && <source src={caseStudies[0].video.webm_url} data-wf-ignore="true" />}
                     </video>
                   </article>
                 </div>
                 <div class="sticky-image-wrapper image-two">
                   <div
-                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg"
-                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm"
+                    data-poster-url={caseStudies[1]?.video?.poster_url || ''}
+                    data-video-urls={`${caseStudies[1]?.video?.mp4_url || ''},${caseStudies[1]?.video?.webm_url || ''}`}
                     data-autoplay="true"
                     data-loop="true"
                     data-wf-ignore="true"
@@ -348,29 +313,21 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                       id="e28611ca-9fb7-3791-b8bc-16d086a20c77-video"
                       autoplay=""
                       loop=""
-                      style="
-                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-poster-00001.jpg&quot;);
-                      "
+                      style={`background-image: url("${caseStudies[1]?.video?.poster_url || ''}");`}
                       muted=""
                       playsinline=""
                       data-wf-ignore="true"
                       data-object-fit="cover"
                     >
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.mp4"
-                        data-wf-ignore="true"
-                      />
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495984d65a257fb519f0dac_pexels rdne stock project 8097473 1920x1080 30fps-transcode.webm"
-                        data-wf-ignore="true"
-                      />
+                      {caseStudies[1]?.video?.mp4_url && <source src={caseStudies[1].video.mp4_url} data-wf-ignore="true" />}
+                      {caseStudies[1]?.video?.webm_url && <source src={caseStudies[1].video.webm_url} data-wf-ignore="true" />}
                     </video>
                   </div>
                 </div>
                 <div class="sticky-image-wrapper image-one">
                   <div
-                    data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg"
-                    data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm"
+                    data-poster-url={caseStudies[2]?.video?.poster_url || ''}
+                    data-video-urls={`${caseStudies[2]?.video?.mp4_url || ''},${caseStudies[2]?.video?.webm_url || ''}`}
                     data-autoplay="true"
                     data-loop="true"
                     data-wf-ignore="true"
@@ -380,22 +337,14 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                       id="9745a9ad-b0ae-6251-72d7-3c2ec23246d2-video"
                       autoplay=""
                       loop=""
-                      style="
-                        background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-poster-00001.jpg&quot;);
-                      "
+                      style={`background-image: url("${caseStudies[2]?.video?.poster_url || ''}");`}
                       muted=""
                       playsinline=""
                       data-wf-ignore="true"
                       data-object-fit="cover"
                     >
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.mp4"
-                        data-wf-ignore="true"
-                      />
-                      <source
-                        src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d51c577f9fcdc252f82_pexels shvets production 7547019 3840x2160 25fps-transcode.webm"
-                        data-wf-ignore="true"
-                      />
+                      {caseStudies[2]?.video?.mp4_url && <source src={caseStudies[2].video.mp4_url} data-wf-ignore="true" />}
+                      {caseStudies[2]?.video?.webm_url && <source src={caseStudies[2].video.webm_url} data-wf-ignore="true" />}
                     </video>
                   </div>
                 </div>
@@ -418,8 +367,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   <div class="mobile-intro-box-image">
                     <div class="sticky-image-wrapper image-one">
                       <div
-                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-poster-00001.jpg"
-                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.webm"
+                        data-poster-url={caseStudies[0]?.video?.poster_url || ''}
+                        data-video-urls={`${caseStudies[0]?.video?.mp4_url || ''},${caseStudies[0]?.video?.webm_url || ''}`}
                         data-autoplay="true"
                         data-loop="true"
                         data-wf-ignore="true"
@@ -429,22 +378,14 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                           id="8e15166e-6d7c-4d3c-b5b2-ceaceecae832-video"
                           autoplay=""
                           loop=""
-                          style="
-                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-poster-00001.jpg&quot;);
-                          "
+                          style={`background-image: url("${caseStudies[0]?.video?.poster_url || ''}");`}
                           muted=""
                           playsinline=""
                           data-wf-ignore="true"
                           data-object-fit="cover"
                         >
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.mp4"
-                            data-wf-ignore="true"
-                          />
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/649592f90106ddc249dc8ef1_pexels tima miroshnichenko 6498514 3840x2160 25fps-transcode.webm"
-                            data-wf-ignore="true"
-                          />
+                          {caseStudies[0]?.video?.mp4_url && <source src={caseStudies[0].video.mp4_url} data-wf-ignore="true" />}
+                          {caseStudies[0]?.video?.webm_url && <source src={caseStudies[0].video.webm_url} data-wf-ignore="true" />}
                         </video>
                         <div
                           data-w-id="6ac90aad-272f-5970-2e14-992b9197710f"
@@ -459,7 +400,7 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                         </div>
                       </div>
                       <a
-                        href="/works-1"
+                        href={`/works/${caseStudies[0]?.slug || 'works-1'}`}
                         class="best-work-link-wrap w-inline-block"
                         ><div class="view-link-best-work">
                           <h6 class="view-more">View</h6>
@@ -471,13 +412,11 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                     id="w-node-_41adf324-56a4-046a-b606-9aedb502abae-50f20c2b"
                     class="services-description"
                   >
-                    Step into a captivating realm of digital creativity, where
-                    video artistry knows no bounds. Welcome to Kakao, your
-                    gateway to a mesmerizing collection of video masterpieces.
+                    {caseStudies[0]?.description || ''}
                   </p>
                 </div>
                 <div class="transparent-btn-wrapper">
-                  <a href="/works-1" class="button-transparent w-inline-block"
+                  <a href={`/works/${caseStudies[0]?.slug || 'works-1'}`} class="button-transparent w-inline-block"
                     ><div class="clip">
                       <div class="btn-banner-text">
                         <div class="btn-title-text">Chi tiết</div>
@@ -519,8 +458,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   <div class="mobile-intro-box-image">
                     <div class="sticky-image-wrapper image-two">
                       <div
-                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-poster-00001.jpg"
-                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.webm"
+                        data-poster-url={caseStudies[1]?.video?.poster_url || ''}
+                        data-video-urls={`${caseStudies[1]?.video?.mp4_url || ''},${caseStudies[1]?.video?.webm_url || ''}`}
                         data-autoplay="true"
                         data-loop="true"
                         data-wf-ignore="true"
@@ -530,22 +469,14 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                           id="51e864f6-7fc4-b27c-01f6-3f9d1c0c28b2-video"
                           autoplay=""
                           loop=""
-                          style="
-                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-poster-00001.jpg&quot;);
-                          "
+                          style={`background-image: url("${caseStudies[1]?.video?.poster_url || ''}");`}
                           muted=""
                           playsinline=""
                           data-wf-ignore="true"
                           data-object-fit="cover"
                         >
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.mp4"
-                            data-wf-ignore="true"
-                          />
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495985e7c779f4ff0267f49_pexels rdne stock project 8097480 1920x1080 30fps-transcode.webm"
-                            data-wf-ignore="true"
-                          />
+                          {caseStudies[1]?.video?.mp4_url && <source src={caseStudies[1].video.mp4_url} data-wf-ignore="true" />}
+                          {caseStudies[1]?.video?.webm_url && <source src={caseStudies[1].video.webm_url} data-wf-ignore="true" />}
                         </video>
                         <div
                           data-w-id="51e864f6-7fc4-b27c-01f6-3f9d1c0c28b3"
@@ -561,7 +492,7 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                       </div>
                       <a
                         data-w-id="0cadff4d-d9a5-3e11-72df-a147b5ebb332"
-                        href="/works-1"
+                        href={`/works/${caseStudies[1]?.slug || 'works-1'}`}
                         class="best-work-link-wrap w-inline-block"
                         ><div class="view-link-best-work">
                           <h6 class="view-more">View</h6>
@@ -573,13 +504,11 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                     id="w-node-_41adf324-56a4-046a-b606-9aedb502abbd-50f20c2b"
                     class="services-description"
                   >
-                    Step into a captivating realm of digital creativity, where
-                    video artistry knows no bounds. Welcome to Kakao, your
-                    gateway to a mesmerizing collection of video masterpieces.
+                    {caseStudies[1]?.description || ''}
                   </p>
                 </div>
                 <div class="transparent-btn-wrapper">
-                  <a href="/works-1" class="button-transparent w-inline-block"
+                  <a href={`/works/${caseStudies[1]?.slug || 'works-1'}`} class="button-transparent w-inline-block"
                     ><div class="clip">
                       <div class="btn-banner-text">
                         <div class="btn-title-text">Chi tiết</div>
@@ -621,8 +550,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   <div class="mobile-intro-box-image">
                     <div class="sticky-image-wrapper image-three">
                       <div
-                        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-poster-00001.jpg"
-                        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.webm"
+                        data-poster-url={caseStudies[2]?.video?.poster_url || ''}
+                        data-video-urls={`${caseStudies[2]?.video?.mp4_url || ''},${caseStudies[2]?.video?.webm_url || ''}`}
                         data-autoplay="true"
                         data-loop="true"
                         data-wf-ignore="true"
@@ -632,22 +561,14 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                           id="90e6484f-1c6f-3102-89da-51e7ed6bc912-video"
                           autoplay=""
                           loop=""
-                          style="
-                            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-poster-00001.jpg&quot;);
-                          "
+                          style={`background-image: url("${caseStudies[2]?.video?.poster_url || ''}");`}
                           muted=""
                           playsinline=""
                           data-wf-ignore="true"
                           data-object-fit="cover"
                         >
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.mp4"
-                            data-wf-ignore="true"
-                          />
-                          <source
-                            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959911d34ea0dba2163aaf_pexels taryn elliott 4729789 1920x1080 25fps-transcode.webm"
-                            data-wf-ignore="true"
-                          />
+                          {caseStudies[2]?.video?.mp4_url && <source src={caseStudies[2].video.mp4_url} data-wf-ignore="true" />}
+                          {caseStudies[2]?.video?.webm_url && <source src={caseStudies[2].video.webm_url} data-wf-ignore="true" />}
                         </video>
                         <div
                           data-w-id="90e6484f-1c6f-3102-89da-51e7ed6bc913"
@@ -662,7 +583,7 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                         </div>
                       </div>
                       <a
-                        href="/works-1"
+                        href={`/works/${caseStudies[2]?.slug || 'works-1'}`}
                         class="best-work-link-wrap w-inline-block"
                         ><div class="view-link-best-work">
                           <h6 class="view-more">View</h6>
@@ -674,13 +595,11 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                     id="w-node-_41adf324-56a4-046a-b606-9aedb502abcc-50f20c2b"
                     class="services-description"
                   >
-                    Step into a captivating realm of digital creativity, where
-                    video artistry knows no bounds. Welcome to Kakao, your
-                    gateway to a mesmerizing collection of video masterpieces.
+                    {caseStudies[2]?.description || ''}
                   </p>
                 </div>
                 <div class="transparent-btn-wrapper">
-                  <a href="/works-1" class="button-transparent w-inline-block"
+                  <a href={`/works/${caseStudies[2]?.slug || 'works-1'}`} class="button-transparent w-inline-block"
                     ><div class="clip">
                       <div class="btn-banner-text">
                         <div class="btn-title-text">Chi tiết</div>
@@ -716,8 +635,8 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
     </section>
     <div data-w-id="92dba6dd-f1b4-079e-312a-4872224e3139" class="video-section">
       <div
-        data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg"
-        data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.webm"
+        data-poster-url={siteSettings.cta_video?.poster_url || ''}
+        data-video-urls={`${siteSettings.cta_video?.mp4_url || ''},${siteSettings.cta_video?.webm_url || ''}`}
         data-autoplay="true"
         data-loop="true"
         data-wf-ignore="true"
@@ -727,22 +646,18 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
           id="092f1ee7-344c-69f4-9fa1-2314c15c1bc4-video"
           autoplay=""
           loop=""
-          style="
-            background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-poster-00001.jpg&quot;);
-          "
+          style={`background-image: url("${siteSettings.cta_video?.poster_url || ''}");`}
           muted=""
           playsinline=""
           data-wf-ignore="true"
           data-object-fit="cover"
         >
-          <source
-            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.mp4"
-            data-wf-ignore="true"
-          />
-          <source
-            src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959fae3c43f45d2db99e4e_pexels marian croitoru 4524595 1920x1080 25fps 1-transcode.webm"
-            data-wf-ignore="true"
-          />
+          {siteSettings.cta_video?.mp4_url && (
+            <source src={siteSettings.cta_video.mp4_url} data-wf-ignore="true" />
+          )}
+          {siteSettings.cta_video?.webm_url && (
+            <source src={siteSettings.cta_video.webm_url} data-wf-ignore="true" />
+          )}
         </video>
         <div class="img-overlay">
           <div class="base-video-container">
@@ -869,273 +784,80 @@ const bannerPoster = "https://cdn.prod.website-files.com/648aca18f05d659650f20ac
                   class="work-collection-list-wrapper w-dyn-list"
                 >
                   <div role="list" class="project-grid w-dyn-items">
-                    <div role="listitem" class="project-item w-dyn-item">
-                      <a
-                        href="/works/digital-dreamscape"
-                        class="project-image w-inline-block"
-                        ><div class="view-link">
-                          <h6 class="view-more">View</h6>
-                        </div>
-                        <div class="view-link-cover-item"></div>
-                        <div class="project-image-wrapper">
-                          <div
-                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-poster-00001.jpg"
-                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.webm"
-                            data-autoplay="true"
-                            data-loop="true"
-                            data-wf-ignore="true"
-                            class="work-bg-video w-background-video w-background-video-atom"
-                          >
-                            <video
-                              id="70d3c56f-db27-5a51-c05b-09bc16eb5cf2-video"
-                              autoplay=""
-                              loop=""
-                              style="
-                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-poster-00001.jpg&quot;);
-                              "
-                              muted=""
-                              playsinline=""
-                              data-wf-ignore="true"
-                              data-object-fit="cover"
-                            >
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.mp4"
-                                data-wf-ignore="true"
-                              />
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959d9231cb704c17409ebc_pexels olia danilevich 4982413 1920x1080 25fps-transcode.webm"
-                                data-wf-ignore="true"
-                              />
-                            </video>
-                            <div
-                              data-w-id="57721d16-613a-6890-985a-83e86ef55ab1"
-                              style="display: flex"
-                              class="column-animations"
-                            >
-                              <div
-                                data-ix="color-bar-1"
-                                style="height: 100%"
-                                class="top-color"
-                              ></div>
-                            </div>
+                    {caseStudies.map((work, idx) => (
+                      <div role="listitem" class={idx % 2 === 1 ? "project-item-middle w-dyn-item" : "project-item w-dyn-item"}>
+                        <a
+                          href={`/works/${work.slug}`}
+                          class="project-image w-inline-block"
+                          ><div class="view-link">
+                            <h6 class="view-more">View</h6>
                           </div>
-                          <div
-                            style="
-                              background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/64abe12320c8ecf9bf32c2b4_Blog%205.jpg&quot;);
-                            "
-                            class="background"
-                          ></div></div
-                      ></a>
-                      <div class="project-card-info">
-                        <div class="card-info">
-                          <a
-                            id="w-node-f983ceb0-fdcf-28dd-a644-5cbe2003f18b-50f20c2b"
-                            href="/work-categories/creative-chronicles"
-                            class="work-category-link"
-                            >Creative Chronicles</a
-                          >
-                          <div class="stacked-title">
+                          <div class="view-link-cover-item"></div>
+                          <div class="project-image-wrapper">
+                            <div
+                              data-poster-url={work.video?.poster_url || ''}
+                              data-video-urls={`${work.video?.mp4_url || ''},${work.video?.webm_url || ''}`}
+                              data-autoplay="true"
+                              data-loop="true"
+                              data-wf-ignore="true"
+                              class="work-bg-video w-background-video w-background-video-atom"
+                            >
+                              <video
+                                autoplay=""
+                                loop=""
+                                style={`background-image: url("${work.video?.poster_url || ''}");`}
+                                muted=""
+                                playsinline=""
+                                data-wf-ignore="true"
+                                data-object-fit="cover"
+                              >
+                                {work.video?.mp4_url && (
+                                  <source src={work.video.mp4_url} data-wf-ignore="true" />
+                                )}
+                                {work.video?.webm_url && (
+                                  <source src={work.video.webm_url} data-wf-ignore="true" />
+                                )}
+                              </video>
+                              <div
+                                style="display: flex"
+                                class="column-animations"
+                              >
+                                <div
+                                  data-ix="color-bar-1"
+                                  style="height: 100%"
+                                  class="top-color"
+                                ></div>
+                              </div>
+                            </div>
+                            <div
+                              style="background-image: none"
+                              class="background"
+                            ></div></div
+                        ></a>
+                        <div class="project-card-info">
+                          <div class="card-info">
                             <a
-                              id="w-node-_2215db28-820d-d233-e77d-3c088f8e8b01-50f20c2b"
-                              href="/works/digital-dreamscape"
-                              class="work-title-link w-inline-block"
-                              ><h3 class="work-title">Digital Dreamscape</h3></a
-                            ><a
-                              id="w-node-_5700a51b-65a3-d80e-7016-39c82e845963-50f20c2b"
-                              href="/works/digital-dreamscape"
-                              class="underline-link w-inline-block"
-                              ><div>Chi tiết</div>
-                              <div class="hover-line">
-                                <div class="hover-line-fill"></div></div
-                            ></a>
+                              href={`/works/${work.slug}`}
+                              class="work-category-link"
+                              >{work.category || 'Dự Án AI'}</a
+                            >
+                            <div class="stacked-title">
+                              <a
+                                href={`/works/${work.slug}`}
+                                class="work-title-link w-inline-block"
+                                ><h3 class="work-title">{work.title}</h3></a
+                              ><a
+                                href={`/works/${work.slug}`}
+                                class="underline-link w-inline-block"
+                                ><div>Chi tiết</div>
+                                <div class="hover-line">
+                                  <div class="hover-line-fill"></div></div
+                              ></a>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div
-                    role="navigation"
-                    aria-label="List"
-                    class="w-pagination-wrapper pagination"
-                  ></div>
-                </div>
-                <div class="work-collection-list-wrapper w-dyn-list">
-                  <div role="list" class="project-grid w-dyn-items">
-                    <div role="listitem" class="project-item-middle w-dyn-item">
-                      <a
-                        data-w-id="fb9dc426-40a1-496f-d0e0-a31fc46a67a0"
-                        href="/works/visual-alchemy"
-                        class="project-image w-inline-block"
-                        ><div class="view-link">
-                          <h6 class="view-more">View</h6>
-                        </div>
-                        <div class="view-link-cover-item"></div>
-                        <div class="project-image-wrapper">
-                          <div
-                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-poster-00001.jpg"
-                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.webm"
-                            data-autoplay="true"
-                            data-loop="true"
-                            data-wf-ignore="true"
-                            class="work-bg-video w-background-video w-background-video-atom"
-                          >
-                            <video
-                              id="fb9dc426-40a1-496f-d0e0-a31fc46a67a6-video"
-                              autoplay=""
-                              loop=""
-                              style="
-                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-poster-00001.jpg&quot;);
-                              "
-                              muted=""
-                              playsinline=""
-                              data-wf-ignore="true"
-                              data-object-fit="cover"
-                            >
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.mp4"
-                                data-wf-ignore="true"
-                              />
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/64959800cb956883830a2dfc_pexels shvets production 7547660 3840x2160 50fps-transcode.webm"
-                                data-wf-ignore="true"
-                              />
-                            </video>
-                            <div
-                              data-w-id="78b581a4-55a2-26d6-95a1-95cac686c5bb"
-                              style="display: flex"
-                              class="column-animations"
-                            >
-                              <div
-                                data-ix="color-bar-1"
-                                style="height: 100%"
-                                class="top-color"
-                              ></div>
-                            </div>
-                          </div>
-                          <div
-                            style="background-image: none"
-                            class="background"
-                          ></div></div
-                      ></a>
-                      <div class="project-card-info">
-                        <div class="card-info">
-                          <a
-                            id="w-node-fb9dc426-40a1-496f-d0e0-a31fc46a67aa-50f20c2b"
-                            href="/work-categories/emotional-journeys"
-                            class="work-category-link"
-                            >Emotional Journeys</a
-                          >
-                          <div class="stacked-title">
-                            <a
-                              id="w-node-_0bb0f03f-8c62-be6a-d12c-94bfaaadd16e-50f20c2b"
-                              href="/works/visual-alchemy"
-                              class="work-title-link w-inline-block"
-                              ><h3 class="work-title">Visual Alchemy</h3></a
-                            ><a
-                              id="w-node-fb9dc426-40a1-496f-d0e0-a31fc46a67ad-50f20c2b"
-                              href="/works/visual-alchemy"
-                              class="underline-link w-inline-block"
-                              ><div>Chi tiết</div>
-                              <div class="hover-line">
-                                <div class="hover-line-fill"></div></div
-                            ></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    role="navigation"
-                    aria-label="List"
-                    class="w-pagination-wrapper pagination"
-                  ></div>
-                </div>
-                <div class="work-collection-list-wrapper w-dyn-list">
-                  <div role="list" class="project-grid w-dyn-items">
-                    <div role="listitem" class="project-item w-dyn-item">
-                      <a
-                        data-w-id="0d005b11-1760-8e3f-e30b-a777e3a28856"
-                        href="/works/motion-mosaics"
-                        class="project-image w-inline-block"
-                        ><div class="view-link">
-                          <h6 class="view-more">View</h6>
-                        </div>
-                        <div class="view-link-cover-item"></div>
-                        <div class="project-image-wrapper">
-                          <div
-                            data-poster-url="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-poster-00001.jpg"
-                            data-video-urls="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.mp4,https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.webm"
-                            data-autoplay="true"
-                            data-loop="true"
-                            data-wf-ignore="true"
-                            class="work-bg-video w-background-video w-background-video-atom"
-                          >
-                            <video
-                              id="0d005b11-1760-8e3f-e30b-a777e3a2885c-video"
-                              autoplay=""
-                              loop=""
-                              style="
-                                background-image: url(&quot;https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-poster-00001.jpg&quot;);
-                              "
-                              muted=""
-                              playsinline=""
-                              data-wf-ignore="true"
-                              data-object-fit="cover"
-                            >
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.mp4"
-                                data-wf-ignore="true"
-                              />
-                              <source
-                                src="https://cdn.prod.website-files.com/648aca18f05d659650f20acc/6495982a399738dade88b800_pexels maksim goncharenok 5642523 1920x1080 25fps-transcode.webm"
-                                data-wf-ignore="true"
-                              />
-                            </video>
-                            <div
-                              data-w-id="8ce7ebd5-e12d-e04f-2355-6b7bc10f48dc"
-                              style="display: flex"
-                              class="column-animations"
-                            >
-                              <div
-                                data-ix="color-bar-1"
-                                style="height: 100%"
-                                class="top-color"
-                              ></div>
-                            </div>
-                          </div>
-                          <div
-                            style="
-                              background-image: url(&quot;https://cdn.prod.website-files.com/648aca19f05d659650f20c0e/64abe12320c8ecf9bf32c2b4_Blog%205.jpg&quot;);
-                            "
-                            class="background"
-                          ></div></div
-                      ></a>
-                      <div class="project-card-info">
-                        <div class="card-info">
-                          <a
-                            id="w-node-_0d005b11-1760-8e3f-e30b-a777e3a28860-50f20c2b"
-                            href="/work-categories/visual-symphony"
-                            class="work-category-link"
-                            >Visual Symphony</a
-                          >
-                          <div class="stacked-title">
-                            <a
-                              id="w-node-_2f1e4f64-533f-0cf5-8967-1b8a60b133ff-50f20c2b"
-                              href="/works/motion-mosaics"
-                              class="work-title-link w-inline-block"
-                              ><h3 class="work-title">Motion Mosaics</h3></a
-                            ><a
-                              id="w-node-_0d005b11-1760-8e3f-e30b-a777e3a28863-50f20c2b"
-                              href="/works/motion-mosaics"
-                              class="underline-link w-inline-block"
-                              ><div>Chi tiết</div>
-                              <div class="hover-line">
-                                <div class="hover-line-fill"></div></div
-                            ></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                   <div
                     role="navigation"

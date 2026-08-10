@@ -84,6 +84,16 @@
       "relation": "oneToMany",
       "target": "api::case-study.case-study",
       "mappedBy": "service"
+    },
+    "featured_video": {
+      "type": "component",
+      "component": "shared.video-source",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }

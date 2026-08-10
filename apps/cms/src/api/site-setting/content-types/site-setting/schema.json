@@ -93,6 +93,26 @@
           "localized": true
         }
       }
+    },
+    "banner_video": {
+      "type": "component",
+      "component": "shared.video-source",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "cta_video": {
+      "type": "component",
+      "component": "shared.video-source",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }

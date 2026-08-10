@@ -94,6 +94,16 @@
           "localized": true
         }
       }
+    },
+    "video": {
+      "type": "component",
+      "component": "shared.video-source",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }
