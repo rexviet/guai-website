@@ -37,6 +37,13 @@ RUN npm ci --ignore-scripts && npm rebuild
 
 # Copy the rest of the application source and build the admin panel.
 COPY . .
+#
+# NOTE: do not add `npm prune --omit=dev` here — it was measured to be a
+# no-op (123 bytes on a 357MB image). `ENV NODE_ENV=production` above already
+# makes `npm ci` skip devDependencies; the image's ~795MB of node_modules is
+# genuine runtime dependencies (@strapi/admin, typedoc, ...). typescript is
+# present because @strapi/typescript-utils depends on it, not because it is a
+# devDependency.
 RUN npm run build
 
 # ---------------------------------------------------------------------------

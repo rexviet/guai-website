@@ -45,6 +45,24 @@ services:
           memory: 512M
 
   strapi:
+    # Both `image:` and `build:` are set on purpose, and they serve different
+    # machines:
+    #
+    #   Production VPS  → `docker compose pull && docker compose up -d`
+    #                     Pulls the amd64 image that .github/workflows/
+    #                     build-cms-image.yml published to GHCR. The VPS has
+    #                     2GB RAM and CANNOT build the Strapi admin panel
+    #                     locally (V8 OOMs at its ~1GB default heap), so never
+    #                     run `up --build` there.
+    #
+    #   Local dev (Mac) → `docker compose up -d --build`
+    #                     Builds from source and tags the result with the same
+    #                     name, which also gets you a native arm64 image (CI
+    #                     only publishes amd64).
+    #
+    # Override CMS_IMAGE to pin a specific commit, e.g.
+    #   CMS_IMAGE=ghcr.io/rexviet/guai-website/cms:sha-<full-sha> docker compose up -d
+    image: ${CMS_IMAGE:-ghcr.io/rexviet/guai-website/cms:latest}
     build:
       context: ../apps/cms
       dockerfile: Dockerfile
