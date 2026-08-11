@@ -1,0 +1,14 @@
+.github/workflows/build-and-deploy.yml
+  h_43770622f8f2a6 41,47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "b5f02e2005e0a571fdd40e84a9f246262d8d482b",
+  "prompts": {},
+  "humans": {
+    "h_43770622f8f2a6": {
+      "author": "Viet Phung <vietphung@everfit.io>"
+    }
+  }
+}
