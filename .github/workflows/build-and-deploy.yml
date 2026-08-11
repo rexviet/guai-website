@@ -38,13 +38,13 @@ jobs:
           SITE_URL: ${{ secrets.SITE_URL || 'https://guai.studio' }}
 
       - name: Setup SSH Deploy Key
-        if: ${{ secrets.VPS_HOST != '' && secrets.SSH_DEPLOY_KEY != '' }}
+        if: ${{ vars.DEPLOY_ENABLED == 'true' }}
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
 
       - name: Deploy to VPS via rsync & Atomic Symlink Swap
-        if: ${{ secrets.VPS_HOST != '' && secrets.SSH_DEPLOY_KEY != '' }}
+        if: ${{ vars.DEPLOY_ENABLED == 'true' }}
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER || 'deploy' }}
