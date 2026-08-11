@@ -136,8 +136,23 @@ Real `.env` files are gitignored — never commit them or print their contents.
 ## Deployment
 
 Push to `main` (or an editor publishing content) triggers the frontend deploy
-automatically. The backend is deployed by hand on the VPS:
-`docker compose -f infra/docker-compose.yml up -d --build`.
-Required GitHub secrets: `VPS_HOST`, `VPS_USER`, `SSH_DEPLOY_KEY`, `STRAPI_API_URL`,
-`SITE_URL`. Full procedure in `docs/deployment.md`; editor-facing runbook in
+automatically via `build-and-deploy.yml`. Required GitHub secrets: `VPS_HOST`,
+`VPS_USER`, `SSH_DEPLOY_KEY`, `STRAPI_API_URL`, `SITE_URL`.
+
+Changes under `apps/cms/**` trigger `build-cms-image.yml`, which builds the
+Strapi image and pushes it to `ghcr.io/rexviet/guai-website/cms`. The backend is
+then deployed by hand on the VPS:
+
+```bash
+docker compose -f infra/docker-compose.yml pull
+docker compose -f infra/docker-compose.yml up -d
+```
+
+**Never run `up --build` on the VPS.** It has 2GB RAM, so V8 caps its heap near
+1GB and the Strapi admin bundle dies with `Ineffective mark-compacts near heap
+limit`. That is why the image is built in CI at all. `infra/docker-compose.yml`
+keeps a `build:` block anyway so Apple Silicon dev machines can build a native
+arm64 image locally — CI only publishes `linux/amd64`.
+
+Full procedure in `docs/deployment.md`; editor-facing runbook in
 `docs/ops-manual.md`.

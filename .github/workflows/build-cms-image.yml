@@ -1,0 +1,82 @@
+name: Build CMS Image
+
+# Builds the Strapi CMS Docker image and publishes it to GHCR.
+#
+# WHY THIS EXISTS: the production VPS is a 2GB / 1 vCPU box. Building the
+# Strapi admin panel there fails — V8 picks a ~1GB old-space heap based on the
+# machine's RAM and the Vite/rollup bundle exhausts it:
+#   FATAL ERROR: Ineffective mark-compacts near heap limit
+# GitHub's ubuntu-latest runner has 4 vCPU / 16GB, so the build succeeds there
+# and the VPS only ever has to `docker compose pull`.
+#
+# Deliberately a SEPARATE workflow from build-and-deploy.yml: that one also
+# fires on `repository_dispatch` whenever an editor publishes content, and
+# rebuilding a Docker image for a content change would be pure waste. This one
+# only runs when CMS code actually changes.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/cms/**'
+      - '.github/workflows/build-cms-image.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: cms-image
+  cancel-in-progress: true
+
+jobs:
+  build-and-push:
+    name: Build & push Strapi image to GHCR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Required for pushing to GHCR with the built-in GITHUB_TOKEN — no
+      # separate registry secret (PAT) is needed.
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Derive image tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # github.repository is `rexviet/guai-website`, so this resolves to
+          # ghcr.io/rexviet/guai-website/cms — which auto-links the package to
+          # this repository in the GitHub UI.
+          images: ghcr.io/${{ github.repository }}/cms
+          tags: |
+            type=raw,value=latest
+            type=sha,format=long
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/cms
+          # amd64 only: the VPS is x86. Adding linux/arm64 here would build it
+          # under QEMU emulation, which is slow enough that the admin bundle
+          # step routinely times out or OOMs. Apple Silicon dev machines build
+          # their own arm64 image locally via the `build:` block that
+          # infra/docker-compose.yml still carries.
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # GitHub Actions layer cache — free for public repositories, and
+          # keeps the expensive `npm ci` layer warm between runs.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

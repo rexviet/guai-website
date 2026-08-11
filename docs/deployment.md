@@ -93,8 +93,25 @@ Kiến trúc Production:
 
 3. **Khởi chạy Docker Container:**
    ```bash
-   docker compose -f infra/docker-compose.yml up -d --build
+   docker compose -f infra/docker-compose.yml pull
+   docker compose -f infra/docker-compose.yml up -d
    ```
+
+   > ⚠️ **Tuyệt đối KHÔNG chạy `up -d --build` trên VPS.** Máy chỉ có 2GB RAM;
+   > Node sẽ tự đặt heap limit ~1GB dựa trên RAM vật lý và bước bundle admin
+   > panel của Strapi sẽ chết giữa chừng với
+   > `FATAL ERROR: Ineffective mark-compacts near heap limit`.
+   > Image được build sẵn trên GitHub Actions (runner 4 vCPU / 16GB) và đẩy lên
+   > GHCR bởi `.github/workflows/build-cms-image.yml`; VPS chỉ cần `pull`.
+
+   **Thiết lập một lần duy nhất — mở public cho GHCR package:** package do
+   Actions tạo ra mặc định là *private*, khiến VPS `pull` bị lỗi xác thực.
+   Vào `https://github.com/users/rexviet/packages/container/guai-website%2Fcms/settings`
+   ➔ **Danger Zone** ➔ **Change visibility** ➔ **Public**. Sau bước này VPS pull
+   được mà không cần đăng nhập registry.
+
+   *(Nếu muốn giữ package private, thay vào đó phải tạo PAT có scope
+   `read:packages` rồi `docker login ghcr.io` trên VPS.)*
 
 4. **Cấu hình Nginx Reverse Proxy & SSL (Certbot):**
    - Sử dụng file cấu hình `infra/nginx/guai-studio.conf` để trỏ domain `cms.guai.studio` vào `127.0.0.1:1337`.
@@ -149,5 +166,6 @@ Nếu cần deploy nhanh từ máy cá nhân lên VPS mà không qua GitHub Acti
 | **Tắt Local Fullstack** | `docker compose -f infra/docker-compose.yml down` |
 | **Build Web Frontend** | `npm run build --prefix apps/web` |
 | **Build Strapi CMS Admin** | `npm run build --prefix apps/cms` |
-| **Deploy Backend VPS** | SSH vào VPS ➔ `docker compose -f infra/docker-compose.yml up -d --build` |
+| **Deploy Backend VPS** | SSH vào VPS ➔ `docker compose -f infra/docker-compose.yml pull && docker compose -f infra/docker-compose.yml up -d` |
+| **Build lại image CMS** | Push thay đổi trong `apps/cms/` lên `main` ➔ GitHub Actions build & push lên GHCR |
 | **Deploy Frontend VPS** | Push code lên `main` ➔ GitHub Actions tự động build & swap symlink |
