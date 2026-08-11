@@ -73,7 +73,12 @@ const seoHtml = generateSeoTags(seo);
       }
 
       /* 2. Global background */
-      body {
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
         background-color: #0B1026 !important;
       }
 
@@ -129,6 +134,18 @@ const seoHtml = generateSeoTags(seo);
         box-shadow: 0 0 18px rgba(34, 211, 238, 0.35);
       }
 
+      /* Fix for "Chi tiết" buttons text dropping down and clipping accents */
+      .btn-title-text {
+        white-space: nowrap !important;
+        line-height: 1.4 !important;
+        padding-top: 3px !important;
+        padding-bottom: 3px !important;
+      }
+      
+      .btn-banner-text {
+        line-height: 1.4 !important;
+      }
+
       /* 9. h6 subtitle tag — Electric Violet */
       .h6-subtitle {
         color: #6C4DFF !important;
@@ -152,6 +169,7 @@ const seoHtml = generateSeoTags(seo);
         border-top-left-radius: 0 !important;
         border-top-right-radius: 0 !important;
       }
+
       .home-1-section {
         z-index: 90;
         position: relative;
@@ -173,6 +191,31 @@ const seoHtml = generateSeoTags(seo);
         position: relative;
         z-index: 15;
         overflow: hidden;
+      }
+      
+      @media (max-width: 479px) {
+        /* Force long titles to wrap and prevent container expansion */
+        .text-animation, h1, h2, h3, h4, h5, h6 {
+          white-space: normal !important;
+          word-wrap: break-word !important;
+          max-width: 100% !important;
+        }
+        /* Reset any excessive margins/widths on containers to prevent grid blowout */
+        .grid-wrapper, .four-column, .flex-container, .advantages-wrap, .about-us-left-con {
+          max-width: 100% !important;
+          width: 100% !important;
+          min-width: 0 !important; /* Fix grid blowout */
+          box-sizing: border-box !important;
+        }
+        .grid-wrapper {
+          padding-left: 15px !important;
+          padding-right: 15px !important;
+          display: block !important; /* Force block to kill 3-column grid on mobile */
+        }
+        .text-animation-wrapper {
+          height: auto !important; /* Prevent text clipping if wrapping */
+          overflow: visible !important;
+        }
       }
     </style>
   </head>

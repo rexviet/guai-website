@@ -119,6 +119,17 @@ const caseStudies = await getCaseStudies(locale);
         .advantages-list > .mini-video-lightbox {
           flex: 0 0 100% !important; /* Show 1 item on mobile */
         }
+        
+        .slider-nav-btn {
+          display: none !important;
+        }
+        
+        .advantages-wrap {
+          width: 100% !important;
+          box-sizing: border-box !important;
+          padding-left: 15px !important;
+          padding-right: 15px !important;
+        }
       }
     </style>
 
@@ -182,10 +193,10 @@ const caseStudies = await getCaseStudies(locale);
               ></div>
               
               <div class="slider-wrapper" style="position: relative;">
-                <button aria-label="Scroll left" onclick="document.querySelector('.advantages-list').scrollBy({left: -(document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; left: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
+                <button class="slider-nav-btn" aria-label="Scroll left" onclick="document.querySelector('.advantages-list').scrollBy({left: -(document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; left: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
                 </button>
-                <button aria-label="Scroll right" onclick="document.querySelector('.advantages-list').scrollBy({left: (document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; right: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
+                <button class="slider-nav-btn" aria-label="Scroll right" onclick="document.querySelector('.advantages-list').scrollBy({left: (document.querySelector('.mini-video-lightbox').offsetWidth + 15), behavior: 'smooth'})" style="position: absolute; right: -24px; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(0,0,0,0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.5)'">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
 
